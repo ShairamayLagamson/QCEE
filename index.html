@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCEE</title>
+    <link rel="stylesheet" href="css/base.css">
+     <link rel="stylesheet" href="css/preview.css">
+     
+</head>
+
+<script src="js/preview.js"></script>
+<body>
+    <header class="topbar">
+        <img src="images/logo.png" alt="Logo" class="logo" onerror="this.style.display='none'">
+        <h1 class="brand">QCee</h1>
+        <label class="search">
+            <input id="searchInput" placeholder="Search...">
+           <button type="button" aria-label="Search" data-gate="search"> 🔍︎ </button>
+        </label>
+
+        <div class="actions">
+            <button class="cart-btn" aria-label="Cart" data-gate="cart">🛒</button>
+            <a href="login.html" class="btn btn-light">Log In</a>
+            <a href="register.html" class="btn btn-orange">Register</a>
+        </div>
+    </header>
+
+            
+     <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="#" data-gate="default">Menu</a>
+        <a href="#" data-gate="default">About Us</a>
+    </nav>
+
+
+<main class="wrap">
+  <section class="block">
+    <h2 class="title">Marketplace Categories</h2>
+    <div class="pills">
+      <button class="pill active">✨ All Products</button>
+      <button class="pill" data-gate="pill">🎨 Arts &amp; Crafts</button>
+      <button class="pill" data-gate="pill">🍪 Bakes &amp; Sweets</button>
+      <button class="pill" data-gate="pill">🎀 Fashion &amp; Accessories</button>
+    </div>
+  </section>
+
+  
+  <section class="block">
+    <h2 class="title">QCee Shops</h2>
+    <p class="sub">Explore each featured enterprise shop</p>
+    <div class="shop-grid" id="shops"></div>
+ 
+    <!-- blurred teaser: the "limit" of the preview -->
+    <div class="locked" id="locked">
+
+      <div class="shop-grid" id="lockedShops" aria-hidden="true"></div>
+
+      <div class="locked-card">
+        
+        <div class="locked-inner">
+          <h3>Access Restricted</h3>
+          <p>PLease Login or Register to access the whole platform.</p>
+          <div class="cta-row">
+            <a href="register.html" class="btn btn-dark">Register</a>
+            <a href="login.html" class="btn btn-light" style="border:1px solid var(--line)">Log In</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+ 
+<footer> about us</footer>
+ 
+<!-- bottom bar (shows on scroll) -->
+<div class="sticky-cta" id="stickyCta">
+  <p>Log in to unlock all shops and products.</p>
+  <a href="login.html" class="btn btn-light">Log In</a>
+  <a href="register.html" class="btn btn-orange">Register</a>
+</div>
+ 
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="modal">
+    <button class="close" data-close aria-label="Close">×</button>
+    <div class="emoji" id="mEmoji"></div>
+    <h3 id="mTitle"></h3>
+    <p id="mText"></p>
+    <div class="cta-row">
+      <a href="register.html" class="btn btn-orange">Register</a>
+      <a href="login.html" class="btn btn-dark">Log In</a>
+    </div>
+    <button class="later" data-close>Maybe later</button>
+  </div>
+</div>
+ 
+</body>
+</html>
