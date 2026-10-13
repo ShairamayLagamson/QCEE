@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=K2D:wght@300;400;500;600;700&family=Oswald:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=K2D:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Khand:wght@300;400;500;600;700&display=swap');
+
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'K2D', sans-serif; }
+
+body {
+  background: linear-gradient(-50deg, #f7e7d1, #fdf6ec, #f7d9b0, #ffd395);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  position: relative;
+  width: 850px;
+  max-width: 100%;
+  flex-shrink: 0;
+  height: 620px;
+  margin: 0;
+  background: #fff; border-radius: 30px; overflow: hidden;
+  box-shadow: 0 0 30px rgba(0,0,0,.2);
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+
+.form-box {
+  position: absolute; left: 0; width: 50%; height: 100%;
+  background: #fff; color: #333; text-align: center;
+  display: flex; padding: 40px; z-index: 1; overflow-y: auto;
+  transition: .6s ease-in-out 1.2s, visibility 0s 1s;
+}
+.container.active .form-box { left: 50%; }
+.form-box.register { visibility: hidden; }              /* was ".form-box .register" (space) */
+.container.active .form-box.register { visibility: visible; }
+.container.active .form-box.login { visibility: hidden; }
+form { width: 100%; margin: auto 0; }
+
+.container h1 { font-size: 36px; margin: -10px 0; }
+.input-box { position: relative; margin: 30px 0; }
+.input-box input {
+  width: 100%; padding: 13px 50px 13px 20px; font-size: 16px;
+  border-radius: 8px; border: none; outline: none;
+  background: #eee; color: #333; font-weight: 500;
+}
+.input-box input::placeholder { color: #888; font-weight: 400; }
+.input-box input:focus { outline: 2px solid #f7d9b0; box-shadow: 0 0 5px #fdce87; }  /* was ::focus */
+.input-box i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #888; font-size: 20px; }
+
+/* register has 5 fields, so tighter spacing */
+.form-box.register h1 { margin: 0 0 8px; }
+.form-box.register .input-box { margin: 14px 0; }
+
+.forgot-link { margin: -15px 0 15px; }
+.forgot-link a { font-size: 14.5px; color: #333; text-decoration: none; }
+.container .error { color: #c0392b; font-size: 14px; min-height: 20px; margin: 6px 0; }
+
+.btn {
+  width: 100%; height: 50px; background: #EDA03F; border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,.1); border: none; cursor: pointer;
+  font-size: 18px; font-weight: 500; color: #fff;
+}
+.container p { font-size: 14px; margin: 15px 0; }
+
+.toggle-box { position: absolute; width: 100%; height: 100%; }
+.toggle-box::before {
+  content: ''; position: absolute; left: 50%; width: 300%; height: 100%;
+  border-radius: 150px; z-index: 2; transition: 1.8s ease-in-out;
+  /* qcu-gate2 photo beside the login form; qcu-gate photo beside the register form (both with a dark tint) */
+  background-color: #EDA03F;
+  background-image:
+    linear-gradient(rgba(40, 20, 0, .4), rgba(40, 20, 0, .4)),
+    url('../images/qcu-gate2.png'),
+    linear-gradient(rgba(40, 20, 0, .4), rgba(40, 20, 0, .4)),
+    url('../images/qcu-gate.png');
+  background-repeat: no-repeat;
+  background-position: left center, left center, right center, right center;
+  background-size: calc(100% / 6) 100%, auto 100%, calc(100% / 6) 100%, auto 100%;
+}
+.toggle-panel p { text-shadow: 0 2px 8px rgba(0,0,0,.5); }
+
+/* panel heading: bold solid word on top, outlined "QCIANS!" below */
+.toggle-panel h1, .toggle-panel h1 span { font-family: 'Khand', 'K2D', sans-serif; }
+.container .toggle-panel h1 {
+  font-size: 64px; font-weight: 600; line-height: 1.05; letter-spacing: 1px;
+  margin: 0 0 16px; text-shadow: 0 2px 10px rgba(0,0,0,.45);
+}
+.toggle-panel h1 span { display: block; }
+.toggle-panel h1 .outline {
+  font-family: 'Jost', 'K2D', sans-serif;
+  font-size: 44px; font-weight: 350; letter-spacing: 2px;
+  color: #fff; -webkit-text-stroke: 0; text-shadow: 0 2px 10px rgba(0,0,0,.45);
+}
+.toggle-panel h1 .cians { display: inline; font-family: inherit; color: #FFD6A3; }
+.container.active .toggle-box::before { left: -250%; }
+
+.toggle-panel {
+  position: absolute; width: 50%; height: 100%; color: #fff; z-index: 2;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center; padding: 90px 30px 0; transition: .6s ease-in-out;
+}
+.toggle-panel.toggle-left { right: 0; transition-delay: 1.2s; }
+.container.active .toggle-panel.toggle-left { right: -50%; transition-delay: .6s; }
+.toggle-panel.toggle-right { left: -50%; transition-delay: .6s; }
+.container.active .toggle-panel.toggle-right { left: 0; transition-delay: 1.2s; }
+.container .toggle-panel p { font-size: 15px; line-height: 1.45; max-width: 270px; margin: 0 0 22px; }
+.toggle-panel .btn {
+  width: 190px; height: 46px; border-radius: 999px;
+  background: rgba(255,255,255,.1); box-shadow: none; border: 2px solid #fff;
+  transition: background .25s;
+}
+.toggle-panel .btn:hover { background: rgba(255,255,255,.28); }
+
+/* phones: panel slides top/bottom instead of left/right */
+@media (max-width: 650px) {
+  .container { height: calc(100vh - 40px); max-height: 760px; }
+  .form-box { left: 0; bottom: 0; width: 100%; height: 76%; padding: 24px; }
+  .container.active .form-box { left: 0; bottom: 24%; }
+  /* phone layout is vertical: bottom of the strip = login side (qcu-gate2), top of the strip = register side (qcu-gate) */
+  .toggle-box::before {
+    left: 0; top: -276%; width: 100%; height: 300%; border-radius: 20vw;
+    background-color: #EDA03F;
+    background-image:
+      linear-gradient(rgba(40, 20, 0, .4), rgba(40, 20, 0, .4)),
+      url('../images/qcu-gate2.png'),
+      linear-gradient(rgba(40, 20, 0, .4), rgba(40, 20, 0, .4)),
+      url('../images/qcu-gate.png');
+    background-repeat: no-repeat;
+    background-position: center bottom, center bottom, center top, center top;
+    background-size: 100% 8%, 100% auto, 100% 8%, 100% auto;
+  }
+  .container.active .toggle-box::before { left: 0; top: 76%; }
+  .toggle-panel { width: 100%; height: 24%; padding: 0 20px; }
+  .toggle-panel p { display: none; }
+  .container .toggle-panel h1 { font-size: 26px; margin: 0 0 10px; }
+  .container .toggle-panel h1 span { display: inline; font-size: 26px; letter-spacing: 1px; }
+  .toggle-panel .btn { height: 40px; font-size: 16px; }
+  .toggle-panel.toggle-left { left: 0; right: auto; top: 0; }
+  .container.active .toggle-panel.toggle-left { left: 0; right: auto; top: -24%; }
+  .toggle-panel.toggle-right { left: 0; right: auto; bottom: -24%; }
+  .container.active .toggle-panel.toggle-right { left: 0; right: auto; bottom: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  .form-box, .toggle-box::before, .toggle-panel { transition-duration: .01s; transition-delay: 0s; }
+}
