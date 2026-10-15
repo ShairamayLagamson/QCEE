@@ -44,6 +44,11 @@ body {
 .container.active .form-box.login { visibility: hidden; }
 form { width: 100%; margin: auto 0; }
 
+/* QCee logo: top-left on login, top-right on register */
+.form-logo { position: absolute; top: 16px; width: 56px; height: auto; pointer-events: none; }
+.form-box.login .form-logo { left: 16px; }
+.form-box.register .form-logo { right: 16px; }
+
 .container h1 { font-size: 36px; margin: -10px 0; }
 .input-box { position: relative; margin: 30px 0; }
 .input-box input {
@@ -139,10 +144,10 @@ form { width: 100%; margin: auto 0; }
   }
   .container.active .toggle-box::before { left: 0; top: 76%; }
   .toggle-panel { width: 100%; height: 24%; padding: 0 20px; }
-  .toggle-panel p { display: none; }
-  .container .toggle-panel h1 { font-size: 26px; margin: 0 0 10px; }
+  .container .toggle-panel p { display: block; font-size: 12.5px; line-height: 1.3; max-width: 280px; margin: 0 0 10px; }
+  .container .toggle-panel h1 { font-size: 26px; margin: 0 0 6px; }
   .container .toggle-panel h1 span { display: inline; font-size: 26px; letter-spacing: 1px; }
-  .toggle-panel .btn { height: 40px; font-size: 16px; }
+  .toggle-panel .btn { height: 36px; font-size: 15px; }
   .toggle-panel.toggle-left { left: 0; right: auto; top: 0; }
   .container.active .toggle-panel.toggle-left { left: 0; right: auto; top: -24%; }
   .toggle-panel.toggle-right { left: 0; right: auto; bottom: -24%; }
