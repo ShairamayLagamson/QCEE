@@ -11,23 +11,24 @@
 
 .role-card {
   position: relative; width: 100%; max-width: 380px;
-  background: #f7e7d1; border-radius: 22px; padding: 30px 24px 28px; text-align: center;
+  background: #F9F1E5; border-radius: 22px; padding: 30px 24px 28px; text-align: center;
   box-shadow: 0 14px 40px rgba(43, 26, 18, .3);
   animation: rolePop .25s ease;
 }
 .role-logo { width: 92px; height: 92px; object-fit: contain; display: block; margin: 0 auto 10px; }
 .role-title {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  font-size: 18px; font-weight: 600; color: #2b1a12; margin-bottom: 20px;
+  font-size: 18px; font-weight: bold; color: #130804; margin-bottom: 20px;
   font-family: 'Momo Trust Sans', sans-serif;
 }
 .role-title svg { width: 20px; height: 20px; flex: none; }
 .role-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .role-btn {
   min-width: 120px; padding: 11px 22px; border: 0; border-radius: 999px; cursor: pointer;
-  background: var(--orange, #e9a03b); color: #fff; font: inherit; font-size: 16px; font-weight: 700;
+  background: var(--orange, #e9a03b); color: #fff; font: inherit; font-size: 16px; font-weight: 400;
   text-shadow: 0 1px 2px rgba(43, 26, 18, .35);
   transition: transform .15s, filter .15s;
+  font-family: 'Momo Trust Sans', sans-serif;
 }
 .role-btn:hover { transform: translateY(-2px); filter: brightness(1.06); }
 .role-btn:focus-visible, .role-close:focus-visible { outline: 3px solid #2b1a12; outline-offset: 2px; }

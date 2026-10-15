@@ -154,8 +154,8 @@ footer {
 }
 
 
-.sticky-cta.show { 
-    transform: none; 
+.sticky-cta.show {   
+  display: none !important;
 }
 
 

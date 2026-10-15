@@ -10,219 +10,303 @@
   --muted: #6f6258;
   --line: #e4d8c9;
 }
-* { 
+* {
     box-sizing:
-    border-box; 
+    border-box;
     margin: 0; }
 
 
 body {
-     font-family: 'Outfit', system-ui, sans-serif; 
-     background: var(--cream); 
-     color: var(--ink);   
+     font-family: 'Outfit', system-ui, sans-serif;
+     background: var(--cream);
+     color: var(--ink);
     }
 
 
-a { 
-    color: inherit; 
-    text-decoration: none; 
+a {
+    color: inherit;
+    text-decoration: none;
   }
 
 
 button {
-     font: inherit; 
-     cursor: pointer; 
-     border: 0; 
+     font: inherit;
+     cursor: pointer;
+     border: 0;
     }
 
 
 :focus-visible {
-     outline: 3px solid var(--orange); 
-     outline-offset: 2px; 
+     outline: 3px solid var(--orange);
+     outline-offset: 2px;
     }
 
 
-.btn { 
-    display: inline-block; 
-    padding: 9px 22px; 
-    border-radius: 999px; 
-    font-weight: 600; 
-    font-size: 15px; 
+.btn {
+    display: inline-block;
+    padding: 9px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
 }
 
 
 .btn-light {
-     background: #fff; 
+     background: #fff;
      color: var(--ink);
      }
 
 
-.btn-orange { 
-    background: var(--orange); 
-    color: var(--brown); 
+.btn-orange {
+    background: var(--orange);
+    color: var(--brown);
 }
 
 /* header */
-.topbar { 
+.topbar {
     position: relative;
-    display: flex; 
-    align-items: center; 
-    gap: 16px; 
-    padding: 14px 24px 14px 150px; 
-    background: var(--brown); 
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 24px 14px 150px;
+    background: var(--brown);
 }
 
 
-.logo { 
-    position: absolute; 
-    left: 36px; 
-    top: 0; 
-    width: 84px; 
-    height: 110px; 
-    object-fit: contain; 
-    z-index: 2; 
+.logo {
+   
+  display: none;
 }
 
 
-.brand { 
-    font-size: 38px; 
-    font-weight: 900; 
-    color: #ffd9a8; 
+.brand {
+    font-size: 38px;
+    font-weight: 900;
+    color: #ffd9a8;
     font-family: 'Microsoft YaHei', 'Noto Sans', sans-serif;
-    
+
 }
 
 
-.search { 
-    flex: 1; 
-    display: flex; 
-    align-items: center; 
-    background: #fff; 
-    border-radius: 999px; 
-    padding: 4px 4px 4px 16px; 
-    max-width: 520px; 
+.search {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 999px;
+    padding: 4px 4px 4px 16px;
+    max-width: 520px;
 }
 
 
-.search input { 
-    flex: 1; 
-    border: 0; 
+.search input {
+    flex: 1;
+    border: 0;
     outline: 0;
-    font: inherit; 
-    font-size: 14px; 
-    background: transparent; 
-    min-width: 0; 
+    font: inherit;
+    font-size: 14px;
+    background: transparent;
+    min-width: 0;
 }
 
 
-.search button { 
-    background: var(--orange); 
-    width: 30px; 
-    height: 30px; 
-    border-radius: 50%; 
+.search button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    padding: 0;
+    /* use the real icon from images/ and hide the emoji text */
+    background: url('../images/search-ico.png') center / 22px 22px no-repeat;
+    font-size: 0;
+    color: transparent;
+  }
+
+/* if the HTML still has <img> tags inside these buttons, ignore them */
+.search button img,
+.cart-btn img {
+    display: none;
 }
 
 
-.actions { 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
-    margin-left: auto; 
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
 }
 
 
-.cart-btn { 
-    background: none; 
-    font-size: 26px; 
-    color: var(--orange); 
+.cart-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    /* icon comes from images/cart-ico.png; the emoji text is hidden */
+    background: url('../images/cart-ico.png') center / 26px 26px no-repeat;
+    font-size: 0;
+    color: transparent;
 }
 
 
-.menu { 
-    display: flex; 
-    justify-content: center; 
-    gap: 72px; 
-    padding: 12px 0 12px 120px; 
-    background: var(--brown-deep); 
-    color: #fff; 
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 72px;
+    padding: 12px 0 12px 120px;
+    background: var(--brown-deep);
+    color: #fff;
     font-family: 'Lunasima', 'Noto Sans', sans-serif;
 }
 
 
-.menu a { 
-    font-size: 17px; 
+.menu a {
+    font-size: 17px;
 }
 
 /* pills */
-.pills { 
+.pills {
     display: flex;
-    gap: 12px; 
-    overflow-x: auto; 
-    padding: 4px 2px 8px; 
-    
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 2px 8px;
+
  }
 
 
-.pills::-webkit-scrollbar { 
-    display: none; 
+.pills::-webkit-scrollbar {
+    display: none;
 }
 
 
 .pill {
-    flex: none; 
-    background: #fff; 
-    border: 1px solid var(--line); 
-    border-radius: 999px; 
-    padding: 11px 22px; 
-    font-weight: 600; 
+    flex: none;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 11px 22px;
+    font-weight: 600;
     color: var(--ink);
  }
 
 
-.pill.active { 
-    background: var(--brown); 
-    color: var(--orange); 
-    border-color: var(--brown); 
+.pill.active {
+    background: var(--brown);
+    color: var(--orange);
+    border-color: var(--brown);
 }
 
 
-@media (max-width: 700px) 
+/* mobile: one-row header (small logo + QCee | search, cart, Log In, Register),
+   centered nav underneath */
+@media (max-width: 700px)
 {
-  .topbar { 
-    flex-wrap: wrap; 
-    padding: 12px 14px 12px 96px; 
-    gap: 10px; 
+  .topbar {
+    flex-wrap: nowrap;
+    padding: 10px 12px;
+    gap: 8px;
     }
 
   .logo {
-     left: 12px; 
-     width: 66px; 
-     height: 88px; 
+     position: static;
+     flex: none;
+     width: 34px;
+     height: 34px;
     }
 
 
-  .brand { 
-    font-size: 28px; 
+  .brand {
+    font-size: 26px;
+    line-height: 1;
     }
 
-  .actions { 
-    margin-left: auto; 
+  /* search collapses to just its icon, pushed to the right */
+  .search {
+    order: 0;
+    flex: none;
+    margin-left: auto;
+    max-width: none;
+    padding: 0;
+    background: none;
     }
 
-  .search { 
-    order: 3; 
-    flex-basis: 100%; 
-    max-width: none; 
+  .search input {
+    display: none;
     }
 
-  .menu { 
-    gap: 28px; 
-    padding: 10px 12px 10px 96px; 
-    justify-content: flex-start; 
+  .search button {
+    width: 34px;
+    height: 34px;
+    background: url('../images/search-ico.png') center / 22px 22px no-repeat;
     }
 
-  .btn { 
-    padding: 8px 16px; 
-    font-size: 14px; 
+  .actions {
+    margin-left: 0;
+    gap: 8px;
     }
+
+  .cart-btn {
+    background-size: 24px 24px;
+    }
+
+  /* hide the brown "Log in to unlock all shops and products" bottom strip on phones */
+  .sticky-cta {
+  display: none !important;
+
+    }
+
+  .btn {
+    padding: 6px 12px;
+    font-size: 13px;
+    }
+
+  /* navigation centered (no left offset for the big desktop logo) */
+  .menu {
+    gap: 36px;
+    padding: 10px 12px;
+    justify-content: center;
+    }
+
+  .menu a {
+    font-size: 16px;
+    }
+
+  .menu a:first-child {
+    font-weight: 700;
+    }
+
+  .pill {
+    padding: 8px 16px;
+    font-size: 14px;
+    }
+}
+
+/* very narrow phones */
+@media (max-width: 700px)
+{
+  .topbar {
+    gap: 6px;
+    padding: 10px;
+    }
+
+  .brand {
+    font-size: 22px;
+    }
+
+  .btn {
+    padding: 6px 9px;
+    font-size: 12px;
+    }
+}
+
+.footer-container {
+  background-color: #fff;
+  padding-bottom: 4rem;
+}
+
+.footer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
