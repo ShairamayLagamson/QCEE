@@ -49,24 +49,38 @@
       <!-- blurred teaser: the "limit" of the preview -->
       <div class="locked" id="locked">
         <div class="shop-grid" id="lockedShops" aria-hidden="true"></div>
-        <div class="locked-card">
-          <div class="locked-inner">
-            <h3>Access Restricted</h3>
-            <p>Please log in or register to access the whole platform.</p>
-            <div class="cta-row">
-              <a href="auth_customer.html?mode=register" data-pick="register" class="btn btn-dark">Register</a>
-              <a href="auth_customer.html" data-pick="login" class="btn btn-light" style="border:1px solid var(--line)">Log In</a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   </main>
 
+<<<<<<< HEAD
   <footer>about us</footer>
 
  
+=======
+  <!-- bottom bar (shows on scroll) -->
+  <!-- <div class="sticky-cta" id="stickyCta">
+    <p>Log in to unlock all shops and products.</p>
+    <a href="auth_customer.html" data-pick="login" class="btn btn-light">Log In</a>
+    <a href="auth_customer.html?mode=register" data-pick="register" class="btn btn-orange">Register</a>
+  </div>
+> -->
+>>>>>>> afaab67 (register/login connected to database with otp, added website footer)
 
+  <!-- "Access Restricted" pop-up: opens once when the visitor scrolls to the locked shops (js/locked-popup.js) -->
+  <div class="lock-popup" id="lockPopup" role="dialog" aria-modal="true" aria-labelledby="lpTitle" aria-hidden="true">
+    <div class="lock-card">
+      <button type="button" class="lp-close" data-lock-close aria-label="Close">&times;</button>
+      <img class="lp-logo" src="images/logo2.png" alt="" onerror="this.style.display='none'">
+      <h3 id="lpTitle">Access Restricted</h3>
+      <p>Please log in or register to access the whole platform.</p>
+      <div class="cta-row">
+        <a href="auth_customer.html?mode=register" data-pick="register" class="btn btn-dark">Register</a>
+        <a href="auth_customer.html" data-pick="login" class="btn btn-light">Log In</a>
+      </div>
+      <button type="button" class="lp-later" data-lock-close>Maybe later</button>
+    </div>
+  </div>
 
   <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="mTitle">
     <div class="modal">
@@ -82,15 +96,9 @@
     </div>
   </div>
 
-  <div class="footer-container">
-    <div class="footer">
-      <div class="footer-heading footer-1">
-        <h2 class="footer-title">Website Information</h2>
-        <p class="footer-text">Campus-Based Merchandise Ordering System for Enterprises is a web-based platform designed to provide a convenient and efficient way for students and faculty members to order merchandise from authorized campus enterprises. Similar to delivery applications such as Shopee and Foodpanda, the system allows users to browse stalls, view available products, add items to a cart, and place orders through a centralized digital platform. This system aims to reduce long lines at campus stores, improve the ordering process, and provide a faster and more organized way of managing merchandise transactions within the school.</p>
-      </div>
-    </div>
-  </div>
   <!-- scripts go LAST, after the page exists -->
+  <script src="js/footer.js"></script>
+  <script src="js/locked-popup.js"></script>
   <script src="js/preview.js"></script>
   <script src="js/role-picker.js"></script>
 </body>

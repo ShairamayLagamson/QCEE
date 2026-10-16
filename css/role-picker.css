@@ -21,7 +21,7 @@
   font-size: 18px; font-weight: bold; color: #130804; margin-bottom: 20px;
   font-family: 'Momo Trust Sans', sans-serif;
 }
-.role-title svg { width: 20px; height: 20px; flex: none; }
+.role-title svg { width: 30px; height: 30px; flex: none; }
 .role-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 .role-btn {
   min-width: 120px; padding: 11px 22px; border: 0; border-radius: 999px; cursor: pointer;

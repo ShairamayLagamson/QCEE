@@ -114,7 +114,9 @@ h2.title {
     margin-bottom: 16px; 
 }
 
-
+.locked-logo { 
+    width: 92px; height: 92px; object-fit: contain; display: block; margin: 0 auto 10px; 
+}
 .cta-row { 
     display: flex; 
     gap: 10px; 

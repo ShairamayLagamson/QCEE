@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Home</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #faf0e4; color: #2b1a12; margin: 0; padding: 40px 20px; text-align: center; }
+    h1 { margin-bottom: 8px; }
+    #who { font-weight: 600; margin: 14px 0 6px; }
+    #note { margin-bottom: 22px; }
+    .ok { color: #2e7d32; } .bad { color: #c0392b; }
+    button { background: #e9a03b; color: #2b1a12; border: 0; border-radius: 999px; padding: 10px 24px; font: inherit; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body data-role="customer">
+  <h1>Customer Home</h1>
+  <p>ginagawa palang etuh</p>
+  <p id="who">Checking your login...</p>
+  <p id="note"></p>
+  <button id="logout" type="button">Log out</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/page-guard.js"></script>
+</body>
+</html>

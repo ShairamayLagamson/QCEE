@@ -55,5 +55,5 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGate();
 // ---- Scroll: bottom bar slides up once the locked section comes into view
 const bar = document.getElementById('stickyCta');
 new IntersectionObserver(([entry]) => {
-  if (entry.isIntersecting) bar.classList.add('show');
+  if (bar && entry.isIntersecting) bar.classList.add('show');   // bar is optional (the strip is commented out in index.html)
 }, { threshold: 0.25 }).observe(document.getElementById('locked'));
