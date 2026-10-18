@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QCee Admin</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body hidden>
+  <header class="topbar admin-top">
+    <img src="images/logo.png" alt="" class="admin-logo" onerror="this.style.display='none'">
+    <h1 class="brand">QCee</h1><span class="tag">Admin</span>
+    <div class="actions"><span id="adminEmail" class="who"></span><button id="logout" class="btn btn-light">Log out</button></div>
+  </header>
+  <nav class="menu admin-menu">
+    <a href="#" data-tab="dashboard" class="on">Dashboard</a>
+    <a href="#" data-tab="requests">Requests <b id="pendBadge" class="badge" hidden>0</b></a>
+  </nav>
+
+  <main class="wrap">
+    <section id="tab-dashboard" class="tab">
+      <h2 class="title">Dashboard</h2>
+      <div class="stats" id="stats"></div>
+      <h3 class="sub2">Shop verification requests waiting <a href="#" class="link" data-tab="requests">View all</a></h3>
+      <div id="latest"></div>
+    </section>
+
+    <section id="tab-requests" class="tab" hidden>
+      <h2 class="title">Shop verification requests</h2>
+      <div class="chips" id="chips"></div>
+      <div id="reqList"></div>
+    </section>
+  </main>
+
+  <div class="dlg" id="dlg" hidden>
+    <div class="card" role="alertdialog" aria-modal="true" aria-labelledby="dTitle">
+      <div class="warn">❓</div><h3 id="dTitle"></h3><p id="dBody"></p>
+      <div class="row"><button id="dNo" class="btn btn-light">Cancel</button><button id="dYes" class="btn danger"></button></div>
+    </div>
+  </div>
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

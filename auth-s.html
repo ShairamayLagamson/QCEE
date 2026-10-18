@@ -6,6 +6,7 @@
   <title>Seller Login / Register</title>
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
   <link rel="stylesheet" href="css/auth-s.css">
+  <link rel="stylesheet" href="css/otp.css">
 </head>
 <body>
   <div class="container">
@@ -57,6 +58,30 @@
         <p class="error" id="registerError"></p>
         <button type="submit" class="btn">Register</button>
       </form>
+
+      <!-- step 2 of registering: the code e-mailed to the seller (hidden until the form above is sent) -->
+      <form id="otpForm" hidden>
+        <h1>Verify e-mail</h1>
+        <p class="otp-hint">We sent a code to <strong id="otpEmail"></strong>. Enter it to send your shop request to the admin.</p>
+        <div class="input-box">
+          <input type="text" id="otpCode" placeholder="Verification code" inputmode="numeric"
+                 pattern="\d{6,8}" maxlength="8" autocomplete="one-time-code" title="Enter the code from your e-mail" required>
+          <i class="bx bx-key"></i>
+        </div>
+        <p class="error" id="otpError"></p>
+        <button type="submit" class="btn">Verify &amp; send request</button>
+        <div class="otp-links">
+          <button type="button" id="otpResend">Resend code</button>
+          <button type="button" id="otpBack">Use a different e-mail</button>
+        </div>
+      </form>
+
+      <!-- shown after the request is sent -->
+      <div id="doneBox" class="done-box" hidden>
+        <h1>Request sent!</h1>
+        <p class="otp-hint">Your e-mail is verified and your shop request was sent to the admin. <strong>Please wait for an e-mail</strong> telling you when your account is approved. You can log in after that.</p>
+        <button type="button" class="btn" id="doneLogin">Go to login</button>
+      </div>
     </div>
 
     <!-- SLIDING PANEL (one box, two panels) -->
@@ -75,6 +100,8 @@
 
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
   <script src="js/auth-s.js"></script>
 </body>
 </html>

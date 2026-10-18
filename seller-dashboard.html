@@ -3,25 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seller Dashboard</title>
-  <style>
-    body { font-family: system-ui, sans-serif; background: #faf0e4; color: #2b1a12; margin: 0; padding: 40px 20px; text-align: center; }
-    h1 { margin-bottom: 8px; }
-    #who { font-weight: 600; margin: 14px 0 6px; }
-    #note { margin-bottom: 22px; }
-    .ok { color: #2e7d32; } .bad { color: #c0392b; }
-    button { background: #e9a03b; color: #2b1a12; border: 0; border-radius: 999px; padding: 10px 24px; font: inherit; font-weight: 600; cursor: pointer; }
-  </style>
+  <title>QCee Seller</title>
+  <link rel="stylesheet" href="css/seller.css">
 </head>
 <body data-role="seller">
-  <h1>Seller Dashboard</h1>
-  <p>(empty placeholder page, build the real seller page here later)</p>
-  <p id="who">Checking your login...</p>
-  <p id="note"></p>
-  <button id="logout" type="button">Log out</button>
+
+  <div class="s-head">
+  <header class="s-top">
+    <img class="s-logo" src="images/logo.png" alt="QCee logo">
+    <div class="s-brand">
+      <strong><span class="q">Q</span><span class="cee">Cee</span></strong>
+      <small>Welcome to QCee!</small>
+    </div>
+
+    <form class="s-search" role="search" onsubmit="return false">
+      <input type="search" placeholder="Search" aria-label="Search">
+      <button type="submit" aria-label="Search"></button>
+    </form>
+
+    <!-- the shop chip opens the menu too (on phones it replaces the 3-line button) -->
+    <button class="s-chip" id="chipBtn" type="button" aria-label="Your shop and menu"
+            aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+      <span class="s-avatar" id="shopAvatar">S</span>
+      <span class="s-chip-text">
+        <b class="js-shopname">My Shop</b>
+        <i class="s-dot" id="shopStatus">Active</i>
+      </span>
+    </button>
+
+    <button class="s-menu-btn" id="menuBtn" type="button"
+            aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- phones: shop name + verified badge on a darker strip under the header -->
+  <div class="s-sub">
+    <span class="s-pill js-shopname">My Shop</span>
+    <span class="s-verified">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <span>Verified Shop</span>
+    </span>
+  </div>
+  </div>
+
+  <!-- floating menu -->
+  <div class="s-backdrop" id="menuBackdrop" hidden></div>
+  <nav class="s-float" id="floatMenu" aria-label="Navigation options" hidden>
+    <h2 class="s-float-title">Navigation Options</h2>
+    <a href="seller-dashboard.html" class="active" aria-current="page"><img src="images/home-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Home</span></a>
+    <a href="#message"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
+    <a href="#order-dashboard"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
+    <a href="#stats"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
+    <a href="#my-store"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
+    <a href="#all-orders"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders Queue</span></a>
+    <hr>
+    <button type="button" id="logout" class="s-logout">Log out</button>
+  </nav>
+
+  <main class="s-main">
+    <section class="s-card is-locked" id="card">
+
+      <!-- desktop: shop name (from registration) + verified badge -->
+      <div class="s-titlerow">
+        <h1 class="js-shopname">My Shop</h1>
+        <span class="s-verified">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>Verified Shop</span>
+        </span>
+      </div>
+
+      <div class="s-grid">
+        <div class="s-field s-field-logo">
+          <span class="s-label">Profile Picture</span>
+          <div class="s-dropwrap">
+            <div class="s-drop s-drop-round" id="dropLogo" data-kind="logo" role="button" tabindex="0" aria-label="Profile picture">
+              <img id="logoPreview" alt="Profile picture preview" hidden>
+              <div class="s-empty" id="logoEmpty">
+                <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.4"/><path d="M3 16l4.5-4.2 3.5 3.3 2.5-2.2L18 16"/><path d="M20 3v5M17.5 5.5h5"/></svg>
+              </div>
+            </div>
+            <div class="s-tools" hidden><button type="button" class="s-change" data-kind="logo">Change</button><button type="button" class="s-adjust" data-kind="logo">Adjust</button></div>
+          </div>
+        </div>
+
+        <div class="s-field s-field-banner">
+          <span class="s-label">Shop Banner</span>
+          <div class="s-dropwrap">
+            <div class="s-drop" id="dropBanner" data-kind="banner" role="button" tabindex="0" aria-label="Shop banner">
+              <img id="bannerPreview" alt="Shop banner preview" hidden>
+              <div class="s-empty" id="bannerEmpty">
+                <svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="15" height="14" rx="2"/><circle cx="8.5" cy="10.5" r="1.4"/><path d="M3 16l4.5-4.2 3.5 3.3 2.5-2.2L18 16"/><path d="M20 3v5M17.5 5.5h5"/></svg>
+              </div>
+            </div>
+            <div class="s-tools" hidden><button type="button" class="s-change" data-kind="banner">Change</button><button type="button" class="s-adjust" data-kind="banner">Adjust</button></div>
+          </div>
+          <p class="s-hint">Recommended size: 1200 &times; 900</p>
+        </div>
+      </div>
+
+      <div class="s-field s-field-desc">
+        <label class="s-label" for="desc">Description</label>
+        <textarea id="desc" rows="3" maxlength="300" placeholder="A brief description about the shop." readonly></textarea>
+      </div>
+
+      <div class="s-actions">
+        <input type="file" id="file" accept="image/*" hidden>
+        <button type="button" class="s-btn" id="editBtn">Edit</button>
+        <button type="button" class="s-btn" id="removeBtn" disabled>Remove</button>
+        <button type="button" class="s-btn s-btn-main" id="saveBtn" disabled>Save</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- picture editor: move and zoom the picture inside a frame of the final shape -->
+  <div class="s-editor" id="editor" hidden>
+    <div class="s-ed-card" role="dialog" aria-modal="true" aria-labelledby="edTitle">
+      <h2 id="edTitle">Adjust picture</h2>
+      <div class="s-ed-frame" id="edFrame"><canvas id="edCanvas"></canvas></div>
+      <p class="s-ed-tip">Drag the picture to move it. Use the slider or pinch to zoom.</p>
+      <input type="range" id="edZoom" min="0" max="100" value="0" step="1" aria-label="Zoom">
+      <div class="s-ed-quick">
+        <button type="button" id="edFit">Fit whole picture</button>
+        <button type="button" id="edFill">Fill the frame</button>
+      </div>
+      <div class="s-ed-actions">
+        <button type="button" class="s-btn" id="edCancel">Cancel</button>
+        <button type="button" class="s-btn s-btn-main" id="edApply">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="s-toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
-  <script src="js/page-guard.js"></script>
+  <script src="js/seller.js"></script>
 </body>
 </html>
