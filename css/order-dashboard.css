@@ -39,7 +39,7 @@
 /* ---------- summary cards ---------- */
 .od-stats {
   display: grid;
-  grid-template-columns: 1.35fr repeat(4, 1fr);
+  grid-template-columns: 1.35fr repeat(3, 1fr);
   gap: 14px;
 }
 .od-stat {
@@ -79,6 +79,12 @@
   background: #fff0d4;
   flex: none;
 }
+.od-stat .ico img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
 .od-stat .num {
   margin: auto;
   font-size: 36px;
@@ -86,9 +92,6 @@
   color: #2b1a12;
   line-height: 1;
   padding-top: 8px;
-}
-.od-stat .ico.i-pending {
-  background: #fff0b8;
 }
 .od-stat .ico.i-preparing,
 .od-stat .ico.i-ready {
@@ -310,11 +313,6 @@ button.od-stat:focus-visible {
   background-position: right 10px center;
   background-size: 8px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23555' stroke-width='1.6'/%3E%3C/svg%3E");
-}
-.od-st-pending {
-  background-color: #fff4d6;
-  border-color: #e4c46b;
-  color: #7a5a00;
 }
 .od-st-preparing {
   background-color: #fde7d3;

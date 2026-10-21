@@ -5,14 +5,12 @@
     return document.getElementById(id);
   };
   var LABEL = {
-    pending: "Pending",
-    preparing: "Preparing",
     ready: "Ready",
     completed: "Completed",
     cancelled: "Cancelled",
   };
-  var STATUSES = ["pending", "preparing", "ready", "completed", "cancelled"],
-    ONGOING = ["pending", "preparing", "ready"];
+  var STATUSES = ["ready", "completed", "cancelled"],
+    ONGOING = ["ready"];
   var orders = [],
     tab = "ongoing",
     query = "",
@@ -180,16 +178,6 @@
       },
       {
         id: "s4",
-        order_no: 1042,
-        status: "pending",
-        customer_name: "Ana Reyes",
-        created_at: at(9),
-        note: "Less sweet please.",
-        total: 134,
-        items: [{ name: "Chockie", qty: 2, price: 67 }],
-      },
-      {
-        id: "s5",
         order_no: 1037,
         status: "cancelled",
         customer_name: "Rico Tan",
@@ -259,27 +247,20 @@
       peso(sum(done)) +
       '</div><small><span class="up">\u2197</span>From completed orders</small></button>' +
       card(
-        "pending",
-        "Pending",
-        "\u23F3",
-        byStatus(["pending"]).length,
-        "pending",
-      ) +
-      card(
-        null,
+        "cancelled",
         "Cancelled",
-        "\u274C",
+        '<img src="images/cancelled-ico.png" alt="" onerror="this.style.visibility=\'hidden\'">',
         byStatus(["cancelled"]).length,
         "cancelled",
-      ) /* Cancelled is not clickable */ +
+      ) +
       card(
         "ready",
         "Ready",
-        "\uD83D\uDD14",
+        '<img src="images/ready-ico.png" alt="" onerror="this.style.visibility=\'hidden\'">',
         byStatus(["ready"]).length,
         "ready",
       ) +
-      card("completed", "Completed", "\u2705", done.length, "completed");
+      card("completed", "Completed", '<img src="images/completed-ico.png" alt="" onerror="this.style.visibility=\'hidden\'">', done.length, "completed");
     document.querySelector('[data-n="ongoing"]').textContent =
       byStatus(ONGOING).length;
     document.querySelector('[data-n="completed"]').textContent = byStatus([
@@ -407,8 +388,8 @@
     var m = {
       profit: ["Profit report: completed orders made today", done],
       completed: ["Completed orders made today", done],
-      pending: ["Pending orders", byStatus(["pending"])],
       ready: ["Ready orders", byStatus(["ready"])],
+      cancelled: ["Cancelled orders", byStatus(["cancelled"])],
     }[kind];
     return { kind: kind, title: m[0], rows: m[1], total: sum(m[1]) };
   }
