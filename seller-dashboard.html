@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QCee Seller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap">
   <link rel="stylesheet" href="css/seller.css">
+  <link rel="stylesheet" href="css/seller-home.css">
 </head>
 <body data-role="seller">
 
@@ -13,7 +17,6 @@
     <img class="s-logo" src="images/logo.png" alt="QCee logo">
     <div class="s-brand">
       <strong><span class="q">Q</span><span class="cee">Cee</span></strong>
-      <small>Welcome to QCee!</small>
     </div>
 
     <form class="s-search" role="search" onsubmit="return false">
@@ -37,12 +40,15 @@
     </button>
   </header>
 
+  <!-- second brown strip: welcome message -->
+  <div class="s-welcome">Welcome to QCee!</div>
+
   <!-- phones: shop name + verified badge on a darker strip under the header -->
   <div class="s-sub">
     <span class="s-pill js-shopname">My Shop</span>
     <span class="s-verified">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
-      <span>Verified Shop</span>
+      <span>Verified</span>
     </span>
   </div>
   </div>
@@ -53,15 +59,73 @@
     <h2 class="s-float-title">Navigation Options</h2>
     <a href="seller-dashboard.html" class="active" aria-current="page"><img src="images/home-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Home</span></a>
     <a href="#message"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
-    <a href="#order-dashboard"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
-    <a href="#stats"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
-    <a href="#my-store"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
+    <a href="order-dashboard.html"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
+    <a href="stats-dashboard.html"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
+    <a href="my-store.html"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
     <a href="#all-orders"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders Queue</span></a>
     <hr>
     <button type="button" id="logout" class="s-logout">Log out</button>
   </nav>
 
   <main class="s-main">
+    <!-- ===== home summary: everything the seller needs at a glance ===== -->
+    <section class="sh" id="home" aria-label="Shop summary">
+
+      <div class="sh-hello sh-reveal">
+        <h2><span id="shGreet">Hello</span>, <span class="js-shopname">My Shop</span></h2>
+        <p id="shDate"></p>
+        <p class="sh-demo" id="shDemo" hidden>Sample numbers shown. Run <b>orders.sql</b> and <b>my-store.sql</b> in Supabase to see your own.</p>
+      </div>
+
+      <div class="sh-top">
+        <article class="sh-status sh-reveal" style="--d:.05s">
+          <div class="sh-status-main">
+            <span class="sh-lab">Shop status</span>
+            <strong id="shStatusText">Open</strong>
+            <small id="shStatusHint">Customers can order from you right now.</small>
+          </div>
+          <button type="button" class="sh-toggle" id="shToggle" aria-pressed="true" data-state="open" aria-label="Open or close your shop">
+            <span class="sh-knob" aria-hidden="true"></span>
+            <span id="shToggleText">Open</span>
+          </button>
+        </article>
+
+        <article class="sh-place sh-reveal" style="--d:.12s">
+          <img class="sh-ico" src="images/location-ico.png" alt="">
+          <div>
+            <span class="sh-lab">Pickup location and hours</span>
+            <strong id="shWhere">Not set yet</strong>
+            <small id="shHours">Set your hours in My Store</small>
+          </div>
+        </article>
+      </div>
+
+      <div class="sh-kpis">
+        <article class="sh-kpi sh-reveal" style="--d:.05s"><img class="sh-kico" src="images/peso-ico.png" alt=""><span class="sh-klab">Sales today</span><b id="kSales">&#8369; 0.00</b></article>
+        <article class="sh-kpi sh-reveal" style="--d:.1s"><img class="sh-kico" src="images/cart-ico2.png" alt=""><span class="sh-klab">Orders today</span><b id="kToday">0</b></article>
+        <article class="sh-kpi sh-reveal" style="--d:.15s"><img class="sh-kico" src="images/bell-ico.png" alt=""><span class="sh-klab">Ready for pickup</span><b id="kReady">0</b></article>
+        <article class="sh-kpi sh-reveal" style="--d:.2s"><img class="sh-kico" src="images/cancel-ico.png" alt=""><span class="sh-klab">Cancelled today</span><b id="kCanc">0</b></article>
+      </div>
+
+      <div class="sh-two">
+        <article class="sh-panel sh-reveal" style="--d:.05s">
+          <header class="sh-ph"><h3>Needs your attention</h3><span class="sh-count" id="attCount">0</span></header>
+          <div class="sh-list" id="attList"></div>
+        </article>
+        <article class="sh-panel sh-reveal" style="--d:.1s">
+          <header class="sh-ph"><h3>Shop setup</h3><span class="sh-count" id="setupPct">0%</span></header>
+          <div class="sh-bar" aria-hidden="true"><i id="setupBar"></i></div>
+          <div class="sh-list" id="setupList"></div>
+        </article>
+      </div>
+
+      <article class="sh-panel sh-reveal" style="--d:.05s">
+        <header class="sh-ph"><h3>Recent orders</h3><a href="order-dashboard.html" class="sh-link">See all &rarr;</a></header>
+        <div class="sh-list" id="recentList"></div>
+      </article>
+    </section>
+
+    <!-- shop profile: picture, banner, description (Edit to change) -->
     <section class="s-card is-locked" id="card">
 
       <!-- desktop: shop name (from registration) + verified badge -->
@@ -139,5 +203,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/seller.js"></script>
+  <script src="js/seller-home.js"></script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+/* Seller pages other than Home: the strip under the header names the page (e.g. ORDER DASHBOARD)
+   instead of saying "Welcome to QCee!". Load this after seller.css on those pages only. */
+
+@media (min-width: 641px) {
+  .s-search {
+    flex-basis: 340px;
+  } /* room for "Search customer, order #, items..." */
+  .s-sub {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--brown-deep);
+    padding: 8px 16px 8px 92px; /* the left padding clears the logo that hangs below the header */
+    min-height: 44px;
+  }
+  .s-sub .s-pill {
+    padding: 7px 18px;
+    border-radius: 12px;
+    background: #3a2418;
+    border: 1px solid #6b4630;
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}

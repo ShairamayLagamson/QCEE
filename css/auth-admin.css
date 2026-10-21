@@ -1,19 +1,110 @@
-@import url('https://fonts.googleapis.com/css2?family=K2D:wght@400;500;600;700&display=swap');
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'K2D', sans-serif; }
-body { background: linear-gradient(-50deg, #f7e7d1, #fdf6ec, #f7d9b0, #ffd395); background-size: 400% 400%; animation: g 15s ease infinite;
-  display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-@keyframes g { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-.card { width: 100%; max-width: 380px; background: #fff; border-radius: 26px; padding: 30px 28px 24px; text-align: center;
-  border-top: 8px solid #2b1a12; box-shadow: 0 0 30px rgba(0,0,0,.2); }
-.logo { width: 70px; height: 70px; object-fit: contain; margin-bottom: 6px; }
-h1 { font-size: 30px; color: #2b1a12; }
-.hint { color: #777; font-size: 14px; margin: 4px 0 18px; }
-.input-box { position: relative; margin: 14px 0; }
-.input-box input { width: 100%; padding: 13px 50px 13px 20px; font-size: 16px; border-radius: 8px; border: none; outline: none; background: #eee; color: #333; font-weight: 500; }
-.input-box input:focus { outline: 2px solid #f7d9b0; box-shadow: 0 0 5px #fdce87; }
-.input-box i { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: #888; font-size: 20px; }
-.error { color: #c0392b; font-size: 14px; min-height: 20px; margin: 6px 0; }
-.btn { width: 100%; height: 50px; background: #EDA03F; border-radius: 8px; border: none; cursor: pointer; font-size: 18px; font-weight: 500; color: #fff; }
-.btn:disabled { opacity: .6; }
-.back { display: inline-block; margin-top: 16px; font-size: 14px; color: #6f6258; text-decoration: none; }
-@media (prefers-reduced-motion: reduce) { body { animation: none; } }
+@import url("https://fonts.googleapis.com/css2?family=K2D:wght@400;500;600;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "K2D", sans-serif;
+}
+body {
+  background: linear-gradient(-50deg, #f7e7d1, #fdf6ec, #f7d9b0, #ffd395);
+  background-size: 400% 400%;
+  animation: g 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+@keyframes g {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.card {
+  width: 100%;
+  max-width: 380px;
+  background: #fff;
+  border-radius: 26px;
+  padding: 30px 28px 24px;
+  text-align: center;
+  border-top: 8px solid #2b1a12;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+.logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 6px;
+}
+h1 {
+  font-size: 30px;
+  color: #2b1a12;
+}
+.hint {
+  color: #777;
+  font-size: 14px;
+  margin: 4px 0 18px;
+}
+.input-box {
+  position: relative;
+  margin: 14px 0;
+}
+.input-box input {
+  width: 100%;
+  padding: 13px 50px 13px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: #eee;
+  color: #333;
+  font-weight: 500;
+}
+.input-box input:focus {
+  outline: 2px solid #f7d9b0;
+  box-shadow: 0 0 5px #fdce87;
+}
+.input-box i {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 20px;
+}
+.error {
+  color: #c0392b;
+  font-size: 14px;
+  min-height: 20px;
+  margin: 6px 0;
+}
+.btn {
+  width: 100%;
+  height: 50px;
+  background: #eda03f;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+}
+.btn:disabled {
+  opacity: 0.6;
+}
+.back {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 14px;
+  color: #6f6258;
+  text-decoration: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+  }
+}

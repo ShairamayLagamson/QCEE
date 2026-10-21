@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Dashboard | QCee Seller</title>
+  <link rel="stylesheet" href="css/seller.css">
+  <link rel="stylesheet" href="css/seller-orders.css">
+</head>
+<body data-role="seller">
+
+  <div class="s-head">
+    <header class="s-top">
+      <img class="s-logo" src="images/logo.png" alt="QCee logo">
+      <div class="s-brand"><strong><span class="q">Q</span><span class="cee">Cee</span></strong></div>
+
+      <form class="s-search" role="search" onsubmit="return false">
+        <input type="search" id="q" placeholder="Search customer, order #, items..." aria-label="Search orders">
+        <button type="submit" aria-label="Search"></button>
+      </form>
+
+      <button class="s-chip" id="chipBtn" type="button" aria-label="Your shop and menu" aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+        <span class="s-avatar" id="shopAvatar">S</span>
+        <span class="s-chip-text"><b class="js-shopname">My Shop</b><i class="s-dot" id="shopStatus">Active</i></span>
+      </button>
+      <button class="s-menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+    <div class="o-strip"><span class="o-pill">Order Dashboard</span></div>
+  </div>
+
+  <div class="s-backdrop" id="menuBackdrop" hidden></div>
+  <nav class="s-float" id="floatMenu" aria-label="Navigation options" hidden>
+    <h2 class="s-float-title">Navigation Options</h2>
+    <a href="seller-dashboard.html"><img src="images/home-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Home</span></a>
+    <a href="#message"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
+    <a href="seller-orders.html" class="active" aria-current="page"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
+    <a href="#stats"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
+    <a href="#my-store"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
+    <a href="#all-orders"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders Queue</span></a>
+    <hr>
+    <button type="button" id="logout" class="s-logout">Log out</button>
+  </nav>
+
+  <main class="o-main">
+    <section class="o-stats" id="stats" aria-label="Today at a glance"></section>
+
+    <section class="o-panel">
+      <div class="o-tabs" id="tabs" role="tablist">
+        <button class="o-tab on" data-tab="ongoing" role="tab">Ongoing <span class="o-n hot" data-n="ongoing">0</span></button>
+        <button class="o-tab" data-tab="completed" role="tab">Completed <span class="o-n" data-n="completed">0</span></button>
+        <button class="o-tab" data-tab="cancelled" role="tab">Cancelled <span class="o-n" data-n="cancelled">0</span></button>
+      </div>
+      <div class="o-card">
+        <div class="o-row o-head" aria-hidden="true"><div>Name</div><div>Order Number</div><div>Status</div><div>Time</div><div>Amount</div><div>Remarks</div></div>
+        <div class="o-list" id="rows"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="s-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/seller-orders.js"></script>
+</body>
+</html>

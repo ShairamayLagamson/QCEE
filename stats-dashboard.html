@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stats Dashboard | QCee Seller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap">
+  <link rel="stylesheet" href="css/seller.css">
+  <link rel="stylesheet" href="css/stats-dashboard.css">
+</head>
+<body data-role="seller">
+
+  <div class="s-head">
+  <header class="s-top">
+    <img class="s-logo" src="images/logo.png" alt="QCee logo">
+    <div class="s-brand">
+      <strong><span class="q">Q</span><span class="cee">Cee</span></strong>
+    </div>
+
+    <form class="s-search" role="search" onsubmit="return false">
+      <input type="search" placeholder="Search" aria-label="Search">
+      <button type="submit" aria-label="Search"></button>
+    </form>
+
+    <button class="s-chip" id="chipBtn" type="button" aria-label="Your shop and menu"
+            aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+      <span class="s-avatar" id="shopAvatar">S</span>
+      <span class="s-chip-text">
+        <b class="js-shopname">My Shop</b>
+        <i class="s-dot" id="shopStatus">Active</i>
+      </span>
+    </button>
+
+    <button class="s-menu-btn" id="menuBtn" type="button"
+            aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- second brown strip: the page picked in the menu -->
+  <div class="st-strip"><span class="st-pill">Stats Dashboard</span></div>
+  </div>
+
+  <!-- floating menu -->
+  <div class="s-backdrop" id="menuBackdrop" hidden></div>
+  <nav class="s-float" id="floatMenu" aria-label="Navigation options" hidden>
+    <h2 class="s-float-title">Navigation Options</h2>
+    <a href="seller-dashboard.html"><img src="images/home-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Home</span></a>
+    <a href="#message"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
+    <a href="order-dashboard.html"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
+    <a href="stats-dashboard.html" class="active" aria-current="page"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
+    <a href="my-store.html"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
+    <a href="#all-orders"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders Queue</span></a>
+    <hr>
+    <button type="button" id="logout" class="s-logout">Log out</button>
+  </nav>
+
+  <main class="st-main">
+
+    <div class="st-demo" id="demoNote" hidden>Showing sample stats. Run <b>orders.sql</b> and <b>my-store.sql</b> in Supabase to see your real sales.</div>
+
+    <!-- title + period picker -->
+    <section class="st-head">
+      <h1>Sales Summary</h1>
+      <div class="st-period" id="period">
+        <button type="button" class="st-period-btn" id="periodBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="periodMenu">
+          <span id="periodLabel">Monthly</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="st-period-menu" id="periodMenu" role="listbox" hidden>
+          <button type="button" role="option" data-period="daily">Daily</button>
+          <button type="button" role="option" data-period="weekly">Weekly</button>
+          <button type="button" role="option" data-period="monthly" class="on">Monthly</button>
+          <button type="button" role="option" data-period="yearly">Yearly</button>
+          <label class="st-pick"><span>Pick a date</span><input type="date" id="pickDate" aria-label="Pick a date"></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- money + orders -->
+    <section class="st-kpis">
+      <article class="st-kpi money" id="kpiMoney">
+        <div class="st-kpi-top">
+          <span class="st-kpi-lab">Money Earned</span>
+          <span class="st-kpi-ico" aria-hidden="true">&#8369;</span>
+        </div>
+        <div class="st-kpi-num" id="kMoney">&#8369; 0.00</div>
+        <small><span class="up" aria-hidden="true">&#8599;</span> From all completed orders</small>
+      </article>
+      <article class="st-kpi orders" id="kpiOrders">
+        <div class="st-kpi-top">
+          <span class="st-kpi-lab">Orders Done</span>
+          <span class="st-kpi-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.2a1.5 1.5 0 0 0 1.5 1.2h8.7a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
+          </span>
+        </div>
+        <div class="st-kpi-num"><span id="kOrders">0</span> <span class="unit">orders</span></div>
+        <small><span class="up" aria-hidden="true">&#8599;</span> From all completed orders</small>
+      </article>
+    </section>
+
+    <!-- sales analytics -->
+    <section class="st-card st-analytics">
+      <div class="st-card-head">
+        <div>
+          <h2>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+            Sales Analytics
+          </h2>
+          <p class="st-sub" id="analyticsSub">Daily revenue</p>
+        </div>
+        <span class="st-chip-hi" id="highPill">Highest sales: none yet</span>
+      </div>
+      <div class="st-chart" id="lineWrap">
+        <svg id="line" role="img" aria-label="Sales chart"></svg>
+        <div class="st-tip" id="lineTip" hidden></div>
+      </div>
+    </section>
+
+    <div class="st-grid-2">
+
+      <!-- top selling products -->
+      <section class="st-card">
+        <div class="st-card-head">
+          <div>
+            <h2>Top Selling Products</h2>
+            <p class="st-sub">Most sold items in this period</p>
+          </div>
+        </div>
+        <div id="topList"></div>
+      </section>
+
+      <!-- busiest hours -->
+      <section class="st-card">
+        <div class="st-card-head">
+          <div>
+            <h2>Busiest Hours</h2>
+            <p class="st-sub" id="peakText">Orders by hour of the day</p>
+          </div>
+        </div>
+        <div class="st-cols" id="hours"></div>
+      </section>
+
+      <!-- cancellation rate -->
+      <section class="st-card">
+        <div class="st-card-head">
+          <div>
+            <h2>Cancellation Rate</h2>
+            <p class="st-sub" id="cancelText">Share of orders cancelled</p>
+          </div>
+        </div>
+        <div class="st-donut-wrap">
+          <div class="st-donut">
+            <svg viewBox="0 0 160 160" aria-hidden="true">
+              <circle class="st-ring-bg" cx="80" cy="80" r="60"/>
+              <circle class="st-ring" id="donutArc" cx="80" cy="80" r="60" transform="rotate(-90 80 80)"/>
+            </svg>
+            <div class="st-donut-c"><b id="donutPct">0%</b><small>cancelled</small></div>
+          </div>
+          <div class="st-legend">
+            <span><i style="background:#EEE1AD"></i><b id="legDone">0 completed</b></span>
+            <span><i style="background:#ECA54B"></i><b id="legCanc">0 cancelled</b></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- sold-out alerts -->
+      <section class="st-card">
+        <div class="st-card-head">
+          <div>
+            <h2>Sold-Out Alerts</h2>
+            <p class="st-sub">Products that are out or almost out</p>
+          </div>
+          <span class="st-chip-hi" id="alertCount">0</span>
+        </div>
+        <div id="alerts"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <div class="s-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/stats-dashboard.js"></script>
+</body>
+</html>

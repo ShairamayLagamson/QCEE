@@ -1,0 +1,939 @@
+/* My Store: same look as the home page (white rounded cards, pill buttons, pastel product tiles).
+   Loaded after seller.css, which supplies the header, floating menu and toast. */
+
+.m-main {
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.m-card {
+  position: relative;
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px 24px;
+  box-shadow:
+    0 2px 10px rgba(43, 26, 18, 0.08),
+    0 8px 0 -6px rgba(43, 26, 18, 0.06);
+}
+
+/* ---------- title card ---------- */
+.m-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.m-title h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+.m-title p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 10px;
+  max-width: 300px;
+}
+.m-actions {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 8px;
+  flex: none;
+}
+
+.m-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    transform 0.15s,
+    filter 0.2s,
+    opacity 0.2s;
+}
+.m-pill svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.m-pill:hover:not(:disabled) {
+  filter: brightness(0.96);
+}
+.m-pill:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.m-pill:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.m-peach {
+  background: #ffdca3;
+  color: #a4651a;
+} /* Category: #FFDCA3 once Edit is pressed (faded while locked) */
+.m-gray {
+  background: #ececec;
+  color: #555;
+}
+.m-orange {
+  background: #eda03f;
+  color: #fff;
+} /* Add Product: #EDA03F once Edit is pressed (faded while locked) */
+.m-pink {
+  background: #fde0e6;
+  color: #d23d5b;
+}
+
+/* ---------- location card ---------- */
+.m-where {
+  padding: 20px 24px 16px;
+}
+.m-loc {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.m-loc-ico {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #fde7c4;
+  color: var(--orange);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.m-loc-ico svg {
+  width: 24px;
+  height: 24px;
+}
+.m-loc-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding-right: 30px;
+}
+.m-loc-text b {
+  font-size: 15px;
+  font-weight: 600;
+}
+.m-loc-text span {
+  font-size: 13px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.m-hours {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.m-hours svg {
+  width: 22px;
+  height: 22px;
+  color: var(--orange);
+  flex: none;
+}
+.m-bar {
+  width: 1.5px;
+  height: 22px;
+  background: #b9ab9a;
+}
+.m-edit-ico {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  color: #6f6258;
+  display: none;
+  place-items: center;
+  border-radius: 8px;
+}
+.m-edit-ico svg {
+  width: 24px;
+  height: 24px;
+}
+.m-edit-ico:hover {
+  background: var(--cream);
+}
+.m-main:not(.is-locked) .m-edit-ico {
+  display: grid;
+}
+
+/* ---------- open / closed ---------- */
+.m-openrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+}
+.m-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.m-openwrap {
+  position: relative;
+}
+.m-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 11px 18px 11px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 1px 4px rgba(43, 26, 18, 0.12);
+}
+/* the status pill is green when open and red when closed so it is hard to miss */
+.m-open {
+  font-weight: 700;
+  font-size: 16px;
+  padding: 11px 16px 11px 18px;
+  gap: 10px;
+}
+.m-open[data-state="open"] {
+  background: #e4f6e9;
+  border-color: #86d498;
+  color: #1b7a3a;
+}
+.m-open[data-state="closed"] {
+  background: #fde3e3;
+  border-color: #ef9d9d;
+  color: #b3321f;
+}
+.m-open svg {
+  color: inherit !important;
+}
+.m-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.m-open[data-state="open"] .m-dot {
+  animation: m-pulse 1.8s ease-out infinite;
+}
+@keyframes m-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(27, 122, 58, 0.45);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 8px rgba(27, 122, 58, 0);
+  }
+}
+.m-pop button[data-to="closed"] {
+  color: #b3321f;
+  font-weight: 700;
+}
+.m-pop button[data-to="open"] {
+  color: #1b7a3a;
+  font-weight: 700;
+}
+.m-closed {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fde3e3;
+  border: 1px solid #ef9d9d;
+  color: #8f2a1b;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.m-closed[hidden] {
+  display: none;
+}
+.m-closed svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-open .m-dot {
+    animation: none !important;
+  }
+}
+.m-open svg {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.m-open[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.m-pop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 20;
+  min-width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow:
+    0 8px 24px rgba(31, 18, 12, 0.2),
+    0 0 0 1px var(--line);
+  padding: 4px;
+  animation: pop 0.15s ease;
+}
+.m-pop[hidden] {
+  display: none;
+}
+.m-pop button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  padding: 9px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.m-pop button:hover {
+  background: var(--cream);
+}
+
+.m-note {
+  background: #fff7ea;
+  border: 1px dashed #f1cf9c;
+  color: #8a5a17;
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 12px;
+}
+.m-note[hidden],
+.m-empty[hidden] {
+  display: none;
+}
+
+/* ---------- products ---------- */
+.m-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 18px;
+}
+.m-prod {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(43, 26, 18, 0.12);
+  animation: rise 0.35s ease both;
+}
+
+.m-pic {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  background: var(--cream);
+  overflow: hidden;
+  cursor: default;
+}
+.m-pic img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.m-ph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+  font-weight: 800;
+  color: rgba(43, 26, 18, 0.35);
+  background-color: var(--tint, #fbd4e3);
+  background-image:
+    radial-gradient(#fff 22%, transparent 24%),
+    radial-gradient(#fff 22%, transparent 24%);
+  background-size: 22px 22px;
+  background-position:
+    0 0,
+    11px 11px;
+}
+.m-stock {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  background: rgba(43, 26, 18, 0.78);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.m-stock.out {
+  background: #d23d5b;
+}
+.m-main:not(.is-locked) .m-pic {
+  cursor: pointer;
+}
+.m-pic.sel {
+  outline: 3px solid var(--orange);
+  outline-offset: -3px;
+}
+.m-pic.sel::after {
+  content: "\2713";
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.m-info {
+  padding: 10px 12px 10px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.m-nrow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+}
+.m-pname {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.m-heart {
+  width: 20px;
+  height: 20px;
+  color: var(--orange);
+  flex: none;
+}
+.m-cat,
+.m-var {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+.m-price {
+  font-size: 19px;
+  font-weight: 700;
+  margin-top: auto;
+  padding-top: 8px;
+}
+.m-price::before {
+  content: "";
+  display: block;
+  border-top: 1px solid var(--line);
+  margin-bottom: 8px;
+}
+.m-tools {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+.m-main:not(.is-locked) .m-tools {
+  display: flex;
+}
+.m-ic {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: none;
+  display: grid;
+  place-items: center;
+  color: #6f6258;
+}
+.m-ic svg {
+  width: 20px;
+  height: 20px;
+}
+.m-ic:hover {
+  background: var(--cream);
+}
+.m-ic.m-trash {
+  color: #e2312d;
+}
+.m-ic.m-trash:hover {
+  background: #fde0e0;
+}
+
+.m-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  padding: 36px 12px;
+}
+
+/* ---------- floating windows ---------- */
+.m-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(31, 18, 12, 0.6);
+  animation: fade 0.2s ease;
+  overflow-y: auto;
+}
+.m-modal[hidden] {
+  display: none;
+}
+.m-sheet {
+  width: 100%;
+  max-width: 440px;
+  margin: auto;
+  background: #fff;
+  border-radius: 22px;
+  padding: 20px 22px 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  animation: pop 0.22s ease;
+}
+.m-sheet-sm {
+  max-width: 400px;
+}
+.m-sheet-xs {
+  max-width: 340px;
+  text-align: center;
+}
+.m-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.m-sheet-head h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+.m-x {
+  background: none;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+}
+.m-x:hover {
+  background: var(--cream);
+}
+
+.m-field {
+  display: block;
+  margin-bottom: 14px;
+  min-width: 0;
+}
+.m-field > span:first-child {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 5px;
+}
+.m-field input,
+.m-field select,
+.m-catadd input {
+  width: 100%;
+  border: 1px solid #ddd3c6;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--ink);
+}
+.m-field input:focus,
+.m-field select:focus,
+.m-catadd input:focus {
+  outline: 3px solid var(--orange);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.m-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.m-selwrap {
+  position: relative;
+  display: block;
+}
+.m-selwrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 34px;
+}
+.m-selwrap svg {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  color: #555;
+  pointer-events: none;
+}
+.m-hint {
+  font-size: 12px;
+  color: var(--muted);
+  margin: -6px 0 12px;
+}
+.m-hint[hidden] {
+  display: none;
+}
+.m-link {
+  background: none;
+  color: #b0661a;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  padding: 0;
+}
+.m-link[hidden] {
+  display: none;
+}
+
+.m-drop {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 190px;
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin: 2px auto 6px;
+  border: 2px dashed #b9ab9a;
+  border-radius: 12px;
+  background: #fffdfa;
+  color: #6f6258;
+  overflow: hidden;
+}
+.m-drop:hover {
+  border-color: var(--orange);
+}
+.m-drop img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.m-drop img[hidden],
+.m-drop-ico[hidden] {
+  display: none;
+}
+#pmRemoveImg {
+  display: block;
+  margin: 0 auto;
+}
+#pmRemoveImg[hidden] {
+  display: none;
+}
+
+.m-sheet-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+.m-sheet-xs .m-sheet-actions {
+  justify-content: center;
+}
+.m-btn {
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    transform 0.15s,
+    filter 0.2s;
+  position: relative;
+}
+.m-btn:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+.m-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+.m-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.m-btn-gray {
+  background: #e4e4e4;
+  color: #444;
+}
+.m-btn-orange {
+  background: var(--orange);
+  color: #fff;
+}
+.m-btn-red {
+  background: #d23d5b;
+  color: #fff;
+}
+.m-btn.busy {
+  color: transparent;
+  pointer-events: none;
+}
+.m-btn.busy::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  animation: spin 0.7s linear infinite;
+}
+
+.m-catlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+.m-catlist li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 6px 6px 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.m-catlist li span {
+  overflow-wrap: anywhere;
+}
+.m-catadd {
+  display: flex;
+  gap: 8px;
+}
+.m-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.m-chip {
+  background: #fde7c4;
+  color: #a4651a;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.m-chip:hover {
+  filter: brightness(0.96);
+}
+.m-cf-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.m-cf-text {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+/* ---------- phones: icon-only buttons and two product cards per row ---------- */
+@media (max-width: 640px) {
+  .m-main {
+    padding: 14px 12px calc(18px + env(safe-area-inset-bottom, 0px));
+    gap: 12px;
+  }
+  .m-card {
+    padding: 18px 16px;
+  }
+  .m-title {
+    gap: 12px;
+  }
+  .m-title h1 {
+    font-size: 28px;
+  }
+  .m-title p {
+    font-size: 10px;
+    max-width: 190px;
+    margin-top: 8px;
+  }
+
+  /* the four buttons show just their icons */
+  .m-actions {
+    gap: 6px;
+  }
+  .m-pill {
+    position: relative;
+    padding: 0;
+    width: 42px;
+    height: 30px;
+    border-radius: 10px;
+  }
+  .m-pill svg {
+    width: 18px;
+    height: 18px;
+  }
+  .m-pill .m-lab {
+    display: none;
+  }
+  .m-pill.m-gray {
+    background: #e6e6e6;
+  }
+  .m-main:not(.is-locked) #editBtn {
+    background: #d6d6d6;
+    box-shadow: inset 0 0 0 2px var(--orange);
+  } /* Edit is on */
+  #delBtn[data-count]:not([data-count=""])::after {
+    /* how many products are selected */
+    content: attr(data-count);
+    position: absolute;
+    right: -5px;
+    top: -7px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: #d23d5b;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+
+  .m-where {
+    padding: 16px;
+  }
+  .m-loc-ico {
+    width: 38px;
+    height: 38px;
+  }
+  .m-loc-text b {
+    font-size: 13px;
+  }
+  .m-loc-text span {
+    font-size: 11px;
+  }
+  .m-hours {
+    font-size: 11px;
+    gap: 10px;
+    padding-left: 4px;
+  }
+
+  .m-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .m-info {
+    padding: 10px 10px 8px;
+  }
+  .m-pname {
+    font-size: 14px;
+  }
+  .m-heart {
+    width: 20px;
+    height: 20px;
+  }
+  .m-cat,
+  .m-var {
+    font-size: 8.5px;
+  }
+  .m-price {
+    font-size: 18px;
+  }
+  .m-stock {
+    font-size: 10px;
+    padding: 3px 9px;
+    left: 8px;
+    top: 8px;
+  }
+  .m-ph {
+    font-size: 44px;
+  }
+  .m-ic {
+    width: 30px;
+    height: 30px;
+  }
+  .m-ic svg {
+    width: 20px;
+    height: 20px;
+  }
+  .m-two {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+@media (max-width: 340px) {
+  .m-title h1 {
+    font-size: 24px;
+  }
+  .m-pill {
+    width: 38px;
+  }
+  .m-card {
+    padding: 16px 14px;
+  }
+}
+
+/* Mona Sans for everything on this page except the brown header strips at the top (those keep the fonts from seller.css).
+   The link in my-store.html loads the font. !important so it wins over the fonts set in seller.css. */
+.m-main,
+.m-main *,
+.m-main *::placeholder,
+.m-modal,
+.m-modal *,
+.m-modal *::placeholder,
+.s-float,
+.s-float *,
+.s-toast {
+  font-family: "Mona Sans", sans-serif !important;
+}

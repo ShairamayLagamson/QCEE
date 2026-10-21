@@ -1,12 +1,38 @@
 /* styles for the e-mail verification (OTP) step on the register side */
 #otpForm input {
-  text-align: center; letter-spacing: 8px; font-size: 22px; font-weight: 600;
+  text-align: center;
+  letter-spacing: 8px;
+  font-size: 22px;
+  font-weight: 600;
 }
-#otpForm input::placeholder { letter-spacing: normal; font-size: 15px; font-weight: 400; }
-.container .otp-hint { color: #555; line-height: 1.4; margin: 12px 0 0; }
-.otp-links { display: flex; justify-content: space-between; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+#otpForm input::placeholder {
+  letter-spacing: normal;
+  font-size: 15px;
+  font-weight: 400;
+}
+.container .otp-hint {
+  color: #555;
+  line-height: 1.4;
+  margin: 12px 0 0;
+}
+.otp-links {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
 .otp-links button {
-  background: none; border: 0; padding: 0; cursor: pointer;
-  color: #8a5a14; font-size: 14px; text-decoration: underline;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: #8a5a14;
+  font-size: 14px;
+  text-decoration: underline;
 }
-.otp-links button:disabled { color: #999; text-decoration: none; cursor: default; }
+.otp-links button:disabled {
+  color: #999;
+  text-decoration: none;
+  cursor: default;
+}

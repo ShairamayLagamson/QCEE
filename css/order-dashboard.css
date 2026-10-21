@@ -1,0 +1,625 @@
+/* Order Dashboard (loaded after seller.css, which supplies the header, menu and toast) */
+.od-strip {
+  background: var(--brown-deep, #1f120c);
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 6px 16px 6px 92px;
+}
+.od-pill {
+  background: #3a2418;
+  border: 1px solid #6b4630;
+  color: var(--orange, #e9a03b);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 12px;
+}
+.od-main {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px 16px 40px;
+}
+.od-demo {
+  background: #fff7ea;
+  border: 1px dashed #f1cf9c;
+  color: #8a5a17;
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.od-demo[hidden] {
+  display: none;
+}
+
+/* ---------- summary cards ---------- */
+.od-stats {
+  display: grid;
+  grid-template-columns: 1.35fr repeat(4, 1fr);
+  gap: 14px;
+}
+.od-stat {
+  background: #fff;
+  border: 0;
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 3px 10px rgba(43, 26, 18, 0.12);
+  min-height: 112px;
+  display: flex;
+  flex-direction: column;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+}
+.od-stat .top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+.od-stat .lab {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #6f6258;
+}
+.od-stat .ico {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  background: #fff0d4;
+  flex: none;
+}
+.od-stat .num {
+  margin: auto;
+  font-size: 36px;
+  font-weight: 700;
+  color: #2b1a12;
+  line-height: 1;
+  padding-top: 8px;
+}
+.od-stat .ico.i-pending {
+  background: #fff0b8;
+}
+.od-stat .ico.i-preparing,
+.od-stat .ico.i-ready {
+  background: #f9d5a8;
+}
+.od-stat .ico.i-completed {
+  background: #bdecc8;
+}
+.od-stat .ico.i-cancelled {
+  background: #fbe4e1;
+}
+button.od-stat {
+  cursor: pointer;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+}
+button.od-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(43, 26, 18, 0.18);
+}
+button.od-stat:active {
+  transform: scale(0.98);
+}
+button.od-stat:focus-visible {
+  outline: 3px solid var(--orange, #e9a03b);
+  outline-offset: 2px;
+}
+/* profit card: images/profit-cardbg.png (background), images/money-bag.png (corner), images/stonks-ico.png (small square) */
+.od-stat.profit {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  background:
+    url("../images/money-bag.png") right 4px bottom 0 / auto 80% no-repeat,
+    url("../images/profit-cardbg.png") center / cover no-repeat,
+    #9a5320;
+}
+/* cute shine: a soft light band sweeps across every few seconds */
+.od-stat.profit::before {
+  content: "";
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: -60%;
+  width: 38%;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+  animation: od-shine 4.8s ease-in-out infinite;
+}
+.od-stat.profit > * {
+  position: relative;
+  z-index: 1;
+}
+@keyframes od-shine {
+  0%,
+  50% {
+    left: -60%;
+  }
+  100% {
+    left: 130%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .od-stat.profit::before {
+    animation: none;
+    display: none;
+  }
+}
+.od-stat.profit .lab {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  max-width: 6.5em;
+}
+.od-stat.profit .ico {
+  background: rgba(255, 255, 255, 0.22);
+}
+.od-stat.profit .ico img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+.od-stat.profit .lab,
+.od-stat.profit .num,
+.od-stat.profit small {
+  color: #ffe3a6;
+}
+.od-stat.profit .num {
+  font-size: 30px;
+  margin: auto 0 6px;
+  padding: 10px 0 0;
+}
+.od-stat.profit small {
+  font-size: 11px;
+  opacity: 0.9;
+}
+.od-stat.profit small .up {
+  color: #8bf0a0;
+  font-weight: 700;
+  margin-right: 3px;
+}
+
+/* ---------- tabs + order list ---------- */
+.od-panel {
+  margin-top: 26px;
+}
+.od-tabs {
+  display: flex;
+  gap: 2px;
+  padding-left: 6px;
+}
+.od-tab {
+  background: #e4ddd3;
+  color: #4a3a30;
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 12px 12px 0 0;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.od-tab.on {
+  background: #fff;
+  color: #2b1a12;
+}
+.od-n {
+  background: #d9d0c4;
+  border-radius: 999px;
+  font-size: 11px;
+  padding: 1px 7px;
+}
+.od-n.hot {
+  background: var(--orange, #e9a03b);
+  color: #2b1a12;
+}
+.od-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 10px rgba(43, 26, 18, 0.12);
+  padding: 10px 12px 14px;
+}
+.od-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.5fr 1.2fr 0.9fr 0.9fr 1.2fr;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.od-head {
+  background: #ececec;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #3a2e26;
+  padding: 10px 14px;
+}
+.od-list {
+  max-height: 440px;
+  overflow-y: auto;
+}
+.od-list .od-row {
+  border-bottom: 1px solid #f0e8dd;
+}
+.od-list .od-row:last-child {
+  border-bottom: 0;
+}
+.c-name {
+  overflow-wrap: anywhere;
+}
+.c-no {
+  display: block;
+}
+.c-items {
+  display: block;
+  color: #8a7b6e;
+  font-size: 11.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.c-time {
+  color: #6f6258;
+}
+.c-amount {
+  font-weight: 700;
+}
+.c-remarks {
+  color: #8a7b6e;
+  overflow-wrap: anywhere;
+}
+.od-empty {
+  padding: 28px 12px;
+  text-align: center;
+  color: #8a7b6e;
+}
+
+.od-status {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 5px 26px 5px 14px;
+  font: 600 12px inherit;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23555' stroke-width='1.6'/%3E%3C/svg%3E");
+}
+.od-st-pending {
+  background-color: #fff4d6;
+  border-color: #e4c46b;
+  color: #7a5a00;
+}
+.od-st-preparing {
+  background-color: #fde7d3;
+  border-color: #e9b98d;
+  color: #9a4f12;
+}
+.od-st-ready {
+  background-color: #fdeccf;
+  border-color: #f0c58a;
+  color: #8a5a14;
+}
+.od-st-completed {
+  background-color: #e3f4e5;
+  border-color: #9ed3a5;
+  color: #2e7d32;
+}
+.od-st-cancelled {
+  background-color: #fbe4e1;
+  border-color: #f0b6ae;
+  color: #c0392b;
+}
+
+/* ---------- header search: icon on the left (desktop) ---------- */
+@media (min-width: 641px) {
+  .s-search {
+    flex: 0 1 300px;
+    flex-direction: row-reverse;
+    padding: 3px 14px 3px 3px;
+  }
+  .s-search input {
+    padding-left: 10px;
+  }
+}
+
+/* ---------- "Save as PDF" box ---------- */
+.od-dlg {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(31, 18, 12, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.od-dlg[hidden] {
+  display: none;
+}
+.od-dlg-card {
+  background: #fff;
+  border-radius: 20px;
+  max-width: 400px;
+  width: 100%;
+  padding: 24px 22px 18px;
+  text-align: center;
+}
+.od-dlg-card h3 {
+  margin-bottom: 8px;
+}
+.od-dlg-card p {
+  color: #6f6258;
+  margin-bottom: 16px;
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+.od-dlg-actions {
+  display: flex;
+  gap: 10px;
+}
+.od-dlg-actions .s-btn {
+  flex: 1;
+}
+.od-dlg-actions .s-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 800px) {
+  .od-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .od-stat.profit {
+    grid-column: 1 / -1;
+    min-height: 120px;
+  }
+  .od-stat.profit .lab {
+    max-width: none;
+  }
+  .od-head {
+    display: none;
+  }
+  .od-row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "name no" "items items" "remarks remarks" "status amount";
+    row-gap: 4px;
+    padding: 12px 6px;
+  }
+  .c-order {
+    display: contents;
+  }
+  .c-name {
+    grid-area: name;
+    font-weight: 700;
+  }
+  .c-no {
+    grid-area: no;
+    justify-self: end;
+    border: 1px solid #e9b98d;
+    background: #fff4e6;
+    color: #9a5a1a;
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 12px;
+  }
+  .c-items {
+    grid-area: items;
+    white-space: normal;
+  }
+  .c-time {
+    display: none;
+  }
+  .c-remarks {
+    grid-area: remarks;
+    font-size: 12.5px;
+  }
+  .c-status {
+    grid-area: status;
+    margin-top: 6px;
+  }
+  .c-amount {
+    grid-area: amount;
+    align-self: end;
+    text-align: right;
+  }
+}
+@media (max-width: 640px) {
+  .od-strip {
+    padding-left: 14px;
+  }
+  .od-main {
+    padding: 16px 12px 32px;
+  }
+  .od-stat .num {
+    font-size: 30px;
+  }
+}
+/* fonts: Mona Sans for the whole page; the brown header strips keep Momo Trust Sans */
+.od-main,
+.od-main *,
+.od-main *::placeholder,
+.od-dlg,
+.od-dlg *,
+.s-float,
+.s-float *,
+.s-toast {
+  font-family: "Mona Sans", sans-serif !important;
+}
+.od-strip,
+.od-strip * {
+  font-family: "Momo Trust Sans", sans-serif !important;
+}
+/* phones: the three tabs scroll sideways instead of running off the screen */
+@media (max-width: 640px) {
+  .od-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .od-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .od-tab {
+    flex: none;
+  }
+}
+
+/* ---------- phone layout (matches the phone mock-up) ---------- */
+@media (max-width: 640px) {
+  .od-main {
+    padding: 14px 12px 32px;
+  }
+  .od-stats {
+    gap: 12px;
+  }
+  .od-stat {
+    min-height: 104px;
+    border-radius: 18px;
+    padding: 14px 14px 12px;
+  }
+  .od-stat .lab {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .od-stat .ico {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+  }
+  .od-stat .num {
+    font-size: 30px;
+    padding-top: 12px;
+  }
+  .od-stat.profit {
+    grid-column: 1 / -1;
+    min-height: 150px;
+    border-radius: 22px;
+    padding: 16px 18px;
+    background:
+      url("../images/money-bag.png") right 4px bottom 0 / auto 80% no-repeat,
+      url("../images/profit-cardbg.png") center / cover no-repeat,
+      #9a5320;
+  }
+  .od-stat.profit .lab {
+    font-size: 13px;
+    max-width: none;
+  }
+  .od-stat.profit .num {
+    font-size: 34px;
+  }
+  .od-stat.profit small {
+    font-size: 12px;
+  }
+  .od-tabs {
+    gap: 4px;
+  }
+  .od-tab {
+    padding: 9px 14px;
+    font-size: 13px;
+    border-radius: 12px 12px 0 0;
+  }
+  .od-card {
+    border-radius: 18px;
+    padding: 6px 10px 10px;
+  }
+  .od-list .od-row {
+    padding: 12px 6px;
+  }
+}
+
+/* ---------- phone layout, round 2 (matches the phone mock-up) ---------- */
+@media (max-width: 640px) {
+  .od-stats {
+    gap: 14px;
+  }
+  .od-stat {
+    min-height: 112px;
+    border-radius: 20px;
+    padding: 14px 16px 14px;
+  }
+  .od-stat .ico {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+  .od-stat .num {
+    font-size: 36px;
+    padding-top: 14px;
+  }
+  .od-stat.profit .num {
+    font-size: 34px;
+  }
+
+  .od-panel {
+    margin-top: 20px;
+  }
+  .od-tabs {
+    width: 100%;
+    gap: 6px;
+    padding: 0;
+  }
+  .od-tab {
+    flex: 1 1 0;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 8px;
+    font-size: 13px;
+    min-width: 0;
+    white-space: nowrap;
+  }
+  .od-tab .od-n {
+    font-size: 11px;
+  }
+  .od-card {
+    border-radius: 0 18px 18px 18px;
+    padding: 8px 10px 10px;
+  }
+  .od-list {
+    max-height: 55vh;
+    scrollbar-width: thin;
+    scrollbar-color: #d9c9b6 transparent;
+  }
+  .od-list .od-row {
+    padding: 14px 6px;
+  }
+  .od-row .c-name {
+    font-size: 15px;
+  }
+  .od-row .c-items {
+    font-size: 12px;
+  }
+  .od-row .c-remarks {
+    font-size: 12px;
+  }
+  .od-row .c-amount {
+    font-size: 15px;
+  }
+}
