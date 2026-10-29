@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout · QCee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Noto+Sans:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="css/customer-home.css">
+  <link rel="stylesheet" href="css/checkout.css">
+</head>
+<body data-role="customer">
+
+  <header class="ch-top">
+    <a class="ch-brand" href="customer-home.html">
+      <img class="ch-logo" src="images/logo.png" alt="QCee logo" onerror="this.style.display='none'">
+      <strong><span class="q">Q</span><span class="cee">Cee</span></strong>
+    </a>
+    <nav class="ch-nav" aria-label="Main">
+      <a href="customer-home.html">Home</a>
+      <a href="customer-home.html#shops">Shops</a>
+    </nav>
+  </header>
+
+  <div class="ch-welcome">Checkout</div>
+
+  <main class="co-main">
+    <a class="co-back" href="customer-home.html">&larr; Back to shop</a>
+
+    <div class="co-card co-empty" id="coEmpty" hidden>
+      <p>Nothing is ticked for checkout. Tick the items in your cart first.</p>
+      <a class="co-btn" href="customer-home.html">Go to shop</a>
+    </div>
+
+    <div class="co-layout" id="coLayout" hidden>
+      <div class="co-left">
+
+        <section class="co-card">
+          <h2 class="co-h">Delivery or pickup</h2>
+          <div class="co-seg" role="radiogroup" aria-label="Delivery or pickup">
+            <button type="button" class="co-seg-btn on" data-f="pickup" role="radio" aria-checked="true">Pickup</button>
+            <button type="button" class="co-seg-btn" data-f="delivery" role="radio" aria-checked="false">Delivery</button>
+          </div>
+          <div class="co-deliv" id="coDeliv" hidden>
+            <label class="co-field">
+              <span>Delivery address</span>
+              <textarea id="coAddr" rows="2" maxlength="160" placeholder="Building, room, or landmark"></textarea>
+            </label>
+          </div>
+        </section>
+
+        <section class="co-card">
+          <h2 class="co-h">Buyer information</h2>
+          <div class="co-grid2">
+            <label class="co-field">
+              <span>Full name</span>
+              <input id="coName" type="text" autocomplete="name">
+            </label>
+            <label class="co-field">
+              <span>Phone number</span>
+              <input id="coPhone" type="tel" autocomplete="tel" placeholder="09XXXXXXXXX">
+            </label>
+          </div>
+          <label class="co-field">
+            <span>Email</span>
+            <input id="coEmail" type="email" readonly>
+          </label>
+        </section>
+
+        <section class="co-card">
+          <h2 class="co-h">Your order</h2>
+          <div id="coGroups"></div>
+        </section>
+      </div>
+
+      <aside class="co-side">
+        <div class="co-sum-card">
+          <h2 class="co-h">Order summary</h2>
+          <div class="co-sum" id="coSum"></div>
+          <div class="co-tot"><span>Total</span><b id="coTotal">₱0.00</b></div>
+          <p class="co-err" id="coErr" role="alert" hidden></p>
+          <button type="button" class="co-place" id="coPlace">Place Order</button>
+          <p class="co-fine">No delivery fee. Each shop receives its own order.</p>
+        </div>
+      </aside>
+    </div>
+
+    <section class="co-done" id="coDone" hidden>
+      <div class="co-card co-done-card">
+        <div class="co-check" aria-hidden="true">&#10003;</div>
+        <h2>Order placed!</h2>
+        <p>Keep these order numbers. Each shop will confirm your order.</p>
+        <ul class="co-orders" id="coOrders"></ul>
+        <p class="co-done-where" id="coWhere"></p>
+        <a class="co-btn" href="customer-home.html">Back to shop</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="ch-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/footer.js"></script>
+</body>
+</html>

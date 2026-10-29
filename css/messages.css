@@ -1,0 +1,210 @@
+/* Messages page. Shared by messages.html (customer) and seller-messages.html (seller).
+   The colours come from :root in customer-home.css or seller.css, so load one of them first. */
+
+[hidden] { display: none !important; }
+
+.ms-main { max-width: 1120px; margin: 0 auto; padding: 18px 20px 40px; }
+
+.ms-wrap {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 14px;
+  height: calc(100vh - 170px);
+  min-height: 460px;
+}
+
+.ms-side,
+.ms-chat {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 10px rgba(43, 26, 18, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.ms-side-h { display: flex; align-items: center; gap: 10px; padding: 16px 16px 10px; }
+.ms-side-h svg { width: 22px; height: 22px; color: var(--orange, #e9a03b); flex: none; }
+.ms-side-h h1 { font-size: 20px; font-weight: 800; color: var(--brown, #2b1a12); }
+
+.ms-search { padding: 0 14px 12px; }
+.ms-search input {
+  width: 100%;
+  border: 1px solid var(--line, #eadfce);
+  border-radius: 999px;
+  padding: 9px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--brown, #2b1a12);
+  outline: 0;
+}
+.ms-search input:focus { border-color: var(--orange, #e9a03b); }
+
+.ms-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; min-height: 0; }
+.ms-row {
+  width: 100%;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--line, #eadfce);
+}
+.ms-row:hover { background: var(--cream, #fff7ee); }
+.ms-row.on { background: var(--peach, #ffd39a); background: rgba(255, 211, 154, 0.35); }
+
+.ms-av {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--cream, #fff7ee);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-weight: 800;
+  color: var(--brown, #2b1a12);
+}
+.ms-av img { width: 100%; height: 100%; object-fit: cover; }
+
+.ms-row-t { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ms-row-t b {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--brown, #2b1a12);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ms-ord { font-style: normal; color: var(--orange, #e9a03b); font-size: 11px; font-weight: 800; }
+.ms-row-t small {
+  color: var(--muted, #747474);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ms-row time { font-size: 11px; color: var(--muted, #747474); align-self: flex-start; flex: none; }
+.ms-none { padding: 18px 16px; color: var(--muted, #747474); font-size: 14px; line-height: 1.5; }
+
+/* chat */
+.ms-empty { margin: auto; color: var(--muted, #747474); font-size: 14px; }
+.ms-pane { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+.ms-chat-h {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line, #eadfce);
+}
+.ms-x { display: none; background: transparent; border: 0; cursor: pointer; font-size: 28px; line-height: 1; color: var(--brown, #2b1a12); padding: 0 6px 0 0; }
+.ms-chat-h .ms-av { width: 44px; height: 44px; }
+.ms-who { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ms-who b { font-size: 17px; font-weight: 800; color: var(--brown, #2b1a12); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ms-who small { color: var(--orange, #e9a03b); font-size: 12px; font-weight: 800; }
+.ms-view {
+  background: var(--orange, #e9a03b);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.ms-view:hover { background: #de9430; }
+
+.ms-thread {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+.ms-msg { display: flex; justify-content: flex-start; }
+.ms-msg.mine { justify-content: flex-end; }
+.ms-bubble {
+  max-width: 70%;
+  background: #f1f1f1;
+  color: var(--brown, #2b1a12);
+  padding: 9px 14px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.ms-msg.mine .ms-bubble { background: #f6e3c4; }
+.ms-bubble p { margin: 0; white-space: pre-wrap; }
+.ms-photo { display: block; width: 100%; max-width: 230px; border-radius: 12px; }
+.ms-bubble p + .ms-photo,
+.ms-photo + p { margin-top: 6px; }
+.ms-hint { color: var(--muted, #747474); font-size: 14px; text-align: center; margin: auto; }
+
+.ms-compose {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--line, #eadfce);
+}
+.ms-compose input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: var(--cream, #fff7ee);
+  border-radius: 999px;
+  padding: 12px 16px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--brown, #2b1a12);
+  outline: 0;
+}
+.ms-attach,
+.ms-send {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--brown, #2b1a12);
+}
+.ms-attach:hover { background: var(--cream, #fff7ee); }
+.ms-attach svg,
+.ms-send svg { width: 22px; height: 22px; }
+.ms-send svg { width: 26px; height: 26px; }
+
+/* phones: the list and the chat take turns */
+@media (max-width: 700px) {
+  .ms-main { padding: 12px 12px 110px; }
+  .ms-wrap { grid-template-columns: 1fr; height: calc(100vh - 150px); }
+  .ms-chat { display: none; }
+  .ms-wrap.show-chat .ms-side { display: none; }
+  .ms-wrap.show-chat .ms-chat { display: flex; }
+  .ms-x { display: block; }
+  .ms-view { padding: 8px 12px; font-size: 13px; }
+  .ms-bubble { max-width: 82%; }
+  .ms-chat-h { padding: 12px 14px; gap: 10px; }
+  .ms-who b { font-size: 15px; }
+}
+
+/* the shop's logo in the seller header chip: fit it inside the round avatar */
+.s-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+
+/* the shop chip and menu button sit on the right, as on the seller home (this page has no search bar) */
+.s-top .s-chip { margin-left: auto; }
+
+/* a chat with a new message from the other side */
+.ms-row.unread b { color: #000; }
+.ms-row.unread small { color: var(--brown, #2b1a12); font-weight: 700; }
+.ms-row.unread time { color: var(--orange, #e9a03b); font-weight: 800; }

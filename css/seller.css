@@ -963,3 +963,15 @@ select {
     color: var(--orange);
   }
 }
+
+/* Messages button, lower right. It is fixed, so it stays put while the page scrolls. */
+.sm-fab {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 40;
+  line-height: 0;
+  transition: transform 0.2s;
+}
+.sm-fab:hover { transform: scale(1.06); }
+.sm-fab svg { width: 64px; height: auto; display: block; }

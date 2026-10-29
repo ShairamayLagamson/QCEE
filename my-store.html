@@ -51,7 +51,7 @@
   <nav class="s-float" id="floatMenu" aria-label="Navigation options" hidden>
     <h2 class="s-float-title">Navigation Options</h2>
     <a href="seller-dashboard.html"><img src="images/home-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Home</span></a>
-    <a href="#message"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
+    <a href="seller-messages.html"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
     <a href="order-dashboard.html"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
     <a href="stats-dashboard.html"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
     <a href="my-store.html" class="active" aria-current="page"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
@@ -143,12 +143,16 @@
         <button type="button" class="m-x" data-close aria-label="Close">&times;</button>
       </header>
 
-      <label class="m-field"><span>Product title</span>
+      <label class="m-field"><span class="pm-title">Product title</span>
         <input id="pmName" type="text" maxlength="60" autocomplete="off" required data-autofocus>
       </label>
 
+      <label class="m-field"><span class="pm-title">Description <em class="pm-hint">(Optional)</em></span>
+        <textarea id="pmDesc" rows="3" maxlength="300" placeholder="Tell customers about this product"></textarea>
+      </label>
+
       <div class="m-two">
-        <label class="m-field"><span>Category</span>
+        <label class="m-field"><span class="pm-title">Category</span>
           <span class="m-selwrap">
             <select id="pmCat" required></select>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
@@ -164,11 +168,15 @@
         <input id="pmStock" type="number" min="0" step="1" inputmode="numeric" required>
       </label>
 
-      <label class="m-field"><span>Variant</span>
-        <input id="pmVariant" type="text" maxlength="60" autocomplete="off" placeholder="Optional, e.g. Dark chocolate">
-      </label>
+      <div class="m-field"><span class="pm-title">Variants <em class="pm-hint">(Optional)</em></span>
+        <div class="pm-varrow">
+          <input id="pmVarInput" type="text" maxlength="40" autocomplete="off" placeholder="Type a variant, then press Add">
+          <button type="button" class="m-btn m-btn-gray" id="pmVarAdd">Add</button>
+        </div>
+        <div class="pm-chips" id="pmVarList"></div>
+      </div>
 
-      <div class="m-field"><span>Add image</span>
+      <div class="m-field"><span>Cover picture</span>
         <button type="button" class="m-drop" id="pmDrop" aria-label="Choose a product picture">
           <img id="pmImg" alt="" hidden>
           <span class="m-drop-ico" id="pmEmpty">
@@ -177,6 +185,12 @@
         </button>
         <button type="button" class="m-link" id="pmRemoveImg" hidden>Remove picture</button>
         <input type="file" id="pmFile" accept="image/*" hidden>
+      </div>
+
+      <div class="m-field"><span>Additional pictures <em class="pm-hint">(Up to 8)</em></span>
+        <div class="pm-gal" id="pmGal"></div>
+        <button type="button" class="m-link" id="pmGalAdd">+ Add pictures</button>
+        <input type="file" id="pmGalFile" accept="image/*" multiple hidden>
       </div>
 
       <div class="m-sheet-actions">
@@ -247,5 +261,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/my-store.js"></script>
+<a class="sm-fab" href="seller-messages.html" aria-label="Messages"><svg width="279" height="257" viewBox="0 0 279 257" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<ellipse cx="139.5" cy="128.5" rx="139.5" ry="128.5" fill="#291A14"/>
+<ellipse cx="139.5" cy="128.5" rx="139.5" ry="128.5" fill="#291A14"/>
+<path d="M196.264 58.4966H108.795C100.755 58.4966 94.2168 65.1471 94.2168 73.325H181.686C189.726 73.325 196.264 79.9755 196.264 88.1534V147.467C204.304 147.467 210.843 140.816 210.843 132.639V73.325C210.843 65.1471 204.304 58.4966 196.264 58.4966Z" fill="white"/>
+<path d="M82.4767 171.088H97.0549V201.345L134.237 171.088H169.946C177.986 171.088 184.524 164.437 184.524 156.259V96.9456C184.524 88.7677 177.986 82.1172 169.946 82.1172H82.4767C74.4368 82.1172 67.8984 88.7677 67.8984 96.9456V156.259C67.8984 164.437 74.4368 171.088 82.4767 171.088Z" fill="white"/>
+<path d="M196.264 58.4966H108.795C100.755 58.4966 94.2168 65.1471 94.2168 73.325H181.686C189.726 73.325 196.264 79.9755 196.264 88.1534V147.467C204.304 147.467 210.843 140.816 210.843 132.639V73.325C210.843 65.1471 204.304 58.4966 196.264 58.4966Z" fill="white"/>
+<path d="M82.4767 171.088H97.0549V201.345L134.237 171.088H169.946C177.986 171.088 184.524 164.437 184.524 156.259V96.9456C184.524 88.7677 177.986 82.1172 169.946 82.1172H82.4767C74.4368 82.1172 67.8984 88.7677 67.8984 96.9456V156.259C67.8984 164.437 74.4368 171.088 82.4767 171.088Z" fill="white"/>
+</svg></a>
+  <script src="js/message-badge.js"></script>
 </body>
 </html>

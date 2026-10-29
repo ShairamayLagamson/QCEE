@@ -339,9 +339,6 @@
       ICON_HEART +
       "</div>" +
       (cat ? '<span class="m-cat">Category: ' + esc(cat) + "</span>" : "") +
-      (p.variant
-        ? '<span class="m-var">Variant: ' + esc(p.variant) + "</span>"
-        : "") +
       '<div class="m-price">' +
       peso(p.price) +
       "</div>" +
@@ -459,6 +456,37 @@
   var pmModal = $("productModal"),
     pmFile = $("pmFile");
 
+  /* variants are a list of names; products saved before this had one variant text */
+  function variantsOf(p) {
+    if (p && Array.isArray(p.variants) && p.variants.length) return p.variants;
+    return p && p.variant ? [p.variant] : [];
+  }
+  function renderVars() {
+    $("pmVarList").innerHTML = pm.vars.map(function (v, i) {
+      return '<span class="pm-chip">' + esc(v) +
+        '<button type="button" data-vi="' + i + '" aria-label="Remove ' + esc(v) + '">&times;</button></span>';
+    }).join("");
+  }
+  function addVar() {
+    var input = $("pmVarInput"), v = input.value.trim();
+    if (!v) return;
+    if (pm.vars.length >= 10) { toast("You can add up to 10 variants."); return; }
+    if (pm.vars.some(function (x) { return x.toLowerCase() === v.toLowerCase(); })) {
+      toast("That variant is already added.");
+      return;
+    }
+    pm.vars.push(v.slice(0, 40));
+    input.value = "";
+    renderVars();
+    input.focus();
+  }
+  function renderGal() {
+    $("pmGal").innerHTML = pm.gal.map(function (g, i) {
+      return '<div class="pm-gal-item"><img src="' + esc(g.url) + '" alt="">' +
+        '<button type="button" data-gi="' + i + '" aria-label="Remove picture">&times;</button></div>';
+    }).join("");
+    $("pmGalAdd").hidden = pm.gal.length >= 8;
+  }
   function showPmImage() {
     var src = pm.url || (!pm.remove && pm.orig) || null;
     $("pmImg").hidden = !src;
@@ -500,18 +528,24 @@
       remove: false,
       orig: p ? p.image_url : null,
       saved: false,
+      vars: p ? variantsOf(p).slice() : [],
+      gal: p ? (p.gallery_urls || []).map(function (u) { return { url: u, blob: null }; }) : [],
     };
     $("pmTitle").textContent = p ? "Edit Product" : "Add New Product";
     $("pmName").value = p ? p.name : "";
     $("pmPrice").value = p ? p.price : "";
     $("pmStock").value = p ? p.stock : "";
-    $("pmVariant").value = p && p.variant ? p.variant : "";
+    $("pmVarInput").value = "";
+    $("pmDesc").value = p && p.description ? p.description : "";
+    renderVars();
+    renderGal();
     fillCats(p ? p.category_id : null);
     showPmImage();
     openModal(pmModal);
   }
   pmModal.onClosed = function () {
     if (pm.url && !pm.saved) URL.revokeObjectURL(pm.url);
+    if (!pm.saved) pm.gal.forEach(function (g) { if (g.blob) URL.revokeObjectURL(g.url); });
   };
   $("addBtn").addEventListener("click", function () {
     if (editing) openProduct(null);
@@ -531,6 +565,43 @@
       pm.blob = null;
     } else if (pm.orig) pm.remove = true;
     showPmImage();
+  });
+  $("pmVarAdd").addEventListener("click", addVar);
+  $("pmVarInput").addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); addVar(); }
+  });
+  $("pmVarList").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-vi]");
+    if (!b) return;
+    pm.vars.splice(Number(b.dataset.vi), 1);
+    renderVars();
+  });
+  $("pmGalAdd").addEventListener("click", function () {
+    $("pmGalFile").click();
+  });
+  $("pmGalFile").addEventListener("change", async function () {
+    var files = Array.prototype.slice.call($("pmGalFile").files || []);
+    $("pmGalFile").value = "";
+    var room = 8 - pm.gal.length;
+    if (files.length > room) toast("You can add up to 8 more pictures.");
+    for (var i = 0; i < Math.min(room, files.length); i++) {
+      var f = files[i];
+      if (!/^image\//.test(f.type) || f.size > 15 * 1024 * 1024) continue;
+      try {
+        var blob = await squareBlob(f);
+        pm.gal.push({ url: URL.createObjectURL(blob), blob: blob });
+      } catch (err) {
+        toast("Couldn't open one of those pictures.");
+      }
+    }
+    renderGal();
+  });
+  $("pmGal").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-gi]");
+    if (!b) return;
+    var g = pm.gal.splice(Number(b.dataset.gi), 1)[0];
+    if (g && g.blob) URL.revokeObjectURL(g.url);
+    renderGal();
   });
   // pictures are cut to a square so every product tile looks the same
   function squareBlob(file) {
@@ -610,7 +681,9 @@
       category_id: catId,
       price: Math.round(parseFloat($("pmPrice").value) * 100) / 100,
       stock: parseInt($("pmStock").value, 10),
-      variant: $("pmVariant").value.trim() || null,
+      variant: null,
+      variants: pm.vars.slice(),
+      description: $("pmDesc").value.trim() || null,
     };
     if (!fields.name) {
       toast("Add a product title.");
@@ -649,6 +722,21 @@
           image = null;
         }
       }
+      var gallery = [];
+      for (var gi = 0; gi < pm.gal.length; gi++) {
+        var gp = pm.gal[gi];
+        if (!gp.blob || demo) {
+          gallery.push(gp.url);
+          continue;
+        }
+        var gpath = user.id + "/products/" + id + "-" + Date.now() + "-" + gi + ".jpg";
+        var gup = await sb.storage
+          .from(BUCKET)
+          .upload(gpath, gp.blob, { upsert: true, contentType: "image/jpeg" });
+        if (gup.error) throw gup.error;
+        gallery.push(sb.storage.from(BUCKET).getPublicUrl(gpath).data.publicUrl);
+      }
+      fields.gallery_urls = gallery;
       fields.image_url = image;
 
       if (!demo) {
@@ -1006,7 +1094,7 @@
     var p = await sb
       .from("products")
       .select(
-        "id, name, price, stock, variant, image_url, category_id, created_at",
+        "id, name, price, stock, variant, variants, gallery_urls, description, image_url, category_id, created_at",
       )
       .eq("business_id", biz.id)
       .order("created_at", { ascending: false });

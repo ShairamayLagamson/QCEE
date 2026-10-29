@@ -213,14 +213,21 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   gap: 7px;
 }
+/* white, glossy dots: a soft highlight on each one; the current slide is a longer white pill */
 .ch-dots button {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.75);
-  transition: width 0.3s, background 0.3s;
+  background: radial-gradient(circle at 32% 30%, #ffffff 0 22%, #fbf3e6 45%, #e4d3bb 100%);
+  box-shadow: 0 1px 3px rgba(43, 26, 18, 0.35), inset 0 -1px 1px rgba(43, 26, 18, 0.15);
+  transition: width 0.3s, box-shadow 0.3s;
 }
-.ch-dots button.on { width: 22px; border-radius: 6px; background: var(--orange); }
+.ch-dots button.on {
+  width: 24px;
+  border-radius: 6px;
+  background: radial-gradient(circle at 30% 28%, #ffffff 0 30%, #ffffff 60%, #f1e4cf 100%);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.55), 0 2px 4px rgba(43, 26, 18, 0.35);
+}
 
 /* sections */
 .ch-block { padding: 26px 0 4px; }
@@ -709,16 +716,17 @@ a { color: inherit; text-decoration: none; }
 .pv-label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
 .pv-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .pv-chip {
-  padding: 8px 16px;
+  padding: 6px 13px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: #fff;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--brown);
+  box-shadow: 0 2px 5px rgba(43, 26, 18, 0.18);
 }
 .pv-chip:hover { border-color: var(--orange); }
-.pv-chip.on { background: var(--orange); border-color: var(--orange); color: #fff; }
+.pv-chip.on { background: var(--orange); border-color: var(--orange); color: #fff; box-shadow: 0 2px 5px rgba(233, 160, 59, 0.4); }
 
 .pv-foot {
   display: flex;
@@ -1111,3 +1119,78 @@ a { color: inherit; text-decoration: none; }
 .fv-row .cd-info b { font-size: 19px; color:#3F3535; }
 .fv-row .cd-price { font-size: 19px; }
 .fv-addcart:disabled { background: var(--line); color: var(--muted); cursor: default; }
+/* cart: tick the items to check out */
+.cd-pick { flex: none; align-self: center; width: 18px; height: 18px; accent-color: var(--orange); cursor: pointer; }
+.cd-all { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.cd-all input { width: 18px; height: 18px; accent-color: var(--orange); cursor: pointer; }
+.cd-checkout:disabled { opacity: 0.4; cursor: default; }
+.cd-proceed:disabled { background: var(--line); color: var(--muted); cursor: default; }
+
+/* product popup: extra pictures */
+.pv-thumbs { display: flex; gap: 8px; padding: 10px 16px 0; overflow-x: auto; }
+.pv-thumbs[hidden] { display: none; }
+.pv-thumb { width: 52px; height: 52px; flex: none; border-radius: 10px; overflow: hidden; border: 2px solid transparent; background: #f6e9d7; }
+.pv-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pv-thumb.on { border-color: var(--orange); }
+
+.ch-menu a.ch-menu-link { display: block; padding: 9px 12px; border-radius: 10px; font-weight: 700; color: var(--brown); }
+.ch-menu a.ch-menu-link:hover { background: var(--cream); }
+
+/* message button: the icon image, with the drawn icon as a fallback */
+.ch-chat img { width: 26px; height: 26px; object-fit: contain; }
+
+/* full-size product picture */
+.pv-media img,
+.pv-thumb { cursor: zoom-in; }
+.lb-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(20, 12, 8, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 56px;
+}
+.lb-overlay[hidden] { display: none; }
+.lb-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+.lb-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--brown);
+  font-size: 28px;
+  line-height: 1;
+}
+.lb-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--brown);
+  font-size: 30px;
+  line-height: 1;
+}
+.lb-prev { left: 12px; }
+.lb-next { right: 12px; }
+.lb-nav[hidden] { display: none; }
+@media (max-width: 700px) {
+  .lb-overlay { padding: 56px 12px; }
+}
+
+/* closed shop in the cart: Pre-Order only */
+.cd-off { opacity: 0.45; cursor: not-allowed !important; }
+.cd-note { font-size: 12px; font-weight: 600; color: #b3321f; margin: 0; }

@@ -71,8 +71,11 @@
     if (!e.target.closest('.ch-me')) avMenu.hidden = true;
   });
   $('logout').addEventListener('click', async function () {
-    if (sbOk) await sb.auth.signOut();
-    location.href = 'index.html';
+    try { if (sbOk) await sb.auth.signOut({ scope: 'local' }); } catch (e) {}
+    try {
+      Object.keys(localStorage).forEach(function (k) { if (/^sb-.*-auth-token/.test(k)) localStorage.removeItem(k); });
+    } catch (e) {}
+    location.replace('index.html');
   });
 
   /* ---------- picture: shown in the big circle and the header avatar ---------- */
