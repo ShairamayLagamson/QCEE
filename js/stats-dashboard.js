@@ -368,12 +368,17 @@
     var role = prof.data && prof.data.role;
     if (role && role !== 'seller') { location.replace(role === 'admin' ? 'admin-dashboard.html' : 'customer-home.html'); return; }
 
-    var b = await sb.from('businesses').select('id, name, is_open').eq('owner_id', user.id).maybeSingle();
+    var b = await sb.from('businesses').select('id, name, is_open, logo_url').eq('owner_id', user.id).maybeSingle();
+    if (b.error) b = await sb.from('businesses').select('id, name, is_open').eq('owner_id', user.id).maybeSingle();   // logo_url column not added yet
     biz = b.data || null;
     var name = (biz && biz.name) || (prof.data && prof.data.full_name) || 'My Shop';
     document.querySelectorAll('.js-shopname').forEach(function (el) { el.textContent = name; });
     document.title = 'Stats Dashboard | ' + name;
-    $('shopAvatar').textContent = name.trim().charAt(0).toUpperCase() || 'S';
+
+    // the header chip shows the shop's profile picture, or the first letter until one is set
+    var av = $('shopAvatar');
+    if (biz && biz.logo_url) { av.style.backgroundImage = 'url("' + biz.logo_url + '")'; av.textContent = ''; }
+    else { av.style.backgroundImage = ''; av.textContent = name.trim().charAt(0).toUpperCase() || 'S'; }
     if (biz && biz.is_open === false) { var st = $('shopStatus'); st.textContent = 'Closed'; st.style.color = '#ff8a7a'; }
 
     await load();

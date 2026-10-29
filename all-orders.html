@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Orders Queue | QCee Seller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap">
+  <link rel="stylesheet" href="css/seller.css">
+  <link rel="stylesheet" href="css/all-orders.css">
+</head>
+<body data-role="seller">
+
+  <div class="s-head">
+    <header class="s-top">
+      <img class="s-logo" src="images/logo.png" alt="QCee logo">
+      <div class="s-brand"><strong><span class="q">Q</span><span class="cee">Cee</span></strong></div>
+
+      <form class="s-search" role="search" onsubmit="return false">
+        <input type="search" id="q" placeholder="Search customer, order #, items..." aria-label="Search orders">
+        <button type="submit" aria-label="Search"></button>
+      </form>
+
+      <button class="s-chip" id="chipBtn" type="button" aria-label="Your shop and menu"
+              aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+        <span class="s-avatar" id="shopAvatar">S</span>
+        <span class="s-chip-text">
+          <b class="js-shopname">My Shop</b>
+          <i class="s-dot" id="shopStatus">Active</i>
+        </span>
+      </button>
+
+      <button class="s-menu-btn" id="menuBtn" type="button"
+              aria-label="Open menu" aria-haspopup="true" aria-expanded="false" aria-controls="floatMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </header>
+
+    <div class="aq-strip"><span class="aq-pill">All Orders Queue</span></div>
+  </div>
+
+  <!-- floating menu -->
+  <div class="s-backdrop" id="menuBackdrop" hidden></div>
+  <nav class="s-float" id="floatMenu" aria-label="Navigation options" hidden>
+    <h2 class="s-float-title">Navigation Options</h2>
+    <a href="seller-dashboard.html"><img src="images/home-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Home</span></a>
+    <a href="#message"><img src="images/messages-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Message</span></a>
+    <a href="order-dashboard.html"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
+    <a href="stats-dashboard.html"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
+    <a href="my-store.html"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
+    <a href="all-orders.html" class="active" aria-current="page"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders Queue</span></a>
+    <hr>
+    <button type="button" id="logout" class="s-logout">Log out</button>
+  </nav>
+
+  <main class="aq-main">
+    <header class="aq-title">
+      <h1>
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+          <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+        All Orders Queue
+      </h1>
+      <p>Complete Order Database</p>
+    </header>
+
+    <!-- status breakdown -->
+    <section class="aq-summary" aria-label="Active breakdown summary">
+      <h2 class="aq-summary-lab">Active Breakdown Summary</h2>
+      <div class="aq-pills" id="breakdown">
+        <!-- filled by JS -->
+      </div>
+    </section>
+
+    <!-- order list / table -->
+    <section class="aq-panel">
+      <div class="aq-card">
+        <!-- desktop table header -->
+        <div class="aq-row aq-head" aria-hidden="true">
+          <div>Customer</div>
+          <div>Order Number</div>
+          <div>Item Summary</div>
+          <div>Total</div>
+          <div>Time</div>
+          <div>Current Status</div>
+          <div>Update Status</div>
+        </div>
+        <div class="aq-list" id="rows"></div>
+      </div>
+
+      <footer class="aq-foot">
+        <span id="totalLabel">Showing 0 Total Orders</span>
+        <span class="aq-live">QCee Database Real Time</span>
+      </footer>
+    </section>
+  </main>
+
+  <div class="s-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/all-orders.js"></script>
+</body>
+</html>

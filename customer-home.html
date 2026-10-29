@@ -3,25 +3,198 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer Home</title>
-  <style>
-    body { font-family: system-ui, sans-serif; background: #faf0e4; color: #2b1a12; margin: 0; padding: 40px 20px; text-align: center; }
-    h1 { margin-bottom: 8px; }
-    #who { font-weight: 600; margin: 14px 0 6px; }
-    #note { margin-bottom: 22px; }
-    .ok { color: #2e7d32; } .bad { color: #c0392b; }
-    button { background: #e9a03b; color: #2b1a12; border: 0; border-radius: 999px; padding: 10px 24px; font: inherit; font-weight: 600; cursor: pointer; }
-  </style>
+  <title>QCee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Noto+Sans:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="css/customer-home.css">
 </head>
 <body data-role="customer">
-  <h1>Customer Home</h1>
-  <p>ginagawa palang etuh</p>
-  <p id="who">Checking your login...</p>
-  <p id="note"></p>
-  <button id="logout" type="button">Log out</button>
+
+  <header class="ch-top">
+    <div class="ch-brand">
+      <img class="ch-logo" src="images/logo.png" alt="QCee logo" onerror="this.style.display='none'">
+      <strong><span class="q">Q</span><span class="cee">Cee</span></strong>
+    </div>
+
+    <form class="ch-search" id="chSearch" role="search" onsubmit="return false">
+      <input type="search" id="q" placeholder="Search product" aria-label="Search product">
+      <button type="button" id="searchBtn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+    </form>
+
+    <nav class="ch-nav" aria-label="Main">
+      <a href="customer-home.html" class="on" aria-current="page">Home</a>
+      <a href="#shops">Shops</a>
+      <a href="#orders">My Orders <i class="ch-live" aria-hidden="true"></i></a>
+    </nav>
+
+    <div class="ch-icons">
+      <button type="button" class="ch-ib" id="cartBtn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.2a1.5 1.5 0 0 0 1.5 1.2h8.7a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
+        <span class="ch-count" id="cartCount" hidden>0</span>
+      </button>
+      <button type="button" class="ch-ib" id="favBtn" aria-label="Saved products and shops">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z"/></svg>
+      </button>
+      <button type="button" class="ch-ib" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+      </button>
+      <div class="ch-me">
+        <button type="button" class="ch-avatar" id="avatar" aria-label="Your account" aria-haspopup="true" aria-expanded="false">Q</button>
+        <div class="ch-menu" id="avMenu" hidden>
+          <div id="meName">Signed in</div>
+          <button type="button" id="logout">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="ch-welcome">Welcome to <span class="q">Q</span><span class="cee">Cee</span>!</div>
+
+  <main class="ch-main">
+    <section class="ch-hero" id="hero" aria-label="Featured shops">
+      <div class="ch-track" id="track"></div>
+      <button type="button" class="ch-arrow prev" id="prev" aria-label="Previous banner" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="ch-arrow next" id="next" aria-label="Next banner" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+      <div class="ch-dots" id="dots"></div>
+    </section>
+
+    <section class="ch-block">
+      <h2 class="ch-h">
+        <img src="images/marketplace-ico.png" alt="">
+        Marketplace Categories
+      </h2>
+      <div class="ch-pills" id="pills"></div>
+      <div class="ch-grid" id="grid"></div>
+      <p class="ch-empty" id="empty" hidden></p>
+    </section>
+
+    <section class="ch-block" id="shops">
+      <h2 class="ch-h">
+        <img src="images/shop-ico.png" alt="">
+        QCee Shops
+      </h2>
+      <p class="ch-sub">Explore each featured enterprise shop</p>
+      <div class="ch-grid" id="shopGrid"></div>
+      <p class="ch-empty" id="shopEmpty" hidden></p>
+    </section>
+  </main>
+
+  <button type="button" class="ch-chat" id="chat" aria-label="Messages">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+  </button>
+
+  <div class="pv-overlay" id="pvOverlay" hidden>
+    <div class="pv-card" role="dialog" aria-modal="true" aria-labelledby="pvName">
+      <button type="button" class="pv-close" id="pvClose" aria-label="Close">&times;</button>
+      <div class="pv-media">
+        <img id="pvImg" alt="" hidden>
+        <div class="pv-ph" id="pvPh" hidden></div>
+        <div class="pv-shop">
+          <span id="pvShopName"></span>
+          <span class="pv-shop-div" aria-hidden="true"></span>
+          <a href="#" id="pvShopLink">View Profile <span aria-hidden="true">›</span></a>
+        </div>
+      </div>
+      <div class="pv-body">
+        <span class="pv-cat" id="pvCat"></span>
+        <div class="pv-title-row">
+          <h2 id="pvName"></h2>
+          <div class="pv-price" id="pvPrice"></div>
+        </div>
+        <p class="pv-desc" id="pvDesc"></p>
+        <div class="pv-avail" id="pvAvail">
+          <span class="pv-avail-label">Availability</span>
+          <img id="pvAvailIcon" class="pv-avail-icon" src="images/instock-ico.png" alt="" hidden>
+          <span id="pvAvailText"></span>
+        </div>
+        <div class="pv-variants" id="pvVariants" hidden>
+          <span class="pv-label">Variant:</span>
+          <div class="pv-chips" id="pvChips"></div>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-qty">
+            <button type="button" id="pvMinus" aria-label="Decrease quantity">&minus;</button>
+            <span id="pvQty">1</span>
+            <button type="button" id="pvPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="pv-add" id="pvAdd">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sv-overlay" id="svOverlay" hidden>
+    <div class="sv-card" role="dialog" aria-modal="true" aria-labelledby="svName">
+      <button type="button" class="sv-x" id="svClose" aria-label="Close">&times;</button>
+      <div class="sv-banner" id="svBanner"></div>
+      <div class="sv-head">
+        <div class="sv-logo" id="svLogo"></div>
+        <div class="sv-title">
+          <div class="sv-id">
+            <h2 id="svName"></h2>
+            <img class="sv-check" src="images/verification-ico.png" alt="Verified">
+          </div>
+          <span class="sv-open" id="svOpen">OPEN NOW</span>
+        </div>
+      </div>
+      <div class="sv-info">
+        <div class="sv-loc">
+          <span class="sv-pin"><img src="images/location-ico.png" alt=""></span>
+          <div>
+            <b>QCU Campus Current Location:</b>
+            <small id="svLoc"></small>
+          </div>
+          <button type="button" class="sv-msg" id="svMsg" aria-label="Message shop"><img src="images/msg-ico.png" alt=""></button>
+        </div>
+        <p class="sv-hours">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span id="svHours"></span>
+        </p>
+      </div>
+      <h3 class="sv-stall"><img src="images/shop-ico.png" alt="">Items in stall</h3>
+      <div class="sv-grid" id="svGrid"></div>
+    </div>
+  </div>
+
+  <div class="cd-overlay" id="fvOverlay" hidden>
+    <aside class="cd-panel" role="dialog" aria-modal="true" aria-labelledby="fvTitle">
+      <header class="cd-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z"/></svg>
+        <h2 id="fvTitle">Your Saved</h2>
+        <button type="button" class="cd-close" id="fvClose" aria-label="Close saved">&times;</button>
+      </header>
+      <div class="fv-tabs" role="tablist">
+        <button type="button" class="fv-tab on" data-tab="products" role="tab" aria-selected="true">Products <span id="fvCountProducts">0</span></button>
+        <button type="button" class="fv-tab" data-tab="shops" role="tab" aria-selected="false">Shops <span id="fvCountShops">0</span></button>
+      </div>
+      <div class="cd-body" id="fvBody"></div>
+    </aside>
+  </div>
+
+  <div class="cd-overlay" id="cdOverlay" hidden>
+    <aside class="cd-panel" role="dialog" aria-modal="true" aria-labelledby="cdTitle">
+      <header class="cd-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.2a1.5 1.5 0 0 0 1.5 1.2h8.7a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
+        <h2 id="cdTitle">Your QCee Cart</h2>
+        <button type="button" class="cd-close" id="cdClose" aria-label="Close cart">&times;</button>
+      </header>
+      <div class="cd-body" id="cdBody"></div>
+      <div class="cd-foot" id="cdFoot" hidden></div>
+    </aside>
+  </div>
+
+  <div class="ch-toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
-  <script src="js/page-guard.js"></script>
+  <script src="js/customer-home.js"></script>
+  <script src="js/footer.js"></script>
 </body>
 </html>

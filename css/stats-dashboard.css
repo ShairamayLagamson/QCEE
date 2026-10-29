@@ -202,7 +202,7 @@
 }
 .st-kpi.orders {
   background:
-    url("../images/order-box.png") right 8px bottom 0 / auto 70% no-repeat,
+    url("../images/ordersdone-ico.png") right 6px bottom 0 / auto 78% no-repeat,
     linear-gradient(135deg, #eca54b 0%, #9a5320 55%, #5e4237 100%);
 }
 .st-kpi:hover {
@@ -259,6 +259,12 @@
 .st-kpi-ico svg {
   width: 20px;
   height: 20px;
+}
+.st-kpi-ico img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
 }
 .st-kpi:hover .st-kpi-ico {
   transform: rotate(-8deg) scale(1.08);
@@ -752,6 +758,10 @@
     width: 30px;
     height: 30px;
     font-size: 15px;
+  }
+  .st-kpi-ico img {
+    width: 18px;
+    height: 18px;
   }
   .st-card {
     padding: 16px 14px;

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile | QCee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Noto+Sans:wght@400;700;800&display=swap">
+  <link rel="stylesheet" href="css/customer-home.css">
+  <link rel="stylesheet" href="css/customer-profile.css">
+</head>
+<body data-role="customer" class="cp-page">
+
+  <!-- same header as the homepage -->
+  <header class="ch-top">
+    <div class="ch-brand">
+      <img class="ch-logo" src="images/logo.png" alt="QCee logo" onerror="this.style.display='none'">
+      <strong><span class="q">Q</span><span class="cee">Cee</span></strong>
+    </div>
+
+    <form class="ch-search" role="search" onsubmit="return false">
+      <input type="search" placeholder="Search product" aria-label="Search product">
+      <button type="button" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+    </form>
+
+    <nav class="ch-nav" aria-label="Main">
+      <a href="customer-home.html">Home</a>
+      <a href="customer-home.html#shops">Shops</a>
+      <a href="customer-home.html#orders">My Orders <i class="ch-live" aria-hidden="true"></i></a>
+    </nav>
+
+    <div class="ch-icons">
+      <button type="button" class="ch-ib" aria-label="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.4 12.2a1.5 1.5 0 0 0 1.5 1.2h8.7a1.5 1.5 0 0 0 1.5-1.2L21 7H6"/></svg>
+      </button>
+      <button type="button" class="ch-ib" aria-label="Favorites">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z"/></svg>
+      </button>
+      <button type="button" class="ch-ib" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+      </button>
+      <div class="ch-me">
+        <button type="button" class="ch-avatar" id="avatar" aria-label="Your account" aria-haspopup="true" aria-expanded="false">Q</button>
+        <div class="ch-menu" id="avMenu" hidden>
+          <div id="meName">Signed in</div>
+          <button type="button" id="logout">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="cp-main">
+
+    <aside class="cp-side">
+      <button type="button" class="cp-photo" id="cpPhoto" aria-label="Change profile picture">
+        <img id="cpImg" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%">
+        <span id="cpInitial">Q</span>
+      </button>
+      <p class="cp-name" id="cpName">Your name</p>
+      <button type="button" class="cp-change" id="cpChange">Change profile</button>
+      <p class="cp-note" id="cpNote" aria-live="polite"></p>
+      <div class="cp-tabs">
+        <a href="customer-profile.html" class="on">Profile</a>
+        <a href="customer-home.html#orders">History</a>
+      </div>
+      <input type="file" id="cpFile" accept="image/*" hidden>
+    </aside>
+
+    <!-- picture adjuster: drag to reposition, slider to zoom, shown after choosing a picture -->
+    <div class="cp-crop-overlay" id="cropOverlay" hidden>
+      <div class="cp-crop-card">
+        <h3>Adjust your picture</h3>
+        <p class="cp-crop-hint">Drag to reposition, use the slider to zoom.</p>
+        <div class="cp-crop-stage" id="cropStage">
+          <canvas id="cropCanvas" width="280" height="280"></canvas>
+          <div class="cp-crop-ring" aria-hidden="true"></div>
+        </div>
+        <input type="range" id="cropZoom" min="100" max="300" value="100" aria-label="Zoom">
+        <div class="cp-crop-actions">
+          <button type="button" class="btn-cancel" id="cropCancel">Cancel</button>
+          <button type="button" class="btn-save" id="cropSave">Use this picture</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="cp-card" aria-labelledby="cpTitle">
+      <h2 id="cpTitle">MyProfile</h2>
+
+      <!-- Username and Name: boxed on phones, label inside the box -->
+      <div class="cp-row cp-box-row">
+        <div class="cp-wrap">
+          <label for="fUsername">Username:</label>
+          <input id="fUsername" class="cp-field" maxlength="20" readonly>
+        </div>
+        <button type="button" class="cp-edit" data-edit="fUsername" aria-label="Edit username">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </div>
+
+      <div class="cp-row cp-box-row">
+        <div class="cp-wrap">
+          <label for="fName">Name:</label>
+          <input id="fName" class="cp-field" readonly>
+        </div>
+        <button type="button" class="cp-edit" data-edit="fName" aria-label="Edit name">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </div>
+
+      <div class="cp-row cp-split">
+        <div class="cp-pair">
+          <label for="fStudent">Student #:</label>
+          <input id="fStudent" class="cp-field" readonly>
+        </div>
+        <div class="cp-pair">
+          <label for="fGender">Gender:</label>
+          <select id="fGender" class="cp-field cp-short">
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="LGBTQIA+">LGBTQIA+</option>
+          </select>
+        </div>
+        <button type="button" class="cp-edit" data-edit="fStudent" aria-label="Edit student number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </div>
+
+      <div class="cp-row">
+        <label for="fEmail">Email:</label>
+        <input id="fEmail" class="cp-field" readonly>
+        <button type="button" class="cp-edit" data-edit="fEmail" aria-label="Edit email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </div>
+
+      <div class="cp-row">
+        <label for="fNumber">Number:</label>
+        <input id="fNumber" class="cp-field" readonly>
+        <button type="button" class="cp-edit" data-edit="fNumber" aria-label="Edit number">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </div>
+
+      <div class="cp-row cp-box-row cp-desc">
+        <div class="cp-wrap">
+          <label for="fDesc">Description:</label>
+          <div class="cp-desc-box">
+            <input id="fDesc" class="cp-field" readonly>
+            <small>Feature of person: ex Wearing blue shirt</small>
+          </div>
+        </div>
+        <button type="button" class="cp-edit" data-edit="fDesc" aria-label="Edit description">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="cp-footer">&copy;2025-2026 QCee All Rights Reserved</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/customer-profile.js"></script>
+</body>
+</html>

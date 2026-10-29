@@ -1,0 +1,562 @@
+:root {
+  --caramel: #eca54b;
+  --banana: #eee1ad;
+  --vanilla: #e2d5c2;
+  --chocolate: #5e4237;
+  --ink-soft: #8a7b6e;
+  --cream: #faf6f0;
+}
+
+/* brown strip under header */
+.aq-strip {
+  background: var(--brown-deep, #1f120c);
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 6px 16px 6px 92px;
+}
+.aq-pill {
+  background: #3a2418;
+  border: 1px solid #6b4630;
+  color: var(--orange, #e9a03b);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 12px;
+}
+
+/* page */
+.aq-main {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px 16px 48px;
+  color: var(--chocolate);
+  font-family: "Mona Sans", system-ui, sans-serif;
+  background: transparent;
+}
+.aq-main * {
+  font-family: inherit;
+}
+.aq-main [hidden] {
+  display: none !important;
+}
+
+/* title */
+.aq-title {
+  margin-bottom: 18px;
+}
+.aq-title h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--chocolate);
+}
+.aq-title h1 svg {
+  flex: none;
+  color: var(--chocolate);
+}
+.aq-title p {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* breakdown summary */
+.aq-summary {
+  background: #fff;
+  border-radius: 20px;
+  padding: 16px 18px 18px;
+  box-shadow: 0 4px 14px rgba(94, 66, 55, 0.1);
+  margin-bottom: 20px;
+}
+.aq-summary-lab {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ebe3d6;
+}
+.aq-pills {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+.aq-pill-s {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: 10px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  min-width: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.aq-pill-s.pending   { border-color: #f3e1a0; }
+.aq-pill-s.preparing { border-color: #f5c9a0; }
+.aq-pill-s.ready     { border-color: #f1d08f; }
+.aq-pill-s.completed { border-color: #bfe3c1; }
+.aq-pill-s.cancelled { border-color: #f1b8b0; }
+.aq-pill-s:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(94, 66, 55, 0.12);
+}
+.aq-pill-s .ico {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.aq-pill-s .ico img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+}
+.aq-pill-s .n {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1;
+}
+.aq-pill-s .lab {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.aq-pill-s .meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+/* status colors for pills */
+.aq-pill-s.pending   { background: #fff4d6; color: #7a5a00; }
+.aq-pill-s.pending .ico { background: #ffe9a8; }
+.aq-pill-s.preparing { background: #fde7d3; color: #9a4f12; }
+.aq-pill-s.preparing .ico { background: #f9d0a8; }
+.aq-pill-s.ready     { background: #fdeccf; color: #8a5a14; }
+.aq-pill-s.ready .ico { background: #f5d9a0; }
+.aq-pill-s.completed { background: #e3f4e5; color: #2e7d32; }
+.aq-pill-s.completed .ico { background: #c8e6c9; }
+.aq-pill-s.cancelled { background: #fbe4e1; color: #c0392b; }
+.aq-pill-s.cancelled .ico { background: #f5c4be; }
+
+/* panel + card */
+.aq-panel {
+  margin-top: 4px;
+}
+.aq-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 3px 12px rgba(43, 26, 18, 0.1);
+  padding: 8px 10px 12px;
+  overflow: hidden;
+}
+
+/* table row */
+.aq-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.1fr 1.4fr 0.8fr 0.85fr 1fr 1.15fr;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+.aq-head {
+  background: #ececec;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #3a2e26;
+  padding: 10px 14px;
+  margin-bottom: 4px;
+}
+.aq-list {
+  max-height: 520px;
+  overflow-y: auto;
+}
+.aq-list .aq-row {
+  border-bottom: 1px solid #f0e8dd;
+  transition: background 0.15s;
+}
+.aq-list .aq-row:last-child {
+  border-bottom: 0;
+}
+.aq-list .aq-row:hover {
+  background: #fbf6ec;
+}
+
+/* cells */
+.aq-customer {
+  font-weight: 700;
+  color: var(--chocolate);
+}
+.aq-order b {
+  display: block;
+  font-weight: 700;
+  color: var(--chocolate);
+}
+.aq-order small,
+.aq-items {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.aq-total {
+  font-weight: 700;
+  color: var(--chocolate);
+  white-space: nowrap;
+}
+.aq-time {
+  color: var(--ink-soft);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* status badge (read-only current status) */
+.aq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.aq-badge.pending   { background: #fff4d6; color: #7a5a00; }
+.aq-badge.preparing { background: #fde7d3; color: #9a4f12; }
+.aq-badge.ready     { background: #fdeccf; color: #8a5a14; }
+.aq-badge.completed { background: #e3f4e5; color: #2e7d32; }
+.aq-badge.cancelled { background: #fbe4e1; color: #c0392b; }
+
+/* update + delete actions */
+.aq-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.aq-update {
+  position: relative;
+}
+.aq-update-btn {
+  appearance: none;
+  border: 1px solid #e0d5c6;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 28px 6px 14px;
+  font: 600 12.5px inherit;
+  color: var(--chocolate);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23555' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 8px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.aq-update-btn:hover {
+  background-color: #fbf6ec;
+  border-color: var(--caramel);
+}
+.aq-update-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 20;
+  min-width: 150px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 12px 28px rgba(94, 66, 55, 0.22), 0 0 0 1px var(--vanilla);
+  animation: aq-pop 0.18s ease;
+}
+.aq-update-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--chocolate);
+  cursor: pointer;
+  transition: background 0.15s, padding-left 0.15s;
+}
+.aq-update-menu button:hover {
+  background: var(--banana);
+  padding-left: 16px;
+}
+.aq-update-menu button.on {
+  background: var(--caramel);
+}
+
+.aq-del {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #a07870;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+.aq-del:hover {
+  background: #fbe4e1;
+  color: #c0392b;
+  transform: scale(1.08);
+}
+.aq-del svg {
+  width: 18px;
+  height: 18px;
+}
+
+.aq-empty {
+  padding: 36px 16px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+/* footer */
+.aq-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 6px 0;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.aq-live {
+  font-weight: 600;
+  color: #b0661a;
+}
+
+/* mobile card layout (hidden on desktop) */
+.aq-card-mobile {
+  display: none;
+}
+
+@keyframes aq-pop {
+  from { opacity: 0; transform: translateY(-4px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- tablets ---------- */
+@media (max-width: 900px) {
+  .aq-row {
+    grid-template-columns: 1fr 1fr 1.2fr 0.7fr 0.8fr 0.9fr 1fr;
+    font-size: 13px;
+    gap: 8px;
+    padding: 10px 10px;
+  }
+  .aq-pill-s {
+    padding: 8px 10px;
+  }
+  .aq-pill-s .n { font-size: 18px; }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 700px) {
+  .aq-strip {
+    padding-left: 14px;
+  }
+  .aq-main {
+    padding: 14px 12px 40px;
+  }
+  .aq-title h1 {
+    font-size: 22px;
+  }
+  .aq-title p {
+    font-size: 13px;
+  }
+
+  /* breakdown: horizontal scroll of compact pills */
+  .aq-summary {
+    padding: 12px 12px 14px;
+    border-radius: 16px;
+  }
+  /* icon on the left and the label above the number; the row scrolls sideways so every box has room for its text */
+  .aq-pills {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .aq-pills::-webkit-scrollbar { display: none; }
+  .aq-pill-s {
+    flex: none;
+    width: 118px;
+    min-width: 118px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    gap: 6px;
+  }
+  .aq-pill-s .meta {
+    align-items: flex-start;
+  }
+  .aq-pill-s.pending   { border-color: #f3e1a0; }
+  .aq-pill-s.preparing { border-color: #f5c9a0; }
+  .aq-pill-s.ready     { border-color: #f1d08f; }
+  .aq-pill-s.completed { border-color: #bfe3c1; }
+  .aq-pill-s.cancelled { border-color: #f1b8b0; }
+  .aq-pill-s .ico {
+    width: 26px;
+    height: 26px;
+  }
+  .aq-pill-s .ico img {
+    width: 15px;
+    height: 15px;
+  }
+  .aq-pill-s .n { font-size: 18px; }
+  .aq-pill-s .lab {
+    font-size: 9px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  /* hide desktop table */
+  .aq-head { display: none; }
+  .aq-list .aq-row { display: none; }
+  .aq-card {
+    padding: 4px 0 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .aq-list { max-height: none; overflow: visible; }
+
+  /* mobile order cards — matches screenshot layout */
+  .aq-card-mobile {
+    display: block;
+    background: #fff;
+    border: 1px solid #efe6da;
+    border-radius: 16px;
+    padding: 14px 14px 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(94, 66, 55, 0.06);
+  }
+  .aq-m-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .aq-m-left { min-width: 0; flex: 1; }
+  .aq-m-name {
+    font-weight: 700;
+    font-size: 15.5px;
+    color: var(--chocolate);
+    line-height: 1.25;
+  }
+  .aq-m-items {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .aq-m-right {
+    text-align: right;
+    flex: none;
+  }
+  .aq-m-order {
+    font-weight: 700;
+    font-size: 13.5px;
+    color: var(--chocolate);
+  }
+  .aq-m-time {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+  .aq-m-bottom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .aq-m-bottom .aq-badge {
+    flex: none;
+  }
+  .aq-m-bottom .aq-update {
+    flex: none;
+  }
+  .aq-m-total {
+    margin-left: auto;
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--chocolate);
+    white-space: nowrap;
+  }
+  /* hide trash on mobile to match the clean screenshot */
+  .aq-card-mobile .aq-del {
+    display: none;
+  }
+  .aq-update-btn {
+    padding: 5px 24px 5px 12px;
+    font-size: 12px;
+  }
+
+  .aq-foot {
+    padding: 12px 2px 0;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .aq-title h1 { font-size: 20px; }
+  .aq-m-name { font-size: 14.5px; }
+  .aq-m-order { font-size: 12.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aq-pill-s,
+  .aq-del,
+  .aq-update-btn,
+  .aq-card-mobile {
+    transition: none;
+  }
+  .aq-update-menu {
+    animation: none;
+  }
+}
+/* every text on this page uses Mona Sans; only the header (logo, search, shop chip, brown strip) keeps its own font */
+.aq-main,
+.aq-main *,
+.s-float,
+.s-float *,
+.s-toast {
+  font-family: "Mona Sans", system-ui, sans-serif;
+}

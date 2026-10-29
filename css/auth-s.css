@@ -391,3 +391,40 @@ form {
     transition-delay: 0s;
   }
 }
+/* orange button hover animation (Login / Register / Verify buttons in the form) */
+.form-box .btn {
+  position: relative;
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.form-box .btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, .55), transparent);
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.form-box .btn:hover {
+  transform: translateY(-3px);
+  background: #f5ae52;
+  box-shadow: 0 10px 22px rgba(237, 160, 63, .45);
+}
+.form-box .btn:hover::after {
+  animation: btn-shine .9s ease;
+}
+.form-box .btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(237, 160, 63, .35);
+}
+@keyframes btn-shine {
+  from { left: -75%; }
+  to { left: 125%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .form-box .btn, .form-box .btn::after { transition: none; animation: none; }
+  .form-box .btn:hover { transform: none; }
+}

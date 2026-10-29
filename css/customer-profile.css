@@ -1,0 +1,267 @@
+/* Customer profile page (opened from the avatar). Uses the homepage header from css/customer-home.css. */
+.cp-main {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 28px;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 36px 24px 40px;
+}
+
+/* left column: photo, name, tabs */
+.cp-side { text-align: center; padding-top: 6px; }
+.cp-photo {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--brown);
+  font-size: 44px;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 6px 16px rgba(43, 26, 18, 0.18);
+}
+.cp-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cp-photo:hover { filter: brightness(0.92); }
+.cp-name { margin-top: 12px; font-size: 16px; font-weight: 700; }
+.cp-change {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: underline;
+}
+.cp-note { min-height: 16px; margin-top: 6px; font-size: 12px; color: var(--muted); }
+.cp-tabs { display: grid; gap: 12px; margin-top: 14px; }
+.cp-tabs a {
+  display: block;
+  padding: 9px 0;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-weight: 700;
+  font-size: 14px;
+}
+.cp-tabs a.on { background: var(--brown); color: #fff; border-color: var(--brown); }
+.cp-tabs a:hover { border-color: var(--orange); }
+
+/* right card */
+.cp-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 30px 30px;
+  box-shadow: 0 6px 20px rgba(43, 26, 18, 0.08);
+}
+.cp-card h2 { font-size: 22px; font-weight: 800; margin-bottom: 22px; }
+
+/* desktop: the label and input sit straight in the row grid */
+.cp-wrap { display: contents; }
+.cp-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.cp-row > label, .cp-wrap > label { font-size: 14px; font-weight: 700; }
+.cp-field {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  color: var(--brown);
+}
+.cp-field:focus { outline: 2px solid var(--peach); border-color: var(--orange); }
+.cp-field[readonly] { background: #fff; }
+.cp-edit {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--brown);
+  border-radius: 8px;
+}
+.cp-edit svg { width: 18px; height: 18px; }
+.cp-edit:hover { background: var(--cream); color: var(--orange); }
+
+/* student number and gender share a row */
+.cp-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 32px; }
+.cp-pair { display: grid; grid-template-columns: 96px minmax(0, 1fr); align-items: center; gap: 10px; }
+.cp-pair label { font-size: 14px; font-weight: 700; }
+.cp-short { max-width: 160px; }
+
+/* description: taller box with a small hint underneath */
+.cp-desc-box { display: grid; gap: 4px; }
+.cp-desc-box .cp-field { height: 58px; padding-top: 8px; }
+.cp-desc-box small { font-size: 10px; color: var(--muted); }
+.cp-desc .cp-edit { margin-top: 2px; align-self: start; }
+.cp-desc > .cp-wrap > label { padding-top: 8px; align-self: start; }
+
+/* footer line */
+.cp-footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  padding: 22px 16px 28px;
+  border-top: 1px solid var(--line);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ---------- phones: centred photo and tabs, the form sits on the cream page like the mock-up ---------- */
+@media (max-width: 700px) {
+  .cp-page .ch-nav { display: none; }
+
+  .cp-main { grid-template-columns: 1fr; gap: 16px; padding: 18px 16px 30px; }
+  .cp-side { text-align: center; padding-top: 0; }
+  .cp-photo { width: 120px; height: 120px; font-size: 44px; border: 3px solid var(--orange); }
+  .cp-name { margin-top: 10px; font-size: 19px; }
+  .cp-change {
+    margin-top: 6px;
+    font-size: 12px;
+    text-decoration: none;
+    color: var(--brown);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 12px;
+  }
+  .cp-note { margin-top: 4px; }
+  .cp-tabs { grid-template-columns: auto auto; justify-content: center; gap: 12px; margin-top: 10px; }
+  .cp-tabs a { padding: 8px 0; min-width: 104px; border-color: #fff; box-shadow: 0 0 0 1px var(--line); }
+  .cp-tabs a.on { border-color: var(--brown); }
+
+  .cp-card { background: none; box-shadow: none; padding: 0; }
+  .cp-card h2 { display: none; }
+
+  /* rows: label column, value, pencil */
+  .cp-row { grid-template-columns: 92px minmax(0, 1fr) 30px; gap: 8px; margin-bottom: 16px; }
+  .cp-row > label { font-size: 14px; font-weight: 600; }
+  .cp-row:not(.cp-box-row) .cp-field:not(.cp-short) {
+    height: auto;
+    padding: 0;
+    border: 0;
+    background: none;
+    font-size: 14px;
+  }
+  .cp-edit { width: 30px; height: 30px; }
+
+  /* Username, Name, Description: white boxes with the label inside */
+  .cp-box-row { grid-template-columns: minmax(0, 1fr) 30px; }
+  .cp-box-row .cp-wrap { position: relative; display: block; }
+  .cp-box-row .cp-wrap > label {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    font-size: 13px;
+    font-weight: 600;
+    pointer-events: none;
+  }
+  .cp-box-row .cp-field {
+    height: 42px;
+    padding-left: 92px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fff;
+  }
+  .cp-desc { align-items: start; }
+  .cp-desc > .cp-wrap > label { padding-top: 0; align-self: auto; }
+  .cp-desc .cp-wrap > label { top: 0; height: 42px; line-height: 42px; transform: none; }
+  .cp-desc-box { display: block; }
+  .cp-desc-box .cp-field { height: 42px; padding-top: 0; }
+  .cp-desc-box small { display: block; margin-top: 6px; text-align: center; font-size: 11px; }
+  .cp-desc .cp-edit { margin-top: 0; }
+
+  /* student number and gender on one line; gender stays a pill */
+  .cp-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) 30px; gap: 8px; }
+  .cp-pair { grid-template-columns: auto minmax(0, 1fr); gap: 8px; }
+  .cp-pair label { font-size: 14px; font-weight: 600; }
+  .cp-short {
+    max-width: none;
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    text-align: center;
+  }
+
+  .cp-footer { font-size: 12px; border-top: 0; padding: 14px 16px 24px; }
+}
+
+/* ---------- picture adjuster (crop / zoom / reposition before saving) ---------- */
+.cp-crop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(43, 26, 18, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+.cp-crop-card {
+  width: 340px;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+.cp-crop-card h3 { font-size: 17px; font-weight: 800; color: var(--brown); }
+.cp-crop-hint { font-size: 12.5px; color: var(--muted); margin: 4px 0 14px; }
+.cp-crop-stage {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #222;
+  touch-action: none;
+  cursor: grab;
+}
+.cp-crop-stage:active { cursor: grabbing; }
+.cp-crop-stage canvas { display: block; width: 100%; height: 100%; }
+.cp-crop-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.45);
+  border: 2px solid #fff;
+  pointer-events: none;
+}
+#cropZoom { width: 100%; margin: 16px 0 4px; accent-color: var(--orange); }
+.cp-crop-actions { display: flex; gap: 10px; margin-top: 14px; }
+.cp-crop-actions button {
+  flex: 1;
+  height: 40px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.btn-cancel { background: var(--cream); color: var(--brown); border: 1px solid var(--line); }
+.btn-cancel:hover { border-color: var(--orange); }
+.btn-save { background: var(--orange); color: #fff; }
+.btn-save:hover { filter: brightness(1.05); }
+
+@media (max-width: 420px) {
+  .cp-crop-card { padding: 18px; }
+  .cp-crop-stage { width: 240px; height: 240px; }
+}
