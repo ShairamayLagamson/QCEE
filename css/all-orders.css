@@ -277,10 +277,8 @@
   border-color: var(--caramel);
 }
 .aq-update-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
-  z-index: 20;
+  position: fixed; /* placed beside the button by placeBeside() in all-orders.js */
+  z-index: 1000;
   min-width: 150px;
   background: #fff;
   border-radius: 14px;

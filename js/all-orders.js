@@ -60,6 +60,21 @@
     }).join(', ') || '—';
   }
   function countStatus(s) { return orders.filter(function (o) { return o.status === s; }).length; }
+  /* open the status choices beside the Update button, not below it */
+  function placeBeside(btn, menu) {
+    var r = btn.getBoundingClientRect();
+    menu.style.left = '0px';
+    menu.style.top = '0px';
+    var mw = menu.offsetWidth, mh = menu.offsetHeight;
+    var left = r.left - mw - 8;          // to the left of the button
+    if (left < 8) left = r.right + 8;    // not enough room on the left: use the right
+    left = Math.min(left, window.innerWidth - mw - 8);
+    var top = r.top + r.height / 2 - mh / 2;   // centred on the button
+    top = Math.max(8, Math.min(top, window.innerHeight - mh - 8));
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+  }
+
   function closeAllMenus() {
     document.querySelectorAll('.aq-update-menu').forEach(function (m) { m.hidden = true; });
   }
@@ -141,6 +156,7 @@
     }).join('');
   }
 
+  window.addEventListener('scroll', closeAllMenus, true); // a fixed menu would drift when the page scrolls
   $('q').addEventListener('input', function (e) { query = e.target.value.trim(); render(); });
 
   document.addEventListener('click', function (e) {
@@ -151,7 +167,7 @@
       var m = document.querySelector('.aq-update-menu[data-for="' + id + '"]');
       var wasOpen = m && !m.hidden;
       closeAllMenus();
-      if (m && !wasOpen) m.hidden = false;
+      if (m && !wasOpen) { m.hidden = false; placeBeside(btn, m); }
       return;
     }
     var opt = e.target.closest('.aq-update-menu button[data-status]');

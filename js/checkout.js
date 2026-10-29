@@ -161,7 +161,8 @@
   }
 
   /* order numbers look like QC - 0327: four digits, unique across all orders */
-  function randomNo() { return String(Math.floor(Math.random() * 10000)).padStart(4, '0'); }
+  function randomNo() { return Math.floor(Math.random() * 10000); }  /* returns as number for database compatibility */
+  function formatNo(n) { return String(n).padStart(4, '0'); }  /* formats as string for display */
 
   function orderPayload(g) {
     return {
@@ -243,7 +244,7 @@
     $('coEmpty').hidden = true;
     $('coDone').hidden = false;
     $('coOrders').innerHTML = made.map(function (o) {
-      return '<li><b>QC - ' + esc(o.no) + '</b><span>' + esc(o.shop) + '<small>' + esc(o.when) + '</small></span><em>' + peso(o.total) + '</em></li>';
+      return '<li><b>QC - ' + esc(formatNo(o.no)) + '</b><span>' + esc(o.shop) + '<small>' + esc(o.when) + '</small></span><em>' + peso(o.total) + '</em></li>';
     }).join('');
     $('coWhere').textContent = (fulfil === 'delivery'
       ? 'It will be delivered to the address you entered.'

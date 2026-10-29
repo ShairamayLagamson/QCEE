@@ -217,10 +217,19 @@ document.addEventListener("click", async (e) => {
   toast(approve ? "Shop approved." : "Request rejected.");
   // e-mail the seller about the decision (runs in the background; a failure never undoes the approval)
   sb.functions
-    .invoke("notify-seller", { body: { request_id: b.dataset.id } })
-    .then((res) => {
+    .invoke("notify-seller", {
+      body: { request_id: b.dataset.id },
+    })
+    .then(async (res) => {
       if (res.error) {
-        console.warn("notify-seller:", res.error);
+        let detail = "";
+        try {
+          detail = await res.error.context.text();
+        } catch (e) {} // the function's real reply (may be plain text, not JSON)
+        console.warn(
+          "notify-seller " + (res.error.context && res.error.context.status) + ":",
+          detail || res.error,
+        );
         toast(
           (approve ? "Approved" : "Rejected") +
             ", but the e-mail could not be sent.",
