@@ -77,6 +77,14 @@
     </section>
   </main>
 
+  <!-- order details: opens when a row is clicked -->
+  <div class="od-view" id="odView" hidden>
+    <div class="od-view-card" role="dialog" aria-modal="true" aria-labelledby="odViewTitle">
+      <header class="od-view-head"><h2 id="odViewTitle">Order details</h2><button type="button" class="od-view-x" id="odViewClose" aria-label="Close">&times;</button></header>
+      <div id="odViewBody"></div>
+    </div>
+  </div>
+
   <div class="od-dlg" id="dlg" hidden>
     <div class="od-dlg-card" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
       <h3 id="dlgTitle">Save as PDF?</h3><p id="dlgBody"></p>

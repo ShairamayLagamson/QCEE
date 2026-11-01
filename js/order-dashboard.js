@@ -23,6 +23,20 @@
     current = null;
   var sbOk = !!window.sb;
 
+  /* a Pre-Order tag with the pickup time, or nothing for an order-now */
+  /* for a delivery: where to bring it, the buyer's phone, and the time (a pre-order's time) */
+  function deliveryLabel(o) {
+    if (o.fulfillment !== 'delivery') return '';
+    var t = o.pickup_time ? new Date(o.pickup_time).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    return '<div class="del-info"><b>Deliver to:</b> ' + esc(o.address || '-') +
+      (o.customer_phone ? ' · ' + esc(o.customer_phone) : '') +
+      (t ? '<br><b>Time:</b> ' + esc(t) : '') + '</div>';
+  }
+  function preLabel(o) {
+    if (o.purchase_option !== 'pre') return '';
+    var t = o.pickup_time ? new Date(o.pickup_time).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    return '<span class="pre-tag">Pre-Order' + (t ? ' · ' + t : '') + '</span>';
+  }
   /* ---------- floating menu ---------- */
   var btn = $("menuBtn"),
     chip = $("chipBtn"),
@@ -201,7 +215,7 @@
     var res = await sb
       .from("orders")
       .select(
-        "id, order_no, status, total, note, pickup_time, created_at, customer_name, order_items(name, qty, price)",
+        "id, order_no, status, total, note, pickup_time, purchase_option, fulfillment, address, customer_phone, created_at, customer_name, order_items(name, qty, price)",
       )
       .eq("business_id", biz.id)
       .order("created_at", { ascending: false });
@@ -308,9 +322,9 @@
               "</div>" +
               '<div class="c-order"><b class="c-no">' +
               esc(orderNo(o)) +
-              '</b><small class="c-items">' +
+              '</b>' + preLabel(o) + '<small class="c-items">' +
               esc(itemsText(o)) +
-              "</small></div>" +
+              "</small>" + deliveryLabel(o) + "</div>" +
               (o.status === "completed"
                 ? '<div class="c-status"><span class="od-status locked od-st-completed">Completed</span></div>'
                 : '<div class="c-status"><select class="od-status od-st-' +
@@ -325,6 +339,7 @@
               "</div>" +
               '<div class="c-remarks">' +
               esc(o.note || "-") +
+              '<button type="button" class="od-view-btn" data-view="' + esc(o.id) + '">View details</button>' +
               "</div></div>"
             );
           })
@@ -333,6 +348,47 @@
         (q ? "No orders match your search." : "No " + tab + " orders yet.") +
         "</p>";
   }
+
+  /* ---------- order details pop-up (click a row) ---------- */
+  function viewTime(iso) {
+    return new Date(iso).toLocaleString("en-PH", { month: "short", day: "numeric", year: "numeric", hour: "numeric", minute: "2-digit" });
+  }
+  function showDetail(o) {
+    var rows = [
+      ["Order #", orderNo(o)],
+      ["Customer", o.customer_name || "Customer"],
+      ["Status", LABEL[o.status] || o.status],
+      ["Placed", viewTime(o.created_at)],
+      ["Type", o.purchase_option === "pre" ? "Pre-Order" + (o.pickup_time ? " · " + viewTime(o.pickup_time) : "") : "Order now"],
+      ["Fulfilment", o.fulfillment === "delivery" ? "Delivery" : "Pickup"]
+    ];
+    if (o.fulfillment === "delivery") {
+      rows.push(["Deliver to", o.address || "-"]);
+      rows.push(["Phone", o.customer_phone || "-"]);
+    }
+    rows.push(["Remarks", o.note || "-"]);
+    rows.push(["Total", peso(o.total)]);
+    var items = (o.items || []).map(function (i) {
+      return "<li><span>" + esc(i.qty) + "x " + esc(i.name) + (i.variant ? " (" + esc(i.variant) + ")" : "") +
+        "</span><b>" + peso(i.price * i.qty) + "</b></li>";
+    }).join("");
+    $("odViewBody").innerHTML =
+      '<dl class="od-view-list">' + rows.map(function (r) {
+        return "<div><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>";
+      }).join("") + "</dl>" +
+      '<h3 class="od-view-h">Items</h3><ul class="od-view-items">' + (items || "<li>No items</li>") + "</ul>";
+    $("odView").hidden = false;
+  }
+  function closeDetail() { $("odView").hidden = true; }
+  $("odViewClose").addEventListener("click", closeDetail);
+  $("odView").addEventListener("click", function (e) { if (e.target === $("odView")) closeDetail(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDetail(); });
+  $("rows").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-view]");
+    if (!b) return;
+    var o = orders.filter(function (x) { return String(x.id) === b.dataset.view; })[0];
+    if (o) showDetail(o);
+  });
 
   $("tabs").addEventListener("click", function (e) {
     var b = e.target.closest("[data-tab]");

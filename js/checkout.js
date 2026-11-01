@@ -68,7 +68,7 @@
   function isClosed(sid) { return !!shopInfo[sid] && shopInfo[sid].is_open === false; }
   function pickupPlace(sid) {
     var s = shopInfo[sid] || {};
-    return s.location || s.address || PICKUP_DEFAULT;
+    return s.location || 'Pickup location not set yet';
   }
 
   function render() {
@@ -211,6 +211,24 @@
     writeCart();
   }
 
+  /* the ordered items also leave the saved cart in the database, so they don't come back on the next visit */
+  async function clearSavedCart(gs) {
+    if (!sbOk) return;
+    try {
+      var s = (await sb.auth.getSession()).data.session;
+      if (!s) return;
+      for (var i = 0; i < gs.length; i++) {
+        for (var j = 0; j < gs[i].items.length; j++) {
+          var it = gs[i].items[j];
+          await sb.from('customer_cart_items').delete()
+            .eq('user_id', s.user.id)
+            .eq('product_id', String(it.id))
+            .eq('variant', it.variant || '');
+        }
+      }
+    } catch (e) { console.warn('clear saved cart:', e); }
+  }
+
   async function placeOrder() {
     if (placing) return;
     var err = validate();
@@ -235,6 +253,7 @@
       return;
     }
     clearLocal(gs);
+    clearSavedCart(gs);
     showDone(result);
   }
 
@@ -280,7 +299,7 @@
       if (ids.indexOf(s) < 0) ids.push(s);
     });
     if (!ids.length) return;
-    var r = await sb.from('businesses').select('id, name, location, address, is_open').in('id', ids);
+    var r = await sb.from('businesses').select('id, name, location, is_open').in('id', ids);
     if (r.error) r = await sb.from('businesses').select('id, name, is_open').in('id', ids);
     (r.data || []).forEach(function (b) { shopInfo[String(b.id)] = b; });
     // a closed shop can only take a Pre-Order

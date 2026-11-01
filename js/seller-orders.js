@@ -52,7 +52,7 @@
     $('rows').innerHTML = list.length ? list.map(function (o) {
       var opts = STATUSES.map(function (s) { return '<option value="' + s + '"' + (s === o.status ? ' selected' : '') + '>' + cap(s) + '</option>'; }).join('');
       return '<div class="o-row" data-id="' + o.id + '"><div class="c-name">' + esc(o.customer_name) + '</div>' +
-        '<div class="c-order"><b>' + esc(o.order_no) + '</b><small>' + esc(itemsText(o.items)) + '</small></div>' +
+        '<div class="c-order"><b>' + esc(o.order_no) + '</b>' + preLabel(o) + '<small>' + esc(itemsText(o.items)) + '</small>' + deliveryLabel(o) + '</div>' +
         (o.status === 'completed'
           ? '<div class="c-status"><span class="o-status locked st-completed">Completed</span></div>'
           : '<div class="c-status"><select class="o-status st-' + o.status + '" aria-label="Order status">' + opts + '</select></div>') +
@@ -73,6 +73,20 @@
     document.querySelectorAll('.o-tab').forEach(function (t) { t.classList.toggle('on', t === b); });
     render();
   });
+  /* a Pre-Order tag with the pickup time, or nothing for an order-now */
+  /* for a delivery: where to bring it, the buyer's phone, and the time (a pre-order's time) */
+  function deliveryLabel(o) {
+    if (o.fulfillment !== 'delivery') return '';
+    var t = o.pickup_time ? new Date(o.pickup_time).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    return '<div class="del-info"><b>Deliver to:</b> ' + esc(o.address || '-') +
+      (o.customer_phone ? ' · ' + esc(o.customer_phone) : '') +
+      (t ? '<br><b>Time:</b> ' + esc(t) : '') + '</div>';
+  }
+  function preLabel(o) {
+    if (o.purchase_option !== 'pre') return '';
+    var t = o.pickup_time ? new Date(o.pickup_time).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    return '<span class="pre-tag">Pre-Order' + (t ? ' · ' + t : '') + '</span>';
+  }
   $('q').addEventListener('input', function (e) { query = e.target.value.trim(); render(); });
 
   $('rows').addEventListener('change', async function (e) {

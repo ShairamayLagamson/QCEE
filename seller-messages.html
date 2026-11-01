@@ -99,6 +99,13 @@
 
   <div class="s-toast" id="toast" role="status" aria-live="polite"></div>
 
+  <!-- View Order: the ongoing order details (sellers) -->
+  <div class="ms-ord-overlay" id="msOrdOverlay" hidden>
+    <div class="ms-ord-card" role="dialog" aria-modal="true" aria-labelledby="msOrdTitle">
+      <header class="ms-ord-head"><h2 id="msOrdTitle">Order details</h2><button type="button" class="ms-x" id="msOrdClose" aria-label="Close">&times;</button></header>
+      <div id="msOrdBody"></div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/messages.js"></script>

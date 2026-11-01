@@ -8,6 +8,21 @@
   var SAVED_ICON = '<svg viewBox="0 0 42 42" fill="none" aria-hidden="true"><path d="M20.8333 0C9.34583 0 0 9.34583 0 20.8333C0 32.3208 9.34583 41.6667 20.8333 41.6667C32.3208 41.6667 41.6667 32.3208 41.6667 20.8333C41.6667 9.34583 32.3208 0 20.8333 0ZM29.5542 22.375L20.8333 31.0958L12.1125 22.375C11.5736 21.843 11.1458 21.2094 10.8537 20.5107C10.5617 19.8121 10.4113 19.0624 10.4113 18.3052C10.4113 17.548 10.5617 16.7983 10.8537 16.0997C11.1458 15.4011 11.5736 14.7674 12.1125 14.2354C12.6444 13.6969 13.278 13.2693 13.9764 12.9774C14.6749 12.6856 15.4243 12.5353 16.1813 12.5353C16.9382 12.5353 17.6876 12.6856 18.3861 12.9774C19.0845 13.2693 19.7181 13.6969 20.25 14.2354L20.8333 14.8167L21.4146 14.2354C21.9465 13.6969 22.5801 13.2693 23.2785 12.9774C23.9769 12.6856 24.7264 12.5353 25.4833 12.5353C26.2403 12.5353 26.9897 12.6856 27.6882 12.9774C28.3866 13.2693 29.0202 13.6969 29.5521 14.2354C30.0911 14.7672 30.5191 15.4008 30.8113 16.0994C31.1035 16.7979 31.2541 17.5476 31.2543 18.3048C31.2545 19.062 31.1043 19.8117 30.8125 20.5104C30.5206 21.2091 30.0929 21.8429 29.5542 22.375Z" fill="#EDA03F"/></svg>';
   var HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z"/></svg>';
 
+  /* the seller's days and hours (saved on My Store): 'Mon - Fri | 8:00 AM - 5:00 PM', or '' if not set */
+  function shopHours(b) {
+    var D = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var days = '';
+    if (b.day_from != null && b.day_to != null) {
+      days = +b.day_from === +b.day_to ? D[+b.day_from] : D[+b.day_from] + ' - ' + D[+b.day_to];
+    }
+    var t12 = function (t) {
+      var p = String(t).split(':'), h = +p[0];
+      return (h % 12 || 12) + ':' + p[1] + ' ' + (h < 12 ? 'AM' : 'PM');
+    };
+    var time = b.open_time && b.close_time ? t12(b.open_time) + ' - ' + t12(b.close_time) : '';
+    return [days, time].filter(Boolean).join(' | ');
+  }
+
   var esc = function (s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
@@ -228,7 +243,7 @@
       draw();
       return;
     }
-    var b = await sb.from('businesses').select('id, name, section, banner_url, logo_url, is_open, location, hours, address');
+    var b = await sb.from('businesses').select('id, name, section, banner_url, logo_url, is_open, location, day_from, day_to, open_time, close_time');
     if (b.error) b = await sb.from('businesses').select('id, name, section, banner_url, logo_url, is_open');
     var c = await sb.from('product_categories').select('id, name');
     var p = await sb.from('products').select('id, name, price, stock, image_url, business_id, category_id, description, variants, gallery_urls');
@@ -397,8 +412,11 @@
     var pill = $('svOpen');
     pill.textContent = open ? 'OPEN NOW' : 'CLOSED';
     pill.classList.toggle('off', !open);
-    $('svLoc').textContent = b.location || b.address || 'QCU Main Campus - Admin Building';
-    $('svHours').innerHTML = (b.hours || 'Mon - Fri | 8:00 AM - 5:00 PM').split('|').map(function (s) { return esc(s.trim()); }).join('<i class="sv-sep" aria-hidden="true"></i>');
+    $('svLoc').textContent = b.location || 'Pickup location not set yet';
+    var hrs = shopHours(b);
+    $('svHours').innerHTML = hrs
+      ? hrs.split('|').map(function (s) { return esc(s.trim()); }).join('<i class="sv-sep" aria-hidden="true"></i>')
+      : esc('Hours not set yet');
     var items = products.filter(function (p) { return p.business_id === b.id; });
     $('svGrid').innerHTML = items.map(function (p) {
       var img = p.image_url ? '<img src="' + esc(p.image_url) + '" alt="">' : '<div class="ch-ph"></div>';

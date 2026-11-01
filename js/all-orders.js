@@ -144,6 +144,20 @@
       LABEL[status] + '</span>';
   }
   // all-orders is a read-only history: statuses are changed on the order dashboard
+  /* a Pre-Order tag with the pickup time, or nothing for an order-now */
+  /* for a delivery: where to bring it, the buyer's phone, and the time (a pre-order's time) */
+  function deliveryLabel(o) {
+    if (o.fulfillment !== 'delivery') return '';
+    var t = o.pickup_time ? new Date(o.pickup_time).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    return '<div class="del-info"><b>Deliver to:</b> ' + esc(o.address || '-') +
+      (o.customer_phone ? ' · ' + esc(o.customer_phone) : '') +
+      (t ? '<br><b>Time:</b> ' + esc(t) : '') + '</div>';
+  }
+  function preLabel(o) {
+    if (o.purchase_option !== 'pre') return '';
+    var t = o.pickup_time ? new Date(o.pickup_time).toLocaleString('en-PH', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '';
+    return '<span class="pre-tag">Pre-Order' + (t ? ' · ' + t : '') + '</span>';
+  }
   function updateDropdown() {
     return '';
   }
@@ -173,8 +187,8 @@
       var desktop =
         '<div class="aq-row" data-id="' + esc(o.id) + '">' +
           '<div class="aq-customer">' + esc(o.customer_name) + '</div>' +
-          '<div class="aq-order"><b>' + esc(o.order_no) + '</b></div>' +
-          '<div class="aq-items">' + esc(items) + '</div>' +
+          '<div class="aq-order"><b>' + esc(o.order_no) + '</b>' + preLabel(o) + '</div>' +
+          '<div class="aq-items">' + esc(items) + deliveryLabel(o) + '</div>' +
           '<div class="aq-total">' + money(o.total) + '</div>' +
           '<div class="aq-time">' + timeText(o.created_at) + '</div>' +
           '<div>' + statusBadge(o.status) + '</div>' +
@@ -185,10 +199,10 @@
           '<div class="aq-m-top">' +
             '<div class="aq-m-left">' +
               '<div class="aq-m-name">' + esc(o.customer_name) + '</div>' +
-              '<div class="aq-m-items">' + esc(items) + '</div>' +
+              '<div class="aq-m-items">' + esc(items) + deliveryLabel(o) + '</div>' +
             '</div>' +
             '<div class="aq-m-right">' +
-              '<div class="aq-m-order">' + esc(o.order_no) + '</div>' +
+              '<div class="aq-m-order">' + esc(o.order_no) + preLabel(o) + '</div>' +
               '<div class="aq-m-time">' + timeText(o.created_at) + '</div>' +
             '</div>' +
           '</div>' +
@@ -264,7 +278,7 @@
     if (!window.sb || !biz) { render(); return; }
 
     var r = await sb.from('orders')
-      .select('id, order_no, status, total, created_at, completed_at, customer_name, remarks, order_items(name, qty, price)')
+      .select('id, order_no, status, total, created_at, completed_at, customer_name, remarks, purchase_option, pickup_time, fulfillment, address, customer_phone, order_items(name, qty, price)')
       .eq('business_id', biz.id)
       .order('created_at', { ascending: false })
       .limit(500);

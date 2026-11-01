@@ -7,7 +7,8 @@
   var me = null;
   var convs = [];          // the conversations this user can see, newest first
   var partners = {};       // customer: keyed by business id; seller: keyed by customer id
-  var activeOrder = {};    // seller only: "customer|shop" -> order number of an ongoing order
+  var activeOrder = {};    // seller only: "customer|shop" -> the ongoing order (its details)
+  var currentOrder = null; // the ongoing order of the chat that is open
   var bizIds = [];         // seller only: ids of the shops this seller owns
   var currentId = null;    // the open conversation
   var shownIds = {};       // message ids already in the thread
@@ -174,12 +175,14 @@
         });
       }
       // only orders still in progress count as "ongoing" and show their number
-      var o = await sb.from('orders').select('order_no, customer_id, shop_id, status, created_at')
+      var o = await sb.from('orders')
+        .select('order_no, customer_id, business_id, status, total, created_at, pickup_time, purchase_option, fulfillment, address, customer_phone, customer_name, order_items(name, variant, qty, price)')
         .eq('seller_id', me).in('status', ['pending', 'preparing', 'ready'])
         .order('created_at', { ascending: false });
+      if (o.error) console.warn('ongoing orders:', o.error.message);
       (o.data || []).forEach(function (x) {
-        var k = x.customer_id + '|' + String(x.shop_id);
-        if (!activeOrder[k]) activeOrder[k] = x.order_no;
+        var k = x.customer_id + '|' + String(x.business_id);
+        if (!activeOrder[k]) activeOrder[k] = x;
       });
     }
   }
@@ -190,7 +193,7 @@
   }
 
   function orderOf(c) {
-    return ROLE === 'seller' ? activeOrder[c.customer_id + '|' + String(c.business_id)] : null;
+    return ROLE === 'seller' ? (activeOrder[c.customer_id + '|' + String(c.business_id)] || null) : null;
   }
 
   function avatarHtml(p) {
@@ -211,7 +214,7 @@
     return '<li><button type="button" class="ms-row' + (c.id === currentId ? ' on' : '') + (isUnread(c) ? ' unread' : '') + '" data-id="' + esc(c.id) + '">' +
       avatarHtml(p) +
       '<span class="ms-row-t"><b>' + esc(p.name) + '</b>' +
-      (ord ? '<i class="ms-ord">Order: QC-' + esc(ord) + '</i>' : '') +
+      (ord ? '<i class="ms-ord">Order: QC - ' + esc(ord.order_no) + '</i>' : '') +
       '<small>' + esc(c.last_text || 'No messages yet') + '</small></span>' +
       '<time>' + esc(timeText(c.last_at)) + '</time></button></li>';
   }
@@ -244,6 +247,42 @@
     return true;
   }
 
+  /* ---------- seller: View Order opens the order details ---------- */
+  var ORD_MONEY = function (n) { return '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+  var ORD_TIME = function (iso) { return new Date(iso).toLocaleString('en-PH', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }); };
+  function showOrderCard(o) {
+    var isPre = o.purchase_option === 'pre';
+    var isDel = o.fulfillment === 'delivery';
+    var rows = [
+      ['Order #', 'QC - ' + esc(o.order_no)],
+      ['Status', esc(String(o.status).charAt(0).toUpperCase() + String(o.status).slice(1))],
+      ['Placed', esc(ORD_TIME(o.created_at))],
+      ['Type', isPre ? 'Pre-Order' + (o.pickup_time ? ' · ' + esc(ORD_TIME(o.pickup_time)) : '') : 'Order now'],
+      ['Fulfilment', isDel ? 'Delivery' : 'Pickup'],
+    ];
+    if (isDel) {
+      rows.push(['Deliver to', esc(o.address || '-')]);
+      rows.push(['Phone', esc(o.customer_phone || '-')]);
+    }
+    rows.push(['Total', ORD_MONEY(o.total)]);
+    var items = (o.order_items || []).map(function (i) {
+      return '<li><span>' + esc(i.qty) + 'x ' + esc(i.name) + (i.variant ? ' (' + esc(i.variant) + ')' : '') + '</span><b>' + ORD_MONEY(i.price * i.qty) + '</b></li>';
+    }).join('');
+    $('msOrdBody').innerHTML =
+      '<dl class="ms-ord-list">' + rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl>' +
+      '<h3 class="ms-ord-h">Items</h3><ul class="ms-ord-items">' + (items || '<li>No items</li>') + '</ul>';
+    $('msOrdOverlay').hidden = false;
+  }
+  function closeOrderCard() { $('msOrdOverlay').hidden = true; }
+  $('msView').addEventListener('click', function (e) {
+    if (ROLE !== 'seller') return;          // customers keep the link to their orders
+    e.preventDefault();
+    if (currentOrder) showOrderCard(currentOrder);
+  });
+  $('msOrdClose').addEventListener('click', closeOrderCard);
+  $('msOrdOverlay').addEventListener('click', function (e) { if (e.target === $('msOrdOverlay')) closeOrderCard(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOrderCard(); });
+
   /* ---------- open a conversation ---------- */
   async function openConv(id) {
     currentId = id;
@@ -257,9 +296,11 @@
     $('msWrap').classList.add('show-chat');
     $('msAv').innerHTML = avatarHtml(p);
     $('msName').textContent = p.name;
+    currentOrder = ord;
     $('msSub').hidden = !ord;
-    $('msSub').textContent = ord ? 'Order: QC-' + ord : '';
-    $('msView').href = ROLE === 'customer' ? 'customer-home.html#orders' : 'seller-orders.html';
+    $('msSub').textContent = ord ? 'Order: QC - ' + ord.order_no : '';
+    $('msView').hidden = ROLE === 'seller' && !ord;   // sellers see View Order only with an ongoing order
+    $('msView').href = ROLE === 'customer' ? 'customer-home.html#orders' : '#';
     $('msThread').innerHTML = '<p class="ms-hint">Loading messages…</p>';
     renderList();
 
