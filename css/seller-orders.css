@@ -274,3 +274,6 @@
     font-size: 30px;
   }
 }
+
+/* completed orders are locked: plain label, no dropdown arrow */
+.locked { background-image: none; cursor: default; pointer-events: none; }

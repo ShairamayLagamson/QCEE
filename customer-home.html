@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Noto+Sans:wght@400;700;800&display=swap">
   <link rel="stylesheet" href="css/customer-home.css">
+  <link rel="stylesheet" href="css/my-orders.css">
+  <link rel="stylesheet" href="css/notifications.css">
 </head>
 <body data-role="customer">
 
@@ -38,9 +40,15 @@
       <button type="button" class="ch-ib" id="favBtn" aria-label="Saved products and shops">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.6 1-1.1a5.5 5.5 0 0 0 0-7.7z"/></svg>
       </button>
-      <button type="button" class="ch-ib" aria-label="Notifications">
+      <div class="nt-wrap">
+        <button type="button" class="ch-ib" id="ntBtn" aria-label="Notifications" aria-expanded="false" aria-controls="ntPanel">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
-      </button>
+      <span class="ch-count" id="ntBadge" hidden>0</span></button>
+        <div class="nt-panel" id="ntPanel" role="dialog" aria-label="Notifications" hidden>
+          <div class="nt-head"><h2>Notifications</h2><span class="nt-new" id="ntNew"></span><button type="button" class="nt-mark" id="ntMarkAll">Mark all read</button><button type="button" class="nt-close" id="ntClose" aria-label="Close">&times;</button></div>
+          <div class="nt-list" id="ntList"></div>
+        </div>
+      </div>
       <div class="ch-me">
         <button type="button" class="ch-avatar" id="avatar" aria-label="Your account" aria-haspopup="true" aria-expanded="false">Q</button>
         <div class="ch-menu" id="avMenu" hidden>
@@ -85,6 +93,16 @@
       <div class="ch-grid" id="shopGrid"></div>
       <p class="ch-empty" id="shopEmpty" hidden></p>
     </section>
+      <div class="cd-overlay" id="moOverlay" hidden>
+    <aside class="cd-panel" role="dialog" aria-modal="true" aria-labelledby="moTitle">
+      <header class="cd-head">
+        <img src="images/my-orders-ico.png" alt="" width="30" height="30">
+        <h2 id="moTitle">My Orders</h2>
+        <button type="button" class="cd-close" id="moClose" aria-label="Close my orders">&times;</button>
+      </header>
+      <div class="cd-body" id="moList"><p class="mo-empty">Loading…</p></div>
+    </aside>
+  </div>
   </main>
 
   <button type="button" class="ch-chat" id="chat" aria-label="Messages">
@@ -206,6 +224,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/customer-home.js"></script>
+  <script src="js/my-orders.js"></script>
+  <script src="js/notifications.js"></script>
   <script src="js/footer.js"></script>
   <script src="js/message-badge.js"></script>
 </body>

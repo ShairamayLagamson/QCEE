@@ -1,0 +1,108 @@
+/* My Orders on the customer home page (#orders). Cards on phones, a table-style list on laptops. */
+
+.mo-block { padding-top: 10px; }
+
+.mo-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--brown);
+  margin-bottom: 4px;
+}
+.mo-title img { width: 28px; height: 28px; }
+
+.mo-sub {
+  font-size: 14px;
+  color: #7a6a5f;
+  margin-bottom: 14px;
+}
+
+.mo-head,
+.mo-card {
+  display: grid;
+  gap: 12px;
+}
+
+.mo-head { display: none; }
+
+.mo-card {
+  grid-template-columns: minmax(0, 1fr);
+  background: #fff4e6;
+  border: 1px solid #f6dcc0;
+  border-left: 5px solid var(--orange);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(43, 26, 18, 0.06);
+  color: #3a2e26;
+}
+.mo-card.st-pending   { border-left-color: #f0c24b; }
+.mo-card.st-preparing { border-left-color: #f5a25a; }
+.mo-card.st-ready     { border-left-color: #6bbf6e; }
+
+.mo-main {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.mo-ico { width: 34px; height: 34px; flex: none; }
+.mo-main h3 { font-size: 16px; font-weight: 800; color: var(--brown); }
+.mo-state { font-size: 14px; font-weight: 700; margin-top: 2px; }
+.mo-msg { font-size: 13px; color: #5a4a40; margin-top: 2px; }
+.mo-time { display: block; font-size: 11px; color: #8a7a6f; margin-top: 4px; }
+
+.mo-shop,
+.mo-items,
+.mo-amt { font-size: 14px; overflow-wrap: anywhere; }
+
+.mo-steps {
+  list-style: none;
+  display: flex;
+  gap: 6px;
+  margin: 2px 0 0;
+  padding: 0;
+}
+.mo-steps li {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 700;
+  color: #a89a8f;
+  text-align: center;
+}
+.mo-steps li span {
+  display: block;
+  height: 6px;
+  border-radius: 6px;
+  background: #eadfd2;
+  margin-bottom: 4px;
+}
+.mo-steps li.done span,
+.mo-steps li.current span { background: var(--orange); }
+.mo-steps li.current { color: var(--brown); }
+
+.mo-empty {
+  text-align: center;
+  padding: 26px 12px;
+  color: #7a6a5f;
+  background: #fff;
+  border-radius: 16px;
+  font-size: 14px;
+}
+
+/* phones: small label above each detail */
+.mo-shop::before,
+.mo-items::before,
+.mo-amt::before {
+  content: attr(data-label);
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #8a7a6f;
+}
+
+/* the orders now sit in the side drawer, so they always use the card layout */
+.cd-overlay[hidden] { display: none; }

@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&family=Noto+Sans:wght@400;700;800&display=swap">
   <link rel="stylesheet" href="css/customer-home.css">
   <link rel="stylesheet" href="css/customer-profile.css">
+  <link rel="stylesheet" href="css/purchase-history.css">
 </head>
 <body data-role="customer" class="cp-page">
 
@@ -63,8 +64,8 @@
       <button type="button" class="cp-change" id="cpChange">Change profile</button>
       <p class="cp-note" id="cpNote" aria-live="polite"></p>
       <div class="cp-tabs">
-        <a href="customer-profile.html" class="on">Profile</a>
-        <a href="customer-home.html#orders">History</a>
+        <a href="#profile" class="on" id="tabProfile">Profile</a>
+        <a href="#history" id="tabHistory">History</a>
       </div>
       <input type="file" id="cpFile" accept="image/*" hidden>
     </aside>
@@ -86,7 +87,7 @@
       </div>
     </div>
 
-    <section class="cp-card" aria-labelledby="cpTitle">
+    <section class="cp-card" id="cpCard" aria-labelledby="cpTitle">
       <h2 id="cpTitle">MyProfile</h2>
 
       <!-- Username and Name: boxed on phones, label inside the box -->
@@ -158,6 +159,15 @@
         </button>
       </div>
     </section>
+    <section class="ph-panel" id="historyPanel" aria-labelledby="phTitle" hidden>
+      <h2 class="ph-title" id="phTitle">Purchase History</h2>
+      <div class="ph-box">
+        <div class="ph-head" aria-hidden="true">
+          <span>Item</span><span>Shop</span><span>Order #</span><span>Amount paid</span><span>Time ordered</span>
+        </div>
+        <div id="phList"><p class="ph-empty">Loading…</p></div>
+      </div>
+    </section>
   </main>
 
   <footer class="cp-footer">&copy;2025-2026 QCee All Rights Reserved</footer>
@@ -165,5 +175,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
   <script src="js/supabase-client.js"></script>
   <script src="js/customer-profile.js"></script>
+  <script src="js/purchase-history.js"></script>
 </body>
 </html>

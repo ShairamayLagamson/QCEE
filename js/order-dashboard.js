@@ -5,12 +5,14 @@
     return document.getElementById(id);
   };
   var LABEL = {
+    pending: "Pending",
+    preparing: "Preparing",
     ready: "Ready",
     completed: "Completed",
     cancelled: "Cancelled",
   };
-  var STATUSES = ["ready", "completed", "cancelled"],
-    ONGOING = ["ready"];
+  var STATUSES = ["pending", "preparing", "ready", "completed", "cancelled"],
+    ONGOING = ["pending", "preparing", "ready"];
   var orders = [],
     tab = "ongoing",
     query = "",
@@ -246,6 +248,8 @@
       '<div class="num">' +
       peso(sum(done)) +
       '</div><small><span class="up">\u2197</span>From completed orders</small></button>' +
+            card(null, "Pending", '<img src="images/pending-ico.png" alt="" onerror="this.style.visibility=\'hidden\'">', byStatus(["pending"]).length, "pending") +
+      card(null, "Preparing", '<img src="images/preparing-ico.png" alt="" onerror="this.style.visibility=\'hidden\'">', byStatus(["preparing"]).length, "preparing") +
       card(
         "cancelled",
         "Cancelled",
@@ -307,11 +311,13 @@
               '</b><small class="c-items">' +
               esc(itemsText(o)) +
               "</small></div>" +
-              '<div class="c-status"><select class="od-status od-st-' +
-              esc(o.status) +
-              '" aria-label="Order status">' +
-              opts +
-              "</select></div>" +
+              (o.status === "completed"
+                ? '<div class="c-status"><span class="od-status locked od-st-completed">Completed</span></div>'
+                : '<div class="c-status"><select class="od-status od-st-' +
+                  esc(o.status) +
+                  '" aria-label="Order status">' +
+                  opts +
+                  "</select></div>") +
               '<div class="c-time">' +
               esc(clock(o.created_at)) +
               '</div><div class="c-amount">' +

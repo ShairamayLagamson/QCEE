@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Orders Queue | QCee Seller</title>
+  <title>All Orders History | QCee Seller</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@200..900&display=swap">
@@ -37,7 +37,7 @@
       </button>
     </header>
 
-    <div class="aq-strip"><span class="aq-pill">All Orders Queue</span></div>
+    <div class="aq-strip"><span class="aq-pill">All Orders History</span></div>
   </div>
 
   <!-- floating menu -->
@@ -49,7 +49,7 @@
     <a href="order-dashboard.html"><img src="images/order-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Order Dashboard</span></a>
     <a href="stats-dashboard.html"><img src="images/stats-dashboard-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>Stats Dashboard</span></a>
     <a href="my-store.html"><img src="images/my-store-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>My Store</span></a>
-    <a href="all-orders.html" class="active" aria-current="page"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders Queue</span></a>
+    <a href="all-orders.html" class="active" aria-current="page"><img src="images/all-orders-ico.png" alt="" onerror="this.style.visibility='hidden'"><span>All Orders History</span></a>
     <hr>
     <button type="button" id="logout" class="s-logout">Log out</button>
   </nav>
@@ -61,7 +61,7 @@
           <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
           <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
         </svg>
-        All Orders Queue
+        All Orders History
       </h1>
       <p>Complete Order Database</p>
     </header>
@@ -74,7 +74,25 @@
       </div>
     </section>
 
-    <!-- order list / table -->
+    <div class="aq-toolbar">
+      <div class="st-period" id="aqPeriod">
+        <button type="button" class="st-period-btn" id="aqPeriodBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="aqPeriodMenu">
+          <span id="aqPeriodLabel">All orders</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="st-period-menu" id="aqPeriodMenu" role="listbox" hidden>
+          <button type="button" role="option" data-period="daily">Daily</button>
+          <button type="button" role="option" data-period="weekly">Weekly</button>
+          <button type="button" role="option" data-period="monthly">Monthly</button>
+          <button type="button" role="option" data-period="yearly">Yearly</button>
+          <button type="button" role="option" data-period="all" class="on">All orders</button>
+          <label class="st-pick"><span>Pick a date</span><input type="date" id="aqPickDate" aria-label="Pick a date"></label>
+        </div>
+      </div>
+      <button type="button" class="st-period-btn aq-print-btn" id="aqPrint">Print / Save as PDF</button>
+    </div>
+
+        <!-- order list / table -->
     <section class="aq-panel">
       <div class="aq-card">
         <!-- desktop table header -->

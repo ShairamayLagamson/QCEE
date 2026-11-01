@@ -558,3 +558,115 @@
 .s-toast {
   font-family: "Mona Sans", system-ui, sans-serif;
 }
+
+/* a Complete link (ready orders) styled like the Update button */
+a.aq-update-btn { display: inline-block; text-decoration: none; }
+
+/* period picker (same look as the stats page) */
+.aq-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 0 0 12px; }
+.st-period {
+  position: relative;
+}
+.st-period-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--caramel);
+  color: var(--chocolate);
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(236, 165, 75, 0.35);
+  transition:
+    transform 0.15s,
+    box-shadow 0.2s,
+    filter 0.2s;
+}
+.st-period-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(236, 165, 75, 0.45);
+  filter: brightness(1.04);
+}
+.st-period-btn:active {
+  transform: scale(0.96);
+}
+.st-period-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.25s;
+}
+.st-period-btn[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.st-period-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 30;
+  min-width: 220px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 6px;
+  box-shadow:
+    0 16px 36px rgba(94, 66, 55, 0.25),
+    0 0 0 1px var(--vanilla);
+  animation: aq-pop 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.st-period-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--chocolate);
+  transition:
+    background 0.15s,
+    padding-left 0.2s;
+}
+.st-period-menu button:hover {
+  background: var(--banana);
+  padding-left: 18px;
+}
+.st-period-menu button.on {
+  background: var(--caramel);
+}
+.st-pick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 12px 6px;
+  margin-top: 4px;
+  border-top: 1px solid var(--vanilla);
+  font-size: 13px;
+  font-weight: 600;
+}
+.st-pick input {
+  border: 1px solid var(--vanilla);
+  border-radius: 10px;
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--chocolate);
+  background: #fff;
+}
+.st-pick input:focus {
+  outline: 3px solid var(--caramel);
+  outline-offset: 1px;
+}
+
+/* print / Save as PDF: the list only, no buttons or menus */
+@media print {
+  .s-head, .s-float, .s-backdrop, .s-toast, .aq-toolbar, .aq-summary, .aq-del, .aq-update, .aq-actions, .aq-m-bottom .aq-update { display: none !important; }
+  .aq-card-mobile { display: none !important; }
+  .aq-list .aq-row, .aq-row.aq-head { display: grid !important; }
+  .aq-list { max-height: none; overflow: visible; }
+  .aq-card { box-shadow: none; }
+  body { background: #fff; }
+}

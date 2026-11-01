@@ -53,7 +53,9 @@
       var opts = STATUSES.map(function (s) { return '<option value="' + s + '"' + (s === o.status ? ' selected' : '') + '>' + cap(s) + '</option>'; }).join('');
       return '<div class="o-row" data-id="' + o.id + '"><div class="c-name">' + esc(o.customer_name) + '</div>' +
         '<div class="c-order"><b>' + esc(o.order_no) + '</b><small>' + esc(itemsText(o.items)) + '</small></div>' +
-        '<div class="c-status"><select class="o-status st-' + o.status + '" aria-label="Order status">' + opts + '</select></div>' +
+        (o.status === 'completed'
+          ? '<div class="c-status"><span class="o-status locked st-completed">Completed</span></div>'
+          : '<div class="c-status"><select class="o-status st-' + o.status + '" aria-label="Order status">' + opts + '</select></div>') +
         '<div class="c-time">' + timeText(o.created_at) + '</div><div class="c-amount">' + money(o.total) + '</div>' +
         '<div class="c-remarks">' + esc(o.remarks || '-') + '</div></div>';
     }).join('') : '<p class="o-empty">' + (q ? 'No orders match your search.' : 'No ' + tab + ' orders yet.') + '</p>';
@@ -79,8 +81,8 @@
     var prev = { status: o.status, completed_at: o.completed_at };
     o.status = sel.value; o.completed_at = o.status === 'completed' ? new Date().toISOString() : null;
     render();
-    var r = await sb.from('orders').update({ status: o.status, completed_at: o.completed_at }).eq('id', id);
-    if (r.error) { o.status = prev.status; o.completed_at = prev.completed_at; render(); toast('Could not update: ' + r.error.message); }
+    var r = await sb.from('orders').update({ status: o.status, completed_at: o.completed_at }).eq('id', id).select('id');
+    if (r.error || !r.data || !r.data.length) { o.status = prev.status; o.completed_at = prev.completed_at; render(); toast('Could not update: ' + (r.error ? r.error.message : 'you are not allowed to change this order')); }
     else toast('Order marked ' + o.status + '.');
   });
 

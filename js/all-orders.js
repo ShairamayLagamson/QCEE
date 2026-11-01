@@ -59,7 +59,58 @@
       return (i.qty || 1) + 'x ' + i.name;
     }).join(', ') || '—';
   }
-  function countStatus(s) { return orders.filter(function (o) { return o.status === s; }).length; }
+  /* ---------- period picker: all orders, or one day / week / month / year ---------- */
+  var period = 'all', picked = null;
+  var PERIOD_TEXT = { all: 'All orders', daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', yearly: 'Yearly' };
+  var pBtn = $('aqPeriodBtn'), pMenu = $('aqPeriodMenu'), pDate = $('aqPickDate');
+  function dayStart(d) { var x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+  function inPeriod(o) {
+    if (period === 'all') return true;
+    var t = new Date(o.created_at), now = new Date(), today = dayStart(now);
+    if (period === 'daily') return dayStart(t).getTime() === today.getTime();
+    if (period === 'weekly') {
+      var from = dayStart(now); from.setDate(from.getDate() - 6);   /* the last 7 days, today included */
+      return t >= from && t < new Date(today.getTime() + 86400000);
+    }
+    if (period === 'monthly') return t.getFullYear() === now.getFullYear() && t.getMonth() === now.getMonth();
+    if (period === 'yearly') return t.getFullYear() === now.getFullYear();
+    if (period === 'date') return !!picked && dayStart(t).getTime() === picked.getTime();
+    return true;
+  }
+  function setPeriodMenu(open) { pMenu.hidden = !open; pBtn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  function markPeriod() {
+    $('aqPeriodLabel').textContent = period === 'date' && picked
+      ? picked.toLocaleDateString('en-PH', { month: 'short', day: 'numeric', year: 'numeric' })
+      : PERIOD_TEXT[period];
+    Array.prototype.forEach.call(pMenu.querySelectorAll('[data-period]'), function (b) {
+      b.classList.toggle('on', period === b.dataset.period);
+    });
+  }
+  pBtn.addEventListener('click', function (e) { e.stopPropagation(); setPeriodMenu(pMenu.hidden); });
+  pMenu.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-period]');
+    if (!b) return;
+    period = b.dataset.period; picked = null; pDate.value = '';
+    setPeriodMenu(false); markPeriod(); render();
+  });
+  pDate.addEventListener('change', function () {
+    if (!pDate.value) return;
+    var p = pDate.value.split('-');
+    picked = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    period = 'date';
+    setPeriodMenu(false); markPeriod(); render();
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('#aqPeriod')) setPeriodMenu(false); });
+
+  /* Print / Save as PDF: the browser's print box; the page title (the PDF's name) shows the period */
+  $('aqPrint').addEventListener('click', function () {
+    var before = document.title;
+    document.title = 'All Orders - ' + $('aqPeriodLabel').textContent + ' - QCee';
+    window.print();
+    setTimeout(function () { document.title = before; }, 1000);
+  });
+
+  function countStatus(s) { return orders.filter(function (o) { return o.status === s && inPeriod(o); }).length; }
   /* open the status choices beside the Update button, not below it */
   function placeBeside(btn, menu) {
     var r = btn.getBoundingClientRect();
@@ -92,13 +143,9 @@
       (status === 'completed' ? '✓ ' : status === 'cancelled' ? '✕ ' : '') +
       LABEL[status] + '</span>';
   }
-  function updateDropdown(order) {
-    var opts = STATUSES.map(function (s) {
-      return '<button type="button" data-status="' + s + '"' + (s === order.status ? ' class="on"' : '') + '>' + LABEL[s] + '</button>';
-    }).join('');
-    return '<div class="aq-update">' +
-      '<button type="button" class="aq-update-btn" data-id="' + esc(order.id) + '">Update</button>' +
-      '<div class="aq-update-menu" hidden data-for="' + esc(order.id) + '">' + opts + '</div></div>';
+  // all-orders is a read-only history: statuses are changed on the order dashboard
+  function updateDropdown() {
+    return '';
   }
   function delBtn(id) {
     return '<button type="button" class="aq-del" data-del="' + esc(id) + '" aria-label="Delete order">' +
@@ -110,6 +157,7 @@
     renderBreakdown();
     var q = query.toLowerCase();
     var list = orders.filter(function (o) {
+      if (!inPeriod(o)) return false;
       if (!q) return true;
       return (o.customer_name + ' ' + o.order_no + ' ' + itemsText(o.items)).toLowerCase().indexOf(q) > -1;
     });
@@ -160,11 +208,11 @@
   $('q').addEventListener('input', function (e) { query = e.target.value.trim(); render(); });
 
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.aq-update-btn');
+    var btn = e.target.closest('button.aq-update-btn');
     if (btn) {
       e.stopPropagation();
       var id = btn.dataset.id;
-      var m = document.querySelector('.aq-update-menu[data-for="' + id + '"]');
+      var m = btn.parentElement.querySelector('.aq-update-menu'); // the menu beside THIS button (desktop row and phone card each have one)
       var wasOpen = m && !m.hidden;
       closeAllMenus();
       if (m && !wasOpen) { m.hidden = false; placeBeside(btn, m); }
@@ -192,9 +240,11 @@
     if (!window.sb) { toast('Order marked ' + LABEL[status] + '.'); return; }
     var payload = { status: status };
     if (status === 'completed') payload.completed_at = o.completed_at;
-    var r = await sb.from('orders').update(payload).eq('id', id);
-    if (r.error) { o.status = prev; render(); toast('Could not update: ' + r.error.message); }
-    else toast('Order marked ' + LABEL[status] + '.');
+    var r = await sb.from('orders').update(payload).eq('id', id).select('id');
+    if (r.error || !r.data || !r.data.length) {   // same check as the order dashboard: a blocked save changes no row
+      o.status = prev; render();
+      toast('Could not update: ' + (r.error ? r.error.message : 'you are not allowed to change this order'));
+    } else toast('Order marked ' + LABEL[status] + '.');
   }
 
   async function deleteOrder(id) {
@@ -253,7 +303,7 @@
     var name = (biz && biz.name) || (prof.data && prof.data.full_name) || 'My Shop';
 
     document.querySelectorAll('.js-shopname').forEach(function (el) { el.textContent = name; });
-    document.title = 'All Orders Queue | ' + name;
+    document.title = 'All Orders History | ' + name;
 
     var av = $('shopAvatar');
     if (biz && biz.logo_url) { av.style.backgroundImage = 'url("' + biz.logo_url + '")'; av.textContent = ''; }
