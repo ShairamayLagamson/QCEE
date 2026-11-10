@@ -4,34 +4,115 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QCee Admin</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/mona-sans/index.css">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/admin.css">
 </head>
 <body hidden>
-  <header class="topbar admin-top">
-    <img src="images/logo.png" alt="" class="admin-logo" onerror="this.style.display='none'">
-    <h1 class="brand">QCee</h1><span class="tag">Admin</span>
-    <div class="actions"><span id="adminEmail" class="who"></span><button id="logout" class="btn btn-light">Log out</button></div>
+  <header class="ad-top">
+    <div class="ad-brand">
+      <img src="images/logo.png" alt="" class="ad-logo" onerror="this.style.display='none'">
+      <span class="ad-wordmark"><span class="ad-q">Q</span>Cee</span>
+    </div>
+    <div class="ad-right">
+    <div class="ad-user">
+      <span class="ad-av" aria-hidden="true"><svg viewBox="0 0 48 48" width="40" height="40"><circle cx="24" cy="24" r="24" fill="#d6d6d6"/><circle cx="24" cy="19" r="8" fill="#9a9a9a"/><path d="M8 42c2.5-8 9-12 16-12s13.5 4 16 12c-4.8 3.6-10.2 5.5-16 5.5S12.8 45.6 8 42z" fill="#9a9a9a"/></svg></span>
+      <span class="ad-who">
+        <b id="adminName">Admin</b>
+        <small><i class="ad-dot"></i>Active</small>
+        <span id="adminEmail" hidden></span>
+      </span>
+    </div>
+    <button id="logout" class="ad-logout">Log Out</button>
+    </div>
   </header>
-  <nav class="menu admin-menu">
+
+  <nav class="admin-menu ad-nav">
     <a href="#" data-tab="dashboard" class="on">Dashboard</a>
     <a href="#" data-tab="requests">Requests <b id="pendBadge" class="badge" hidden>0</b></a>
+    <a href="#" data-tab="accounts">Accounts</a>
   </nav>
 
-  <main class="wrap">
+  <main class="ad-wrap">
     <section id="tab-dashboard" class="tab">
-      <h2 class="title">Dashboard</h2>
-      <div class="stats" id="stats"></div>
-      <h3 class="sub2">Shop verification requests waiting <a href="#" class="link" data-tab="requests">View all</a></h3>
-      <div id="latest"></div>
+      <div class="stats ad-stats" id="stats"></div>
+      <div class="ad-sechead">
+        <h3>Shop verification requests waiting</h3>
+        <a href="#" class="link" data-tab="requests">view all</a>
+      </div>
+      <div class="ad-table" id="latest"></div>
     </section>
 
     <section id="tab-requests" class="tab" hidden>
-      <h2 class="title">Shop verification requests</h2>
-      <div class="chips" id="chips"></div>
-      <div id="reqList"></div>
+      <div class="ad-filterbar" id="chips"></div>
+      <div class="ad-table" id="reqList"></div>
+      <p class="ad-count" id="reqCount"></p>
+    </section>
+
+    <section id="tab-accounts" class="tab" hidden>
+      <div class="ad-accbar">
+        <div class="ad-search">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.6" y2="16.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input type="text" id="accSearch" placeholder="Search shops, accounts or emails…">
+        </div>
+        <label class="ad-selectwrap">Role
+          <select id="accRole">
+            <option value="all">All Roles</option>
+            <option value="seller">Sellers</option>
+            <option value="customer">Users</option>
+          </select>
+        </label>
+        <label class="ad-selectwrap">Filter Status:
+          <select id="accStatus">
+            <option value="all">All Status</option>
+            <option value="active">Active</option>
+            <option value="suspended">Suspended</option>
+          </select>
+        </label>
+      </div>
+      <div class="ad-acc-grid" id="accountsList"></div>
+      <p class="ad-count" id="accCount"></p>
     </section>
   </main>
+
+  <footer class="ad-foot">
+    QCee Enterprise Portal · © 2026 Quezon City E-Commerce &nbsp;|&nbsp;
+    <a href="#">Privacy Policy</a> <a href="#">Terms &amp; Conditions</a> <a href="#">Support</a>
+  </footer>
+
+  <div class="ad-rdlg" id="reqDlg" hidden>
+    <div class="ad-rcard" role="dialog" aria-modal="true" aria-labelledby="rdTitle">
+      <div class="ad-rhead">
+        <span class="ad-ricon" aria-hidden="true">
+          <svg width="85" height="83" viewBox="0 0 85 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="42.5" cy="41.5" rx="42.5" ry="41.5" fill="#FFE4C1"/>
+            <path d="M36.25 43.75H49.75M36.25 52.75H43M25 23.5V59.5C25 60.6935 25.4741 61.8381 26.318 62.682C27.1619 63.5259 28.3065 64 29.5 64H56.5C57.6935 64 58.8381 63.5259 59.682 62.682C60.5259 61.8381 61 60.6935 61 59.5V33.2695C60.9999 32.67 60.8801 32.0766 60.6475 31.5241C60.4149 30.9715 60.0742 30.471 59.6455 30.052L49.6555 20.2825C48.8148 19.4605 47.6858 19.0001 46.51 19H29.5C28.3065 19 27.1619 19.4741 26.318 20.318C25.4741 21.1619 25 22.3065 25 23.5Z" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke="#33231D"/>
+            <path d="M47.5 19V28C47.5 29.1935 47.9741 30.3381 48.818 31.182C49.6619 32.0259 50.8065 32.5 52 32.5H61" stroke-width="5" stroke-linejoin="round" stroke="#33231D"/>
+          </svg>
+        </span>
+        <span>
+          <b id="rdTitle">Seller Registration Application</b>
+          <small>Review documents and enterprise details</small>
+        </span>
+        <button type="button" id="rdClose" class="ad-rclose" aria-label="Close">✕</button>
+      </div>
+      <div class="ad-rbody">
+        <div><span class="ad-rlabel">Business Name</span><p id="rdBusiness"></p></div>
+        <div><span class="ad-rlabel">Submission Date</span><p id="rdDate"></p></div>
+        <div><span class="ad-rlabel">Username</span><p id="rdUsername"></p></div>
+        <div><span class="ad-rlabel">Email</span><p id="rdEmail"></p></div>
+        <div><span class="ad-rlabel">Section</span><p id="rdSection"></p></div>
+      </div>
+      <div class="ad-rfoot">
+        <span class="ad-pill" id="rdStatus">PENDING</span>
+        <div class="ad-quick" id="rdActions">
+          <button class="ad-approve" data-act="approve" id="rdApprove">✓ Approve</button>
+          <button class="ad-reject" data-act="reject" id="rdReject">✕ Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="dlg" id="dlg" hidden>
     <div class="card" role="alertdialog" aria-modal="true" aria-labelledby="dTitle">

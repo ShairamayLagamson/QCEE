@@ -1,6 +1,8 @@
 /* My Orders on the customer home page (#orders). Cards on phones, a table-style list on laptops. */
 
-.mo-block { padding-top: 10px; }
+.mo-block {
+  padding-top: 10px;
+}
 
 .mo-title {
   display: flex;
@@ -11,7 +13,10 @@
   color: var(--brown);
   margin-bottom: 4px;
 }
-.mo-title img { width: 28px; height: 28px; }
+.mo-title img {
+  width: 28px;
+  height: 28px;
+}
 
 .mo-sub {
   font-size: 14px;
@@ -25,7 +30,9 @@
   gap: 12px;
 }
 
-.mo-head { display: none; }
+.mo-head {
+  display: none;
+}
 
 .mo-card {
   grid-template-columns: minmax(0, 1fr);
@@ -38,24 +45,54 @@
   box-shadow: 0 2px 8px rgba(43, 26, 18, 0.06);
   color: #3a2e26;
 }
-.mo-card.st-pending   { border-left-color: #f0c24b; }
-.mo-card.st-preparing { border-left-color: #f5a25a; }
-.mo-card.st-ready     { border-left-color: #6bbf6e; }
+.mo-card.st-pending {
+  border-left-color: #f0c24b;
+}
+.mo-card.st-preparing {
+  border-left-color: #f5a25a;
+}
+.mo-card.st-ready {
+  border-left-color: #6bbf6e;
+}
 
 .mo-main {
   display: flex;
   gap: 12px;
   align-items: flex-start;
 }
-.mo-ico { width: 34px; height: 34px; flex: none; }
-.mo-main h3 { font-size: 16px; font-weight: 800; color: var(--brown); }
-.mo-state { font-size: 14px; font-weight: 700; margin-top: 2px; }
-.mo-msg { font-size: 13px; color: #5a4a40; margin-top: 2px; }
-.mo-time { display: block; font-size: 11px; color: #8a7a6f; margin-top: 4px; }
+.mo-ico {
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+.mo-main h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--brown);
+}
+.mo-state {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.mo-msg {
+  font-size: 13px;
+  color: #5a4a40;
+  margin-top: 2px;
+}
+.mo-time {
+  display: block;
+  font-size: 11px;
+  color: #8a7a6f;
+  margin-top: 4px;
+}
 
 .mo-shop,
 .mo-items,
-.mo-amt { font-size: 14px; overflow-wrap: anywhere; }
+.mo-amt {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
 
 .mo-steps {
   list-style: none;
@@ -79,8 +116,12 @@
   margin-bottom: 4px;
 }
 .mo-steps li.done span,
-.mo-steps li.current span { background: var(--orange); }
-.mo-steps li.current { color: var(--brown); }
+.mo-steps li.current span {
+  background: var(--orange);
+}
+.mo-steps li.current {
+  color: var(--brown);
+}
 
 .mo-empty {
   text-align: center;
@@ -105,4 +146,6 @@
 }
 
 /* the orders now sit in the side drawer, so they always use the card layout */
-.cd-overlay[hidden] { display: none; }
+.cd-overlay[hidden] {
+  display: none;
+}

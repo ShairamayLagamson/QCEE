@@ -1,9 +1,15 @@
 /* Messages page. Shared by messages.html (customer) and seller-messages.html (seller).
    The colours come from :root in customer-home.css or seller.css, so load one of them first. */
 
-[hidden] { display: none !important; }
+[hidden] {
+  display: none !important;
+}
 
-.ms-main { max-width: 1120px; margin: 0 auto; padding: 18px 20px 40px; }
+.ms-main {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 18px 20px 40px;
+}
 
 .ms-wrap {
   display: grid;
@@ -25,11 +31,27 @@
   min-height: 0;
 }
 
-.ms-side-h { display: flex; align-items: center; gap: 10px; padding: 16px 16px 10px; }
-.ms-side-h svg { width: 22px; height: 22px; color: var(--orange, #e9a03b); flex: none; }
-.ms-side-h h1 { font-size: 20px; font-weight: 800; color: var(--brown, #2b1a12); }
+.ms-side-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 10px;
+}
+.ms-side-h svg {
+  width: 22px;
+  height: 22px;
+  color: var(--orange, #e9a03b);
+  flex: none;
+}
+.ms-side-h h1 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--brown, #2b1a12);
+}
 
-.ms-search { padding: 0 14px 12px; }
+.ms-search {
+  padding: 0 14px 12px;
+}
 .ms-search input {
   width: 100%;
   border: 1px solid var(--line, #eadfce);
@@ -40,9 +62,18 @@
   color: var(--brown, #2b1a12);
   outline: 0;
 }
-.ms-search input:focus { border-color: var(--orange, #e9a03b); }
+.ms-search input:focus {
+  border-color: var(--orange, #e9a03b);
+}
 
-.ms-list { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; min-height: 0; }
+.ms-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
 .ms-row {
   width: 100%;
   background: #fff;
@@ -55,8 +86,13 @@
   text-align: left;
   border-bottom: 1px solid var(--line, #eadfce);
 }
-.ms-row:hover { background: var(--cream, #fff7ee); }
-.ms-row.on { background: var(--peach, #ffd39a); background: rgba(255, 211, 154, 0.35); }
+.ms-row:hover {
+  background: var(--cream, #fff7ee);
+}
+.ms-row.on {
+  background: var(--peach, #ffd39a);
+  background: rgba(255, 211, 154, 0.35);
+}
 
 .ms-av {
   width: 46px;
@@ -70,9 +106,18 @@
   font-weight: 800;
   color: var(--brown, #2b1a12);
 }
-.ms-av img { width: 100%; height: 100%; object-fit: cover; }
+.ms-av img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-.ms-row-t { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ms-row-t {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
 .ms-row-t b {
   font-size: 15px;
   font-weight: 800;
@@ -81,7 +126,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ms-ord { font-style: normal; color: var(--orange, #e9a03b); font-size: 11px; font-weight: 800; }
+.ms-ord {
+  font-style: normal;
+  color: var(--orange, #e9a03b);
+  font-size: 11px;
+  font-weight: 800;
+}
 .ms-row-t small {
   color: var(--muted, #747474);
   font-size: 12px;
@@ -89,12 +139,31 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ms-row time { font-size: 11px; color: var(--muted, #747474); align-self: flex-start; flex: none; }
-.ms-none { padding: 18px 16px; color: var(--muted, #747474); font-size: 14px; line-height: 1.5; }
+.ms-row time {
+  font-size: 11px;
+  color: var(--muted, #747474);
+  align-self: flex-start;
+  flex: none;
+}
+.ms-none {
+  padding: 18px 16px;
+  color: var(--muted, #747474);
+  font-size: 14px;
+  line-height: 1.5;
+}
 
 /* chat */
-.ms-empty { margin: auto; color: var(--muted, #747474); font-size: 14px; }
-.ms-pane { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.ms-empty {
+  margin: auto;
+  color: var(--muted, #747474);
+  font-size: 14px;
+}
+.ms-pane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
 
 .ms-chat-h {
   display: flex;
@@ -103,11 +172,39 @@
   padding: 14px 18px;
   border-bottom: 1px solid var(--line, #eadfce);
 }
-.ms-x { display: none; background: transparent; border: 0; cursor: pointer; font-size: 28px; line-height: 1; color: var(--brown, #2b1a12); padding: 0 6px 0 0; }
-.ms-chat-h .ms-av { width: 44px; height: 44px; }
-.ms-who { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.ms-who b { font-size: 17px; font-weight: 800; color: var(--brown, #2b1a12); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ms-who small { color: var(--orange, #e9a03b); font-size: 12px; font-weight: 800; }
+.ms-x {
+  display: none;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--brown, #2b1a12);
+  padding: 0 6px 0 0;
+}
+.ms-chat-h .ms-av {
+  width: 44px;
+  height: 44px;
+}
+.ms-who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.ms-who b {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--brown, #2b1a12);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ms-who small {
+  color: var(--orange, #e9a03b);
+  font-size: 12px;
+  font-weight: 800;
+}
 .ms-view {
   background: var(--orange, #e9a03b);
   color: #fff;
@@ -117,7 +214,9 @@
   border-radius: 999px;
   white-space: nowrap;
 }
-.ms-view:hover { background: #de9430; }
+.ms-view:hover {
+  background: #de9430;
+}
 
 .ms-thread {
   flex: 1;
@@ -128,8 +227,13 @@
   gap: 8px;
   min-height: 0;
 }
-.ms-msg { display: flex; justify-content: flex-start; }
-.ms-msg.mine { justify-content: flex-end; }
+.ms-msg {
+  display: flex;
+  justify-content: flex-start;
+}
+.ms-msg.mine {
+  justify-content: flex-end;
+}
 .ms-bubble {
   max-width: 70%;
   background: #f1f1f1;
@@ -140,12 +244,29 @@
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
-.ms-msg.mine .ms-bubble { background: #f6e3c4; }
-.ms-bubble p { margin: 0; white-space: pre-wrap; }
-.ms-photo { display: block; width: 100%; max-width: 230px; border-radius: 12px; }
+.ms-msg.mine .ms-bubble {
+  background: #f6e3c4;
+}
+.ms-bubble p {
+  margin: 0;
+  white-space: pre-wrap;
+}
+.ms-photo {
+  display: block;
+  width: 100%;
+  max-width: 230px;
+  border-radius: 12px;
+}
 .ms-bubble p + .ms-photo,
-.ms-photo + p { margin-top: 6px; }
-.ms-hint { color: var(--muted, #747474); font-size: 14px; text-align: center; margin: auto; }
+.ms-photo + p {
+  margin-top: 6px;
+}
+.ms-hint {
+  color: var(--muted, #747474);
+  font-size: 14px;
+  text-align: center;
+  margin: auto;
+}
 
 .ms-compose {
   display: flex;
@@ -179,47 +300,163 @@
   border-radius: 50%;
   color: var(--brown, #2b1a12);
 }
-.ms-attach:hover { background: var(--cream, #fff7ee); }
+.ms-attach:hover {
+  background: var(--cream, #fff7ee);
+}
 .ms-attach svg,
-.ms-send svg { width: 22px; height: 22px; }
-.ms-send svg { width: 26px; height: 26px; }
+.ms-send svg {
+  width: 22px;
+  height: 22px;
+}
+.ms-send svg {
+  width: 26px;
+  height: 26px;
+}
 
 /* phones: the list and the chat take turns */
 @media (max-width: 700px) {
-  .ms-main { padding: 12px 12px 110px; }
-  .ms-wrap { grid-template-columns: 1fr; height: calc(100vh - 150px); }
-  .ms-chat { display: none; }
-  .ms-wrap.show-chat .ms-side { display: none; }
-  .ms-wrap.show-chat .ms-chat { display: flex; }
-  .ms-x { display: block; }
-  .ms-view { padding: 8px 12px; font-size: 13px; }
-  .ms-bubble { max-width: 82%; }
-  .ms-chat-h { padding: 12px 14px; gap: 10px; }
-  .ms-who b { font-size: 15px; }
+  .ms-main {
+    padding: 12px 12px 110px;
+  }
+  .ms-wrap {
+    grid-template-columns: 1fr;
+    height: calc(100vh - 150px);
+  }
+  .ms-chat {
+    display: none;
+  }
+  .ms-wrap.show-chat .ms-side {
+    display: none;
+  }
+  .ms-wrap.show-chat .ms-chat {
+    display: flex;
+  }
+  .ms-x {
+    display: block;
+  }
+  .ms-view {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .ms-bubble {
+    max-width: 82%;
+  }
+  .ms-chat-h {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .ms-who b {
+    font-size: 15px;
+  }
 }
 
 /* the shop's logo in the seller header chip: fit it inside the round avatar */
-.s-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+.s-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
 
 /* the shop chip and menu button sit on the right, as on the seller home (this page has no search bar) */
-.s-top .s-chip { margin-left: auto; }
+.s-top .s-chip {
+  margin-left: auto;
+}
 
 /* a chat with a new message from the other side */
-.ms-row.unread b { color: #000; }
-.ms-row.unread small { color: var(--brown, #2b1a12); font-weight: 700; }
-.ms-row.unread time { color: var(--orange, #e9a03b); font-weight: 800; }
+.ms-row.unread b {
+  color: #000;
+}
+.ms-row.unread small {
+  color: var(--brown, #2b1a12);
+  font-weight: 700;
+}
+.ms-row.unread time {
+  color: var(--orange, #e9a03b);
+  font-weight: 800;
+}
 
 /* View Order pop-up (sellers) */
-.ms-ord-overlay { position: fixed; inset: 0; z-index: 300; background: rgba(31, 18, 12, 0.55); display: grid; place-items: center; padding: 16px; }
-.ms-ord-overlay[hidden] { display: none; }
-.ms-ord-card { background: #fff; border-radius: 18px; width: 100%; max-width: 420px; max-height: 86vh; overflow-y: auto; padding: 18px 20px 20px; box-shadow: 0 20px 44px rgba(31, 18, 12, 0.3); color: #3a2e26; }
-.ms-ord-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.ms-ord-head h2 { flex: 1; font-size: 18px; font-weight: 800; color: var(--brown, #5a3a2a); }
-.ms-ord-list { display: grid; gap: 8px; margin: 0 0 12px; }
-.ms-ord-list div { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px; font-size: 14px; }
-.ms-ord-list dt { color: #8a7a6f; font-weight: 700; }
-.ms-ord-list dd { margin: 0; overflow-wrap: anywhere; font-weight: 600; }
-.ms-ord-h { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; color: #8a7a6f; margin: 12px 0 6px; }
-.ms-ord-items { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.ms-ord-items li { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 8px 10px; background: #fff4e6; border-radius: 10px; }
-.ms-ord-items b { white-space: nowrap; }
+.ms-ord-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(31, 18, 12, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.ms-ord-overlay[hidden] {
+  display: none;
+}
+.ms-ord-card {
+  background: #fff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 420px;
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 18px 20px 20px;
+  box-shadow: 0 20px 44px rgba(31, 18, 12, 0.3);
+  color: #3a2e26;
+}
+.ms-ord-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.ms-ord-head h2 {
+  flex: 1;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--brown, #5a3a2a);
+}
+.ms-ord-list {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.ms-ord-list div {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 8px;
+  font-size: 14px;
+}
+.ms-ord-list dt {
+  color: #8a7a6f;
+  font-weight: 700;
+}
+.ms-ord-list dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-weight: 600;
+}
+.ms-ord-h {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #8a7a6f;
+  margin: 12px 0 6px;
+}
+.ms-ord-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.ms-ord-items li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+  padding: 8px 10px;
+  background: #fff4e6;
+  border-radius: 10px;
+}
+.ms-ord-items b {
+  white-space: nowrap;
+}
