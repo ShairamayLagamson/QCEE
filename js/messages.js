@@ -100,7 +100,15 @@
 
     if (ROLE === 'customer') {
       var nm = (prof.data && prof.data.full_name) || s.user.email || 'Q';
-      if ($('avatar')) $('avatar').textContent = initial(nm);
+      if ($('avatar')) {
+        $('avatar').textContent = initial(nm);
+        var myPic = pictureUrl(prof.data && prof.data.avatar_url);
+        if (myPic) {
+          var img = new Image();
+          img.onload = function () { $('avatar').style.backgroundImage = 'url("' + myPic + '")'; $('avatar').textContent = ''; };
+          img.src = myPic;
+        }
+      }
       if ($('meName')) $('meName').textContent = nm;
 
       // opened from a shop's page: make sure the conversation exists, then open it
@@ -251,6 +259,8 @@
   var ORD_MONEY = function (n) { return '₱' + Number(n || 0).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
   var ORD_TIME = function (iso) { return new Date(iso).toLocaleString('en-PH', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }); };
   function showOrderCard(o) {
+    var body = $('msOrdBody'), overlay = $('msOrdOverlay');
+    if (!body || !overlay) return;         // this page (e.g. the buyer side) has no order-popup markup
     var isPre = o.purchase_option === 'pre';
     var isDel = o.fulfillment === 'delivery';
     var rows = [
@@ -268,19 +278,22 @@
     var items = (o.order_items || []).map(function (i) {
       return '<li><span>' + esc(i.qty) + 'x ' + esc(i.name) + (i.variant ? ' (' + esc(i.variant) + ')' : '') + '</span><b>' + ORD_MONEY(i.price * i.qty) + '</b></li>';
     }).join('');
-    $('msOrdBody').innerHTML =
+    body.innerHTML =
       '<dl class="ms-ord-list">' + rows.map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl>' +
       '<h3 class="ms-ord-h">Items</h3><ul class="ms-ord-items">' + (items || '<li>No items</li>') + '</ul>';
-    $('msOrdOverlay').hidden = false;
+    overlay.hidden = false;
   }
-  function closeOrderCard() { $('msOrdOverlay').hidden = true; }
-  $('msView').addEventListener('click', function (e) {
+  function closeOrderCard() { var o = $('msOrdOverlay'); if (o) o.hidden = true; }
+  var msView = $('msView');
+  if (msView) msView.addEventListener('click', function (e) {
     if (ROLE !== 'seller') return;          // customers keep the link to their orders
     e.preventDefault();
     if (currentOrder) showOrderCard(currentOrder);
   });
-  $('msOrdClose').addEventListener('click', closeOrderCard);
-  $('msOrdOverlay').addEventListener('click', function (e) { if (e.target === $('msOrdOverlay')) closeOrderCard(); });
+  var msOrdClose = $('msOrdClose');
+  if (msOrdClose) msOrdClose.addEventListener('click', closeOrderCard);
+  var msOrdOverlay = $('msOrdOverlay');
+  if (msOrdOverlay) msOrdOverlay.addEventListener('click', function (e) { if (e.target === msOrdOverlay) closeOrderCard(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOrderCard(); });
 
   /* ---------- open a conversation ---------- */
